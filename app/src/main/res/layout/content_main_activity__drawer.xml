@@ -8,4 +8,12 @@
     tools:context="com.amar.itay.takego.controller.MainActivity_Drawer"
     tools:showIn="@layout/app_bar_main_activity__drawer">
 
+    <LinearLayout
+        android:id="@+id/FragLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

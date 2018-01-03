@@ -72,6 +72,11 @@ public class List_DBManager implements DB_manager {
     }
 
     @Override
+    public int addInvatation(ContentValues newInvatation) {
+        return 0;
+    }
+
+    @Override
     public List<CarsModel> AllCarsModel() {
         return carsModels;
     }
@@ -89,6 +94,11 @@ public class List_DBManager implements DB_manager {
     @Override
     public List<Car> AllCars() {
         return cars;
+    }
+
+    @Override
+    public List<Invitation> allInvatation() {
+        return null;
     }
 
     @Override

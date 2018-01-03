@@ -9,6 +9,7 @@ import com.amar.itay.takego.model.entities.Branch;
 import com.amar.itay.takego.model.entities.Car;
 import com.amar.itay.takego.model.entities.CarsModel;
 import com.amar.itay.takego.model.entities.Client;
+import com.amar.itay.takego.model.entities.Invitation;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -25,6 +26,8 @@ public class MySQL_DBManager implements DB_manager {
 
     private final String UserName="itaamar";
     private final String WEB_URL = "http://"+UserName+".vlab.jct.ac.il/Car_and_Go/";
+
+    static List<Branch> branchList = new ArrayList<Branch>();
 
 
     @Override
@@ -114,6 +117,11 @@ public class MySQL_DBManager implements DB_manager {
     }
 
     @Override
+    public int addInvatation(ContentValues newInvatation) {
+        return 0;
+    }
+
+    @Override
     public List<CarsModel> AllCarsModel() {
         List<CarsModel> result = new ArrayList<CarsModel>();
 
@@ -159,25 +167,31 @@ public class MySQL_DBManager implements DB_manager {
 
     @Override
     public List<Branch> AllBranch() {
-        List<Branch> result = new ArrayList<Branch>();
 
-        try{
-            String str = PHPtools.GET(WEB_URL+"/getAllBranch.php");
-            JSONArray jsonArray = new JSONObject(str).getJSONArray("branches");
+        if(branchList.size() <= 0){
 
-            for( int i=0; i<jsonArray.length(); i++){
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
+            try{
+                String str = PHPtools.GET(WEB_URL+"/getAllBranch.php");
+                JSONArray jsonArray = new JSONObject(str).getJSONArray("branches");
 
-                ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
-                Branch branch = Car_GoConst.ContentValuesToBranch(contentValues);
-                result.add(branch);
+                for( int i=0; i<jsonArray.length(); i++){
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                    ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
+                    Branch branch = Car_GoConst.ContentValuesToBranch(contentValues);
+                    branchList.add(branch);
+                }
+                return branchList;
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            return result;
-        } catch (Exception e) {
-            e.printStackTrace();
+            return null;
         }
-        return null;
+        else return branchList;
+
     }
+
+
 
     @Override
     public List<Car> AllCars() {
@@ -210,7 +224,10 @@ public class MySQL_DBManager implements DB_manager {
         return null;
     }
 
-
+    @Override
+    public List<Invitation> allInvatation() {
+        return null;
+    }
 
 
     public void printLog(String message)

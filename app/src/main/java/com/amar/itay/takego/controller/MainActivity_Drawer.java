@@ -1,5 +1,8 @@
 package com.amar.itay.takego.controller;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,9 +17,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.amar.itay.takego.R;
+import com.amar.itay.takego.model.entities.Branch;
+
+import java.util.List;
 
 public class MainActivity_Drawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +50,14 @@ public class MainActivity_Drawer extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        FragmentManager fragmentManager = getFragmentManager();
+        android.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment fragment = new startFragment();
+        fragmentTransaction.add(R.id.FragLinearLayout, fragment);
+        fragmentTransaction.addToBackStack("home");
+        fragmentTransaction.commit();
+
     }
 
     @Override
@@ -81,6 +97,7 @@ public class MainActivity_Drawer extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        Fragment fragment = null;
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
@@ -89,6 +106,9 @@ public class MainActivity_Drawer extends AppCompatActivity
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_Branches) {
+            fragment = new branchFragment();
+
+
 
 
         } else if (id == R.id.nav_share) {
@@ -96,6 +116,14 @@ public class MainActivity_Drawer extends AppCompatActivity
         } else if (id == R.id.nav_send) {
 
         }
+        if(fragment != null) {
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.FragLinearLayout, fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

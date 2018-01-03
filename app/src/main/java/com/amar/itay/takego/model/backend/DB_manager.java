@@ -7,6 +7,7 @@ import com.amar.itay.takego.model.entities.Branch;
 import com.amar.itay.takego.model.entities.Car;
 import com.amar.itay.takego.model.entities.CarsModel;
 import com.amar.itay.takego.model.entities.Client;
+import com.amar.itay.takego.model.entities.Invitation;
 
 import java.util.List;
 
@@ -21,10 +22,13 @@ public interface DB_manager {
     int addModel(ContentValues newModel);
     String addCar(ContentValues newCar);
     int addBranch(ContentValues newBranch);
+    int addInvatation (ContentValues newInvatation);
+
     List<CarsModel> AllCarsModel();
     List<Client> AllUsers();
     List<Branch> AllBranch();
     List<Car> AllCars();
+    List<Invitation> allInvatation();
 
     //functions we added
     /*boolean CarModelAvailable();

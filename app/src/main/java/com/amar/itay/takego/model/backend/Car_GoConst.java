@@ -7,6 +7,11 @@ import com.amar.itay.takego.model.entities.Car;
 import com.amar.itay.takego.model.entities.CarsModel;
 import com.amar.itay.takego.model.entities.Client;
 import com.amar.itay.takego.model.entities.Gearbox;
+import com.amar.itay.takego.model.entities.Invitation;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 
 /**
@@ -47,6 +52,64 @@ public class Car_GoConst {
         public static final String PHONE_NUMBER = "phone_number";
         public static final String EMAIL = "email";
         public static final String CREDIT_CARD = "credit_card";
+    }
+
+    public static class InvitationConst{
+        public static final String INVITATION_ID = "_id";
+        public static final String CLIENT_ID = "client_id";
+        public static final String INVITATION_IS_OPEN = "invitation_is_open";
+        public static final String CAR_NUMBER = "car_number_id";
+        public static final String START_RENT = "start_rent";
+        public static final String END_RENT = "end_rent";
+        public static final String IS_FUEL = "is_fuel";
+        public static final String FUEL_LITER = "fuel_liter";
+        public static final String TOTAL_PAYMENT = "total_payment";
+
+    }
+
+    public static ContentValues InvitationToContentValues(Invitation invitation) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(InvitationConst.INVITATION_ID, invitation.getInvitationId());
+        contentValues.put(InvitationConst.CLIENT_ID, invitation.getClientId());
+        contentValues.put(InvitationConst.INVITATION_IS_OPEN, invitation.getIsInvitationIsOpen());
+        contentValues.put(InvitationConst.CAR_NUMBER, invitation.getCarNumber());
+        contentValues.put(InvitationConst.IS_FUEL, invitation.getIsFuel());
+        contentValues.put(InvitationConst.FUEL_LITER, invitation.getFuelLiter());
+        contentValues.put(InvitationConst.TOTAL_PAYMENT, invitation.getTotalPayment());
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // like MySQL Format
+        String dateString = dateFormat.format(invitation.getStartRent());
+        contentValues.put(InvitationConst.START_RENT, dateString);
+
+        dateString = dateFormat.format(invitation.getEndRent());
+        contentValues.put(InvitationConst.END_RENT, dateString);
+
+
+        return contentValues;
+    }
+
+    public static Invitation ContentValuesToInvitation(ContentValues contentValues) {
+        Invitation invitation = new Invitation();
+        invitation.setInvitationId(contentValues.getAsInteger(InvitationConst.INVITATION_ID));
+        invitation.setClientId(contentValues.getAsLong(InvitationConst.CLIENT_ID));
+        invitation.setInvitationIsOpen(contentValues.getAsBoolean(InvitationConst.INVITATION_IS_OPEN));
+        invitation.setCarNumber(contentValues.getAsString(InvitationConst.CAR_NUMBER));
+        invitation.setIsFuel(contentValues.getAsBoolean(InvitationConst.IS_FUEL));
+        invitation.setFuelLiter(contentValues.getAsInteger(InvitationConst.FUEL_LITER));
+        invitation.setTotalPayment(contentValues.getAsDouble(InvitationConst.TOTAL_PAYMENT));
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // like MySQL Format
+        String dateString = contentValues.getAsString(InvitationConst.START_RENT);
+        String dateString2 = contentValues.getAsString(InvitationConst.END_RENT);
+        try {
+            invitation.setStartRent(dateFormat.parse(dateString));
+            invitation.setEndRent(dateFormat.parse(dateString2));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        return invitation;
     }
 
     public static ContentValues CarToContentValues(Car car) {
