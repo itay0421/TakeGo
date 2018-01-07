@@ -59,7 +59,7 @@ public class List_DBManager implements DB_manager {
     }
 
     @Override
-    public String addCar(ContentValues newCar) {
+    public int addCar(ContentValues newCar) {
         Car car = Car_GoConst.ContentValuesToCar(newCar);
         cars.add(car);
         return car.getCarNumber();
@@ -72,9 +72,11 @@ public class List_DBManager implements DB_manager {
     }
 
     @Override
-    public int addInvatation(ContentValues newInvatation) {
+    public int addInvitation(ContentValues newInvatation) {
         return 0;
     }
+
+
 
     @Override
     public List<CarsModel> AllCarsModel() {

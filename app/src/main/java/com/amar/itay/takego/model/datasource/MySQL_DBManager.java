@@ -28,6 +28,7 @@ public class MySQL_DBManager implements DB_manager {
     private final String WEB_URL = "http://"+UserName+".vlab.jct.ac.il/Car_and_Go/";
 
     static List<Branch> branchList = new ArrayList<Branch>();
+    static List<Invitation> invitationList = new ArrayList<Invitation>();
 
 
     @Override
@@ -64,20 +65,25 @@ public class MySQL_DBManager implements DB_manager {
     }
 
     @Override
-    public String addCar(ContentValues newCar) {
+    public int addCar(ContentValues newCar)  {
+
 
         try {
             String result = PHPtools.POST(WEB_URL + "/insertCar.php", newCar);
-         //   String id = result;
+            String s = result.trim();
+            int id = Integer.parseInt(s) ;
+
 //            if (id > 0)
 //                SetUpdate();
 //            printLog("addStudent:\n" + result);
-            return "1";
+            return id;
         } catch (IOException e) {
             printLog("addCar Exception:\n" + e);
-            return null;
+            return -1;
         }
+
     }
+
     @Override
     public long addUser(ContentValues newClient) {
 
@@ -117,8 +123,21 @@ public class MySQL_DBManager implements DB_manager {
     }
 
     @Override
-    public int addInvatation(ContentValues newInvatation) {
-        return 0;
+    public int addInvitation(ContentValues newInvitation) {
+        try{
+            String result = PHPtools.POST(WEB_URL + "insertInvitation.php", newInvitation);
+            String s = result.trim();
+            int id = Integer.parseInt(s) ;
+            //          if (id > 0)
+//                SetUpdate();
+            printLog("addInvitation:\n" + result);
+            return id;
+        } catch (IOException e) {
+            e.getMessage();
+            printLog("addInvitation Exception:\n" + e);
+
+            return -1;
+        }
     }
 
     @Override
@@ -226,7 +245,26 @@ public class MySQL_DBManager implements DB_manager {
 
     @Override
     public List<Invitation> allInvatation() {
-        return null;
+        if(branchList.size() <= 0){
+
+            try{
+                String str = PHPtools.GET(WEB_URL+"/getAllInvitation.php");
+                JSONArray jsonArray = new JSONObject(str).getJSONArray("invitations");
+
+                for( int i=0; i<jsonArray.length(); i++){
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                    ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
+                    Invitation invitation = Car_GoConst.ContentValuesToInvitation(contentValues);
+                    invitationList.add(invitation);
+                }
+                return invitationList;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+        else return invitationList;
     }
 
 

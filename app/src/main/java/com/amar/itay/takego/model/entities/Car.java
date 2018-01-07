@@ -9,16 +9,26 @@ public class Car {
     private int BranchNumber;
     private int ModelType;//just int
     private int Kilometers;
-    private String CarNumber;
+    private int CarNumber;
+    private boolean InUse;
 
     public Car() {
     }
 
-    public Car(int branchNumber, int modelType, int kilometers, String carNumber) {
+    public Car(int branchNumber, int modelType, int kilometers, int carNumber) {
         BranchNumber = branchNumber;
         ModelType = modelType;
         Kilometers = kilometers;
         CarNumber = carNumber;
+        InUse = false;
+    }
+
+    public boolean isInUse() {
+        return InUse;
+    }
+
+    public void setInUse(boolean inUse) {
+        InUse = inUse;
     }
 
     /**
@@ -66,14 +76,14 @@ public class Car {
     /**
      * @return the car number.
      */
-    public String getCarNumber() {
+    public int getCarNumber() {
         return CarNumber;
     }
 
     /**
      * @param carNumber to change the car number.
      */
-    public void setCarNumber(String carNumber) {
+    public void setCarNumber(int carNumber) {
         CarNumber = carNumber;
     }
 

@@ -8,7 +8,7 @@ public class Invitation {
     private int InvitationId;
     private long ClientId;
     private boolean InvitationIsOpen;
-    private String CarNumber;
+    private int CarNumber;
     private Date StartRent;
     private Date EndRent;
     private boolean IsFuel; //if client fill fuel
@@ -21,7 +21,7 @@ public class Invitation {
     public Invitation() {
     }
 
-    public Invitation(int invitationId, long clientId, boolean invitationIsOpen, String carNumber, Date startRent,
+    public Invitation(int invitationId, long clientId, boolean invitationIsOpen, int carNumber, Date startRent,
                       Date endRent, boolean isFuel, int fuelLiter, double totalPayment) {
         InvitationId = invitationId;
         ClientId = clientId;
@@ -49,7 +49,7 @@ public class Invitation {
         return InvitationIsOpen;
     }
 
-    public String getCarNumber() {
+    public int getCarNumber() {
         return CarNumber;
     }
 
@@ -85,7 +85,7 @@ public class Invitation {
         InvitationIsOpen = invitationIsOpen;
     }
 
-    public void setCarNumber(String carNumber) {
+    public void setCarNumber(int carNumber) {
         CarNumber = carNumber;
     }
 

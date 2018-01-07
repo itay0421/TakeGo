@@ -20,9 +20,10 @@ public interface DB_manager {
     boolean UserExistsOnDataBase(Long ID);
     long addUser(ContentValues newClient);
     int addModel(ContentValues newModel);
-    String addCar(ContentValues newCar);
+    int addCar(ContentValues newCar);
     int addBranch(ContentValues newBranch);
-    int addInvatation (ContentValues newInvatation);
+    int addInvitation (ContentValues newInvatation);
+
 
     List<CarsModel> AllCarsModel();
     List<Client> AllUsers();

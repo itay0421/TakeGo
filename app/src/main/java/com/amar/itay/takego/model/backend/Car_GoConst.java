@@ -34,6 +34,7 @@ public class Car_GoConst {
         public static final String MODEL_TYPE = "model_type";
         public static final String KILOMETERS = "kilometer";
         public static final String CAR_NUMBER = "_id";
+        public static final String IN_USE = "in_use";
     }
 
     public static class CarModelConst {
@@ -93,7 +94,7 @@ public class Car_GoConst {
         invitation.setInvitationId(contentValues.getAsInteger(InvitationConst.INVITATION_ID));
         invitation.setClientId(contentValues.getAsLong(InvitationConst.CLIENT_ID));
         invitation.setInvitationIsOpen(contentValues.getAsBoolean(InvitationConst.INVITATION_IS_OPEN));
-        invitation.setCarNumber(contentValues.getAsString(InvitationConst.CAR_NUMBER));
+        invitation.setCarNumber(contentValues.getAsInteger(InvitationConst.CAR_NUMBER));
         invitation.setIsFuel(contentValues.getAsBoolean(InvitationConst.IS_FUEL));
         invitation.setFuelLiter(contentValues.getAsInteger(InvitationConst.FUEL_LITER));
         invitation.setTotalPayment(contentValues.getAsDouble(InvitationConst.TOTAL_PAYMENT));
@@ -118,6 +119,7 @@ public class Car_GoConst {
         contentValues.put(Car_GoConst.CarConst.MODEL_TYPE, car.getModelType());
         contentValues.put(Car_GoConst.CarConst.KILOMETERS, car.getKilometers());
         contentValues.put(Car_GoConst.CarConst.CAR_NUMBER, car.getCarNumber());
+        contentValues.put(CarConst.IN_USE, car.isInUse());
         return contentValues;
     }
 
@@ -126,7 +128,8 @@ public class Car_GoConst {
         car.setBranchNumber(contentValues.getAsInteger(Car_GoConst.CarConst.BRANCH_NUMBER));
         car.setModelType(contentValues.getAsInteger(Car_GoConst.CarConst.MODEL_TYPE));
         car.setKilometers(contentValues.getAsInteger(Car_GoConst.CarConst.KILOMETERS));
-        car.setCarNumber(contentValues.getAsString(Car_GoConst.CarConst.CAR_NUMBER));
+        car.setCarNumber(contentValues.getAsInteger(Car_GoConst.CarConst.CAR_NUMBER));
+        car.setInUse(contentValues.getAsBoolean(CarConst.IN_USE));
         return car;
     }
 
