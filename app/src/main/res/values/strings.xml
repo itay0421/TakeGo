@@ -22,4 +22,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="head_image">head_image</string>
+    <string name="hello_client_name">Hello client_name!<br/>
+        please select your dream Car</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.amar.itay.takego.controller;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import android.widget.EditText;
 
 import com.amar.itay.takego.R;
 import com.amar.itay.takego.controller.MainActivity_Drawer;
+import com.amar.itay.takego.model.backend.FactoryMethod;
+import com.amar.itay.takego.model.datasource.MySQL_DBManager;
 
 public class MainActivity_Login extends AppCompatActivity implements View.OnClickListener {
 
@@ -30,6 +33,18 @@ public class MainActivity_Login extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_login);
         findViews();
+
+        //*******just for test.
+        new AsyncTask<Void,Void,Void>() {
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                MySQL_DBManager.branchList = FactoryMethod.getManager().AllBranch();
+                MySQL_DBManager.carsModelList = FactoryMethod.getManager().AllCarsModel();
+                return null;
+            }
+
+        }.execute();
 
     }
 

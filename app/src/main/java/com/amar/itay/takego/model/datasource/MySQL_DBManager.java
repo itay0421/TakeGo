@@ -27,8 +27,10 @@ public class MySQL_DBManager implements DB_manager {
     private final String UserName="itaamar";
     private final String WEB_URL = "http://"+UserName+".vlab.jct.ac.il/Car_and_Go/";
 
-    static List<Branch> branchList = new ArrayList<Branch>();
-    static List<Invitation> invitationList = new ArrayList<Invitation>();
+    static public List<Branch> branchList = new ArrayList<Branch>();
+    static public  List<Invitation> invitationList = new ArrayList<Invitation>();
+    static public List<CarsModel> carsModelList = new ArrayList<>();
+
 
 
     @Override

@@ -47,14 +47,14 @@ public class branchFragment extends Fragment  {
 
             @Override
             protected void onPostExecute(List<Branch> branches) {
-                ArrayAdapter<Branch> adapter = new ArrayAdapter<Branch>(getContext(), R.layout.branch_list, myBranchsList)
+                ArrayAdapter<Branch> adapter = new ArrayAdapter<Branch>(getContext(), R.layout.item_list_branch, myBranchsList)
                 {
 
                     @Override
                     public View getView(int position, View convertView, ViewGroup parent) {
 
                         if (convertView == null)    {
-                            convertView = View.inflate(branchFragment.this.getActivity(), R.layout.branch_list,null);
+                            convertView = View.inflate(branchFragment.this.getActivity(), R.layout.item_list_branch,null);
                         }
 
                         TextView productId_City_TextView = (TextView) convertView.findViewById(R.id.street);
