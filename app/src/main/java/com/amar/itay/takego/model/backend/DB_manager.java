@@ -42,5 +42,7 @@ public interface DB_manager {
     void deleteModel(ContentValues _idDel);
 
 
+    List<Branch> AllBranchByModel(ContentValues contentValues);
 
+    Car GetCarByModelBranch(ContentValues contentValues);
 }

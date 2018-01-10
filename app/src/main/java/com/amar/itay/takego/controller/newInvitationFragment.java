@@ -2,6 +2,7 @@ package com.amar.itay.takego.controller;
 
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -17,9 +18,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.amar.itay.takego.R;
+import com.amar.itay.takego.model.backend.Car_GoConst;
 import com.amar.itay.takego.model.backend.FactoryMethod;
 import com.amar.itay.takego.model.datasource.MySQL_DBManager;
 import com.amar.itay.takego.model.entities.Branch;
+import com.amar.itay.takego.model.entities.Car;
 import com.amar.itay.takego.model.entities.CarsModel;
 
 import java.util.List;
@@ -33,6 +36,11 @@ public class newInvitationFragment extends Fragment {
     //get list of car model
     List<CarsModel> carsModelList;
     List<Branch> myCustomBranchsList = null;
+    Car selected_Car;
+    int selected_carsModelCode = 0;
+    int selected_branch = 0;
+    ContentValues contentValues = new ContentValues();
+
 
 
     public newInvitationFragment() {
@@ -46,6 +54,7 @@ public class newInvitationFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_new_invitation, container, false);
 
         final ListView listView = (ListView)view.findViewById(R.id.listView2);
+        final ListView listView2 = (ListView)view.findViewById(R.id.listView2);
 
         //solution for scrolling ListView inside a ScrollView
         listView.setOnTouchListener(new ListView.OnTouchListener() {
@@ -108,59 +117,112 @@ public class newInvitationFragment extends Fragment {
 
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
-                int selected_carsModelCode = ((CarsModel)listView.getItemAtPosition(position)).getModelCode();
-                listView.setAdapter(null);
+                //final int selected_carsModelCode ;
 
-                //import branch list that have selcted model
-                new AsyncTask<Void, View, List<Branch>>() {
-                    ProgressDialog asyncDialog = new ProgressDialog(newInvitationFragment.this.getActivity());
 
-                    @Override
-                    protected void onPreExecute() {
-                        //set message of the dialog
-                        asyncDialog.setMessage("loading");
-                        //show dialog
-                        asyncDialog.show();
-                        super.onPreExecute();
-                    }
+                String selector = "model";
 
-                    @Override
-                    protected List<Branch> doInBackground(Void... voids) {
-                        myCustomBranchsList = FactoryMethod.getManager().AllBranch();//!!
-                        return myCustomBranchsList;
-                    }
 
-                    @Override
-                    protected void onPostExecute(List<Branch> branches) {
-                        ArrayAdapter<Branch> adapter_Branch = new ArrayAdapter<Branch>(getContext(), R.layout.item_list_branch, myCustomBranchsList)
-                        {
 
-                            @Override
-                            public View getView(int position, View convertView, ViewGroup parent) {
+                if (selector == "model"){
 
-                                if (convertView == null)    {
-                                    convertView = View.inflate(newInvitationFragment.this.getActivity(), R.layout.item_list_branch,null);
+                    selected_carsModelCode = ((CarsModel)listView.getItemAtPosition(position)).getModelCode();
+                    contentValues.put(Car_GoConst.CarConst.MODEL_TYPE,selected_carsModelCode );
+
+                    //clear listview and load branch list
+                    listView.setAdapter(null);
+                    new AsyncTask<Void, View, List<Branch>>() {
+                        ProgressDialog asyncDialog = new ProgressDialog(newInvitationFragment.this.getActivity());
+
+                        @Override
+                        protected void onPreExecute() {
+                            //set message of the dialog
+                            asyncDialog.setMessage("loading");
+                            //show dialog
+                            asyncDialog.show();
+                            super.onPreExecute();
+                        }
+
+                        @Override
+                        protected List<Branch> doInBackground(Void... voids) {
+                            myCustomBranchsList = FactoryMethod.getManager().AllBranchByModel(contentValues);
+                            return myCustomBranchsList;
+                        }
+
+                        @Override
+                        protected void onPostExecute(List<Branch> branches) {
+                            ArrayAdapter<Branch> adapter_Branch = new ArrayAdapter<Branch>(getContext(), R.layout.item_list_branch, myCustomBranchsList)
+                            {
+
+                                @Override
+                                public View getView(int position, View convertView, ViewGroup parent) {
+
+                                    if (convertView == null)    {
+                                        convertView = View.inflate(newInvitationFragment.this.getActivity(), R.layout.item_list_branch,null);
+                                    }
+
+                                    TextView productId_City_TextView = (TextView) convertView.findViewById(R.id.street);
+                                    TextView productId_Street_TextView = (TextView) convertView.findViewById(R.id.city);
+                                    // TextView productId_BuildingNumber_TextView = (TextView) convertView.findViewById(R.id._bulidingNumber);
+                                    //TextView productId_ParkingSpaces_TextView = (TextView) convertView.findViewById(R.id._ParkingSpaces);
+                                    //TextView productId_BranchNumber_TextView = (TextView) convertView.findViewById(R.id._BranchNumber);
+
+                                    productId_City_TextView.setText(myCustomBranchsList.get(position).getCity().toString());
+                                    productId_Street_TextView.setText((myCustomBranchsList.get(position).getStreet()).toString()+", ");
+                                    //productId_BuildingNumber_TextView.setText(((Integer) myBranchsList.get(position).getBuildingNumber()).toString());
+                                    //productId_ParkingSpaces_TextView.setText(((Integer) myBranchsList.get(position).getParkingSpacesNumber()).toString());
+                                    //productId_BranchNumber_TextView.setText(((Integer) myBranchsList.get(position).getBranchNumber()).toString());
+                                    return convertView;
                                 }
+                            };
+                            asyncDialog.dismiss();
+                            listView2.setAdapter(adapter_Branch);
 
-                                TextView productId_City_TextView = (TextView) convertView.findViewById(R.id.street);
-                                TextView productId_Street_TextView = (TextView) convertView.findViewById(R.id.city);
-                                // TextView productId_BuildingNumber_TextView = (TextView) convertView.findViewById(R.id._bulidingNumber);
-                                //TextView productId_ParkingSpaces_TextView = (TextView) convertView.findViewById(R.id._ParkingSpaces);
-                                //TextView productId_BranchNumber_TextView = (TextView) convertView.findViewById(R.id._BranchNumber);
+                        }
+                    }.execute();
+                selector = "branch" ;
 
-                                productId_City_TextView.setText(myCustomBranchsList.get(position).getCity().toString());
-                                productId_Street_TextView.setText((myCustomBranchsList.get(position).getStreet()).toString()+", ");
-                                //productId_BuildingNumber_TextView.setText(((Integer) myBranchsList.get(position).getBuildingNumber()).toString());
-                                //productId_ParkingSpaces_TextView.setText(((Integer) myBranchsList.get(position).getParkingSpacesNumber()).toString());
-                                //productId_BranchNumber_TextView.setText(((Integer) myBranchsList.get(position).getBranchNumber()).toString());
-                                return convertView;
-                            }
-                        };
-                        asyncDialog.dismiss();
-                        listView.setAdapter(adapter_Branch);
 
-                    }
-                }.execute();
+
+                }
+                else if(selector == "branch"){ //after user select branch
+
+                    selected_branch = ((Branch)listView.getItemAtPosition(position)).getBranchNumber();
+                    contentValues.put(Car_GoConst.CarConst.BRANCH_NUMBER, selected_branch );
+
+                    //clear listview and load branch list
+
+                    new AsyncTask<Void, View, Void>() {
+                        ProgressDialog asyncDialog = new ProgressDialog(newInvitationFragment.this.getActivity());
+
+                        @Override
+                        protected void onPreExecute() {
+                            //set message of the dialog
+                            asyncDialog.setMessage("loading");
+                            //show dialog
+                            asyncDialog.show();
+                            super.onPreExecute();
+                        }
+
+                        @Override
+                        protected void onPostExecute(Void aVoid) {
+                            asyncDialog.dismiss();                        }
+
+                        @Override
+                        protected Void doInBackground(Void... voids) {
+
+                            selected_Car = FactoryMethod.getManager().GetCarByModelBranch(contentValues);
+                            return null;
+                        }
+
+
+                    }.execute();
+
+
+                }
+
+
+
 
 
             }

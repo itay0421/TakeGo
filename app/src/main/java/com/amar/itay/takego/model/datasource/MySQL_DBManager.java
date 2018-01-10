@@ -67,6 +67,46 @@ public class MySQL_DBManager implements DB_manager {
     }
 
     @Override
+    public List<Branch> AllBranchByModel(ContentValues contentValues) {
+        List<Branch> branchList = new ArrayList<>();
+        try{
+            String str = PHPtools.POST(WEB_URL+"/branch_contains_a_free_model.php", contentValues);
+            JSONArray jsonArray = new JSONObject(str).getJSONArray("branches");
+
+            for( int i=0; i<jsonArray.length(); i++){
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                ContentValues contentValues1 = PHPtools.JsonToContentValues(jsonObject);
+                Branch branch = Car_GoConst.ContentValuesToBranch(contentValues1);
+                branchList.add(branch);
+            }
+            return branchList;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public Car GetCarByModelBranch(ContentValues contentValues) {
+        Car car;
+        try{
+            String result = PHPtools.POST(WEB_URL+"/first_free_car_for_m_model_b_branch.php",contentValues );
+            JSONObject jsonObject = new JSONObject(result);
+
+            ContentValues contentValues1 = PHPtools.JsonToContentValues(jsonObject);
+            car = Car_GoConst.ContentValuesToCar(contentValues1);
+
+            return car;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+
+    @Override
     public int addCar(ContentValues newCar)  {
 
 
@@ -268,6 +308,8 @@ public class MySQL_DBManager implements DB_manager {
         }
         else return invitationList;
     }
+
+
 
 
     public void printLog(String message)

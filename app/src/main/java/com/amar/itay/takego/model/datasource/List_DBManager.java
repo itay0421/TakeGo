@@ -108,5 +108,15 @@ public class List_DBManager implements DB_manager {
 
     }
 
+    @Override
+    public List<Branch> AllBranchByModel(ContentValues contentValues) {
+        return null;
+    }
+
+    @Override
+    public Car GetCarByModelBranch(ContentValues contentValues) {
+        return null;
+    }
+
 
 }
