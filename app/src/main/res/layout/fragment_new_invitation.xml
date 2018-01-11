@@ -16,14 +16,6 @@
             android:layout_height="wrap_content"
             android:background="#e6f0ff">
 
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="568dp" />
-
             <ImageView
                 android:id="@+id/imageView4"
                 android:layout_width="384dp"
@@ -53,15 +45,20 @@
             <ListView
                 android:id="@+id/listView2"
                 android:layout_width="0dp"
-                android:layout_height="405dp"
-                android:layout_marginEnd="16dp"
+                android:layout_height="359dp"
+                android:layout_marginEnd="24dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:clickable="false"
                 android:divider="#000000"
                 android:dividerHeight="1dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView8" />
+                app:layout_constraintTop_toBottomOf="@+id/textView8"
+                android:layout_marginRight="24dp"
+                android:layout_marginLeft="8dp" />
+
+
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

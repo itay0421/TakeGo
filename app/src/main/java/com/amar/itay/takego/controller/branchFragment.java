@@ -59,15 +59,15 @@ public class branchFragment extends Fragment  {
 
                         TextView productId_City_TextView = (TextView) convertView.findViewById(R.id.street);
                         TextView productId_Street_TextView = (TextView) convertView.findViewById(R.id.city);
-                        // TextView productId_BuildingNumber_TextView = (TextView) convertView.findViewById(R.id._bulidingNumber);
-                        //TextView productId_ParkingSpaces_TextView = (TextView) convertView.findViewById(R.id._ParkingSpaces);
-                        //TextView productId_BranchNumber_TextView = (TextView) convertView.findViewById(R.id._BranchNumber);
+                        TextView productId_BuildingNumber_TextView = (TextView) convertView.findViewById(R.id._bulidingNumber);
+                        TextView productId_ParkingSpaces_TextView = (TextView) convertView.findViewById(R.id._ParkingSpaces);
+                        TextView productId_BranchNumber_TextView = (TextView) convertView.findViewById(R.id._BranchNumber);
 
-                        productId_City_TextView.setText(myBranchsList.get(position).getCity().toString());
+                        productId_City_TextView.setText(myBranchsList.get(position).getCity().toString()+", ");
                         productId_Street_TextView.setText((myBranchsList.get(position).getStreet()).toString()+", ");
-                        //productId_BuildingNumber_TextView.setText(((Integer) myBranchsList.get(position).getBuildingNumber()).toString());
-                        //productId_ParkingSpaces_TextView.setText(((Integer) myBranchsList.get(position).getParkingSpacesNumber()).toString());
-                        //productId_BranchNumber_TextView.setText(((Integer) myBranchsList.get(position).getBranchNumber()).toString());
+                        productId_BuildingNumber_TextView.setText(((Integer) myBranchsList.get(position).getBuildingNumber()).toString());
+                        productId_ParkingSpaces_TextView.setText("parking space: " +((Integer) myBranchsList.get(position).getParkingSpacesNumber()).toString());
+                        productId_BranchNumber_TextView.setText("id: "+((Integer) myBranchsList.get(position).getBranchNumber()).toString());
                         return convertView;
                     }
                 };

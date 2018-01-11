@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amar.itay.takego.R;
 import com.amar.itay.takego.model.backend.Car_GoConst;
@@ -27,6 +28,8 @@ import com.amar.itay.takego.model.entities.CarsModel;
 
 import java.util.List;
 
+import static android.widget.Toast.LENGTH_LONG;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,10 +39,11 @@ public class newInvitationFragment extends Fragment {
     //get list of car model
     List<CarsModel> carsModelList;
     List<Branch> myCustomBranchsList = null;
-    Car selected_Car;
+    static Car selected_Car;
     int selected_carsModelCode = 0;
     int selected_branch = 0;
     ContentValues contentValues = new ContentValues();
+    static String selector = "model";
 
 
 
@@ -80,9 +84,6 @@ public class newInvitationFragment extends Fragment {
         });
 
         carsModelList = MySQL_DBManager.carsModelList;
-
-
-
         ArrayAdapter<CarsModel> adapter_carModel  = new ArrayAdapter<CarsModel>(getContext(), R.layout.item_list_model, carsModelList){
 
             @NonNull
@@ -113,24 +114,18 @@ public class newInvitationFragment extends Fragment {
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
-
-
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+          public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
                 //final int selected_carsModelCode ;
 
+              if (selector == "model"){
 
-                String selector = "model";
-
-
-
-                if (selector == "model"){
 
                     selected_carsModelCode = ((CarsModel)listView.getItemAtPosition(position)).getModelCode();
                     contentValues.put(Car_GoConst.CarConst.MODEL_TYPE,selected_carsModelCode );
 
                     //clear listview and load branch list
-                    listView.setAdapter(null);
+                    //listView.setAdapter(null);
                     new AsyncTask<Void, View, List<Branch>>() {
                         ProgressDialog asyncDialog = new ProgressDialog(newInvitationFragment.this.getActivity());
 
@@ -146,6 +141,7 @@ public class newInvitationFragment extends Fragment {
                         @Override
                         protected List<Branch> doInBackground(Void... voids) {
                             myCustomBranchsList = FactoryMethod.getManager().AllBranchByModel(contentValues);
+                            //AllBranchByModel(contentValues);
                             return myCustomBranchsList;
                         }
 
@@ -163,36 +159,34 @@ public class newInvitationFragment extends Fragment {
 
                                     TextView productId_City_TextView = (TextView) convertView.findViewById(R.id.street);
                                     TextView productId_Street_TextView = (TextView) convertView.findViewById(R.id.city);
-                                    // TextView productId_BuildingNumber_TextView = (TextView) convertView.findViewById(R.id._bulidingNumber);
-                                    //TextView productId_ParkingSpaces_TextView = (TextView) convertView.findViewById(R.id._ParkingSpaces);
-                                    //TextView productId_BranchNumber_TextView = (TextView) convertView.findViewById(R.id._BranchNumber);
+                                    TextView productId_BuildingNumber_TextView = (TextView) convertView.findViewById(R.id._bulidingNumber);
+                                    TextView productId_ParkingSpaces_TextView = (TextView) convertView.findViewById(R.id._ParkingSpaces);
+                                    TextView productId_BranchNumber_TextView = (TextView) convertView.findViewById(R.id._BranchNumber);
 
-                                    productId_City_TextView.setText(myCustomBranchsList.get(position).getCity().toString());
+                                    productId_City_TextView.setText(myCustomBranchsList.get(position).getCity().toString()+", ");
                                     productId_Street_TextView.setText((myCustomBranchsList.get(position).getStreet()).toString()+", ");
-                                    //productId_BuildingNumber_TextView.setText(((Integer) myBranchsList.get(position).getBuildingNumber()).toString());
-                                    //productId_ParkingSpaces_TextView.setText(((Integer) myBranchsList.get(position).getParkingSpacesNumber()).toString());
-                                    //productId_BranchNumber_TextView.setText(((Integer) myBranchsList.get(position).getBranchNumber()).toString());
+                                    productId_BuildingNumber_TextView.setText(((Integer) myCustomBranchsList.get(position).getBuildingNumber()).toString());
+                                    productId_ParkingSpaces_TextView.setText("parking space: " + ((Integer) myCustomBranchsList.get(position).getParkingSpacesNumber()).toString());
+                                    productId_BranchNumber_TextView.setText("id: "+((Integer) myCustomBranchsList.get(position).getBranchNumber()).toString());
                                     return convertView;
                                 }
                             };
-                            asyncDialog.dismiss();
-                            listView2.setAdapter(adapter_Branch);
 
+                            listView.setAdapter(adapter_Branch);
+                            asyncDialog.dismiss();
                         }
                     }.execute();
-                selector = "branch" ;
-
-
+                  selector = "branch" ;
 
                 }
-                else if(selector == "branch"){ //after user select branch
+                else if(selector == "branch"){ //after user select branch (by model)
 
                     selected_branch = ((Branch)listView.getItemAtPosition(position)).getBranchNumber();
                     contentValues.put(Car_GoConst.CarConst.BRANCH_NUMBER, selected_branch );
 
                     //clear listview and load branch list
 
-                    new AsyncTask<Void, View, Void>() {
+                    new AsyncTask<Void, View, Car>() {
                         ProgressDialog asyncDialog = new ProgressDialog(newInvitationFragment.this.getActivity());
 
                         @Override
@@ -203,27 +197,25 @@ public class newInvitationFragment extends Fragment {
                             asyncDialog.show();
                             super.onPreExecute();
                         }
-
                         @Override
-                        protected void onPostExecute(Void aVoid) {
-                            asyncDialog.dismiss();                        }
-
-                        @Override
-                        protected Void doInBackground(Void... voids) {
+                        protected Car doInBackground(Void... voids) {
 
                             selected_Car = FactoryMethod.getManager().GetCarByModelBranch(contentValues);
-                            return null;
+                            return selected_Car;
                         }
 
+                        @Override
+                        protected void onPostExecute(Car car) {
+                            asyncDialog.dismiss();
+                            listView.setAdapter(null);
+                            Toast.makeText(newInvitationFragment.this.getActivity(), "the car"+ car, Toast.LENGTH_LONG).show();
+
+                        }
 
                     }.execute();
 
 
-                }
-
-
-
-
+              }
 
             }
         });

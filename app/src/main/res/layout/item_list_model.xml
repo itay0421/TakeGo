@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="81dp"
-        android:layout_height="79dp"
+        android:layout_width="65dp"
+        android:layout_height="60dp"
         android:layout_marginStart="8dp"
         android:background="@android:color/background_light"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,7 +21,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:fontFamily="casual"
         android:text="company"
         android:textColor="@android:color/black"
@@ -35,7 +34,6 @@
         android:layout_width="162dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:fontFamily="casual"
         android:text="model"
         android:textColor="@android:color/black"
@@ -49,7 +47,6 @@
         android:layout_width="64dp"
         android:layout_height="19dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="code"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toBottomOf="@+id/textView_conpany" />
@@ -57,9 +54,9 @@
     <TextView
         android:id="@+id/textView_gearbox"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="40dp"
         android:text="gearbox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -69,7 +66,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="40dp"
         android:text="seats"
         app:layout_constraintEnd_toStartOf="@+id/textView_gearbox"
         app:layout_constraintTop_toTopOf="parent" />

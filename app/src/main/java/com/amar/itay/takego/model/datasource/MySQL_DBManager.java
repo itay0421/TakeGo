@@ -83,19 +83,20 @@ public class MySQL_DBManager implements DB_manager {
             return branchList;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return branchList;
         }
     }
 
     @Override
-    public Car GetCarByModelBranch(ContentValues contentValues) {
+    public Car GetCarByModelBranch(ContentValues _contentValues) {
         Car car;
-        try{
-            String result = PHPtools.POST(WEB_URL+"/first_free_car_for_m_model_b_branch.php",contentValues );
-            JSONObject jsonObject = new JSONObject(result);
 
-            ContentValues contentValues1 = PHPtools.JsonToContentValues(jsonObject);
-            car = Car_GoConst.ContentValuesToCar(contentValues1);
+        try{
+            String result = PHPtools.POST(WEB_URL+"/first_free_car_for_m_model_b_branch.php",_contentValues );
+            JSONArray jsonArray = new JSONObject(result).getJSONArray("cars");
+            JSONObject jsonObject = jsonArray.getJSONObject(0);
+            ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
+            car = Car_GoConst.ContentValuesToCar(contentValues);
 
             return car;
         } catch (Exception e) {
