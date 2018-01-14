@@ -1,13 +1,17 @@
 package com.amar.itay.takego.controller;
 
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,7 +29,11 @@ import com.amar.itay.takego.model.datasource.MySQL_DBManager;
 import com.amar.itay.takego.model.entities.Branch;
 import com.amar.itay.takego.model.entities.Car;
 import com.amar.itay.takego.model.entities.CarsModel;
+import com.amar.itay.takego.model.entities.Client;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import static android.widget.Toast.LENGTH_LONG;
@@ -37,13 +45,21 @@ import static android.widget.Toast.LENGTH_LONG;
 public class newInvitationFragment extends Fragment {
 
     //get list of car model
-    List<CarsModel> carsModelList;
-    List<Branch> myCustomBranchsList = null;
-    static Car selected_Car;
-    int selected_carsModelCode = 0;
-    int selected_branch = 0;
+    protected List<CarsModel> carsModelList;
+    protected List<Branch> myCustomBranchsList = null;
+    protected Car selected_Car;
+    protected int selected_carsModelCode = 0;
+    protected CarsModel selectedcarsModel;
+    protected int selected_branch = 0;
+    protected Branch selectedBranch;
+
     ContentValues contentValues = new ContentValues();
-    static String selector = "model";
+    String selector = "model";
+    Client client = new Client("Amar", "Itay", 23123 , "0509975183", "itay0421@gmail.com",88901234);
+    ListView listView;
+    ArrayAdapter<CarsModel> adapter_carModel;
+
+    //TODO id notlong
 
 
 
@@ -58,7 +74,6 @@ public class newInvitationFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_new_invitation, container, false);
 
         final ListView listView = (ListView)view.findViewById(R.id.listView2);
-        final ListView listView2 = (ListView)view.findViewById(R.id.listView2);
 
         //solution for scrolling ListView inside a ScrollView
         listView.setOnTouchListener(new ListView.OnTouchListener() {
@@ -84,7 +99,7 @@ public class newInvitationFragment extends Fragment {
         });
 
         carsModelList = MySQL_DBManager.carsModelList;
-        ArrayAdapter<CarsModel> adapter_carModel  = new ArrayAdapter<CarsModel>(getContext(), R.layout.item_list_model, carsModelList){
+        adapter_carModel  = new ArrayAdapter<CarsModel>(getContext(), R.layout.item_list_model, carsModelList){
 
             @NonNull
             @Override
@@ -120,7 +135,7 @@ public class newInvitationFragment extends Fragment {
 
               if (selector == "model"){
 
-
+                    selectedcarsModel = ((CarsModel)listView.getItemAtPosition(position));
                     selected_carsModelCode = ((CarsModel)listView.getItemAtPosition(position)).getModelCode();
                     contentValues.put(Car_GoConst.CarConst.MODEL_TYPE,selected_carsModelCode );
 
@@ -181,6 +196,7 @@ public class newInvitationFragment extends Fragment {
                 }
                 else if(selector == "branch"){ //after user select branch (by model)
 
+                    selectedBranch = ((Branch)listView.getItemAtPosition(position));
                     selected_branch = ((Branch)listView.getItemAtPosition(position)).getBranchNumber();
                     contentValues.put(Car_GoConst.CarConst.BRANCH_NUMBER, selected_branch );
 
@@ -202,13 +218,47 @@ public class newInvitationFragment extends Fragment {
 
                             selected_Car = FactoryMethod.getManager().GetCarByModelBranch(contentValues);
                             return selected_Car;
+                            //because it non UI-tread, we cant change here global object of main UI
                         }
 
                         @Override
                         protected void onPostExecute(Car car) {
                             asyncDialog.dismiss();
                             listView.setAdapter(null);
-                            Toast.makeText(newInvitationFragment.this.getActivity(), "the car"+ car, Toast.LENGTH_LONG).show();
+                            selected_Car = car;
+                            //here we can. onPostExecute it run on UI main
+                            //Toast.makeText(newInvitationFragment.this.getActivity(), "the car"+ selected_Car, Toast.LENGTH_LONG).show();
+
+                            //showConfirmInvitation();
+                            //dialog for add invitation
+                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(newInvitationFragment.this.getActivity());
+                            alertDialogBuilder.setTitle("Confirm Invitation");
+                            String massege = "Hello "+"<b>"+client.getPrivateName()+client.getFamilyName()+"</b>,<br/><br/>"+
+                                    "We want to make sure that the order is right for you,<br/>" +
+                                    "please confirm your oreder.<br/><br/>"+
+                                    "Car number: "+"<b>" + selected_Car.getCarNumber()+ "</b><br/>" +
+                                    "Model: "+"<b>" + selectedcarsModel.getCompanyName() +" "+ selectedcarsModel.getModelName()+ "</b><br/>" +
+                                    "Branch: "+"<b>" + selectedBranch.getCity() +", "+ selectedBranch.getStreet() +" "+
+                                                            selectedBranch.getBuildingNumber()+ "</b><br/><br/>" +
+                                    "you pay with credit card " + client.getCreditCard() + "<br/>" +
+                                    "we start your renting from today." + "<br/><br/>"
+                                    + "Are you approves the order? <br/>";
+
+
+
+
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                                alertDialogBuilder.setMessage(Html.fromHtml(massege, Html.FROM_HTML_MODE_LEGACY));
+                            } else {
+                                alertDialogBuilder.setMessage(Html.fromHtml(massege));
+                            }
+                            alertDialogBuilder.setPositiveButton("Ok",onClickListener);
+                            alertDialogBuilder.setNegativeButton("Cancel ",onClickListener);
+
+
+                            AlertDialog alertDialog = alertDialogBuilder.create();
+                            alertDialog.show( );
+
 
                         }
 
@@ -221,6 +271,67 @@ public class newInvitationFragment extends Fragment {
         });
         return view;
     }
+
+
+
+
+    AlertDialog.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
+
+
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+
+            switch (which)
+            {
+                case Dialog.BUTTON_NEGATIVE:
+                    Toast.makeText(newInvitationFragment.this.getActivity(), Html.fromHtml("O.K! <br/> you can try choose another car").toString(), Toast.LENGTH_LONG).show();
+
+                    //we need to go back here.
+                    break;
+
+                case Dialog.BUTTON_POSITIVE:
+
+                    Date date = new Date();
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String date_str = dateFormat.format(date).toString();
+
+                    contentValues.put(Car_GoConst.InvitationConst.TOTAL_PAYMENT, 0 );
+                    contentValues.put(Car_GoConst.InvitationConst.FUEL_LITER, "null" );
+                    contentValues.put(Car_GoConst.InvitationConst.IS_FUEL, "false");
+                    contentValues.put(Car_GoConst.InvitationConst.START_RENT, date_str);
+                    contentValues.put(Car_GoConst.InvitationConst.END_RENT, "null");
+                    contentValues.put(Car_GoConst.InvitationConst.INVITATION_IS_OPEN, "true");
+                    contentValues.put(Car_GoConst.InvitationConst.CLIENT_ID, client.getId());
+                    contentValues.put(Car_GoConst.InvitationConst.CAR_NUMBER, selected_Car.getCarNumber());
+
+
+
+
+
+                    new AsyncTask<Void, Void, Integer>() {
+
+                        @Override
+                        protected Integer doInBackground(Void... params) {
+                            int resoult = FactoryMethod.getManager().addInvitation(contentValues);
+                            return resoult;
+                        }
+
+
+                        @Override
+                        protected void onPostExecute(Integer resoult) {
+                            Toast.makeText(newInvitationFragment.this.getActivity(),
+                                    Html.fromHtml("We add your invitation!<br/> Enjoy your new car!<br/> is:").toString() + resoult, Toast.LENGTH_LONG).show();
+
+                            super.onPostExecute(resoult);
+                        }
+
+
+                    }.execute();
+                    break;
+
+            }
+
+        } };
 
 
 
