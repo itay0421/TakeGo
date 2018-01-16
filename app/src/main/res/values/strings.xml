@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">Take&amp;Go</string>
+    <string name="app_name">TakeGo</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Please enter your ID</string>
-    <string name="prompt_password">Password (optional)</string>
+    <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in </string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
@@ -23,6 +23,18 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="head_image">head_image</string>
-    <string name="hello_client_name">Hello client_name!<br/>
+    <string name="hello_client_name">Hello client_name!<br />
         please select your dream Car</string>
+
+    <string name="user_name">User Name</string>
+    <string name="new_user">New User</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="Add_Client">Add Client</string>
+    <string name="private_name">Private Name</string>
+    <string name="family_name">Family Name</string>
+    <string name="Id">Id</string>
+    <string name="email">Email</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="credit_card">Credit Card</string>
+    <string name="next">Next</string>
 </resources>

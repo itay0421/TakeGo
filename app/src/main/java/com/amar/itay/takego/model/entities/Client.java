@@ -25,7 +25,6 @@ public class Client {
         FamilyName = familyName;
         PrivateName = privateName;
         Id = id;
-
         PhoneNumber = phoneNumber;
         this.email = email;
         CreditCard = creditCard;

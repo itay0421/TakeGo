@@ -36,11 +36,12 @@ public class List_DBManager implements DB_manager {
 
 
     @Override
-    public boolean UserExistsOnDataBase(Long ID) {
-        int ClientsMount = clients.size();
+    public boolean UserExistsOnDataBase(ContentValues ID) {
+        /*int ClientsMount = clients.size();
         for (int i = 0; i < ClientsMount; i++)
             if (clients.get(i).getId() == ID)
                 return true;
+        return false;*/
         return false;
     }
 
@@ -76,6 +77,15 @@ public class List_DBManager implements DB_manager {
         return 0;
     }
 
+    @Override
+    public long addUserNamePass(ContentValues UserPassword) {
+        return 0;
+    }
+
+    @Override
+    public long checkOnDataBase(ContentValues UserPassword) {
+        return 0;
+    }
 
 
     @Override
@@ -96,6 +106,11 @@ public class List_DBManager implements DB_manager {
     @Override
     public List<Car> AllCars() {
         return cars;
+    }
+
+    @Override
+    public List<Car> allAvailableCars() {
+        return null;
     }
 
     @Override

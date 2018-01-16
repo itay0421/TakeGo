@@ -2,6 +2,7 @@ package com.amar.itay.takego.model.datasource;
 
 import android.content.ContentValues;
 import android.util.Log;
+import android.util.SparseLongArray;
 
 import com.amar.itay.takego.model.backend.Car_GoConst;
 import com.amar.itay.takego.model.backend.DB_manager;
@@ -30,11 +31,30 @@ public class MySQL_DBManager implements DB_manager {
     static public List<Branch> branchList = new ArrayList<Branch>();
     static public  List<Invitation> invitationList = new ArrayList<Invitation>();
     static public List<CarsModel> carsModelList = new ArrayList<>();
+    static public List<Car> carsList = new ArrayList<>();
 
 
 
     @Override
-    public boolean UserExistsOnDataBase(Long ID) {
+    public boolean UserExistsOnDataBase(ContentValues newClient) {
+        try {
+
+            String result = PHPtools.POST(WEB_URL + "/checkUserExist.php", newClient);
+            String s = result.trim();
+            int id = Integer.parseInt(s);
+
+//            if (id > 0)
+//                SetUpdate();
+//            printLog("addStudent:\n" + result);
+            //return id;
+            if (id > 0)
+                return true;
+            else
+                return false;
+        } catch (IOException e) {
+            printLog("addCar Exception:\n" + e);
+            //return -1;
+        }
         return false;
     }
 
@@ -184,6 +204,40 @@ public class MySQL_DBManager implements DB_manager {
     }
 
     @Override
+    public long addUserNamePass(ContentValues UserPassword) {
+        try {
+            String result = PHPtools.POST(WEB_URL + "/addUserPassword.php", UserPassword);
+            String s = result.trim();
+            long id = Long.parseLong(s);
+
+//            if (id > 0)
+//                SetUpdate();
+//            printLog("addStudent:\n" + result);
+            return id;
+        } catch (IOException e) {
+            printLog("addCar Exception:\n" + e);
+            return -1;
+        }
+    }
+
+    @Override
+    public long checkOnDataBase(ContentValues UserPassword) {
+        try {
+            String a = PHPtools.POST(WEB_URL + "/UserNameExistOnDataBase.php",UserPassword);
+            return Integer.parseInt(a.trim());
+           /* JSONArray jsonArray = new JSONObject(str).getJSONArray("cars_model");
+            JSONObject jsonObject = jsonArray.getJSONObject(0);
+            ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
+            List<String> client = Car_GoConst.ContentValuestoUserPassword(contentValues);
+            return Integer.parseInt(client.get(0));*/
+        } catch (Exception e) {
+           e.printStackTrace();
+
+        }
+        return -1;
+    }
+
+    @Override
     public List<CarsModel> AllCarsModel() {
         List<CarsModel> result = new ArrayList<CarsModel>();
 
@@ -322,5 +376,28 @@ public class MySQL_DBManager implements DB_manager {
         Log.d(this.getClass().getName(),"Exception-->\n"+message);
     }
 
+    @Override
+    public List<Car> allAvailableCars() {
+        if(carsList.size() <= 0){
+
+            try{
+                String str = PHPtools.GET(WEB_URL+"/getAllAvailableCars.php");
+                JSONArray jsonArray = new JSONObject(str).getJSONArray("cars");
+
+                for( int i=0; i<jsonArray.length(); i++){
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                    ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
+                    Car car = Car_GoConst.ContentValuesToCar(contentValues);
+                    carsList.add(car);
+                }
+                return carsList;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+        else return carsList;
+    }
 
 }

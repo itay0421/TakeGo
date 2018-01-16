@@ -12,6 +12,8 @@ import com.amar.itay.takego.model.entities.Invitation;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -65,6 +67,12 @@ public class Car_GoConst {
         public static final String IS_FUEL = "is_fuel";
         public static final String FUEL_LITER = "fuel_liter";
         public static final String TOTAL_PAYMENT = "total_payment";
+
+    }
+    public static class UesrNamePasswordConst {
+        public static final String CLIENT_ID = "_id";
+        public static final String USER_NAME = "user_name";
+        public static final String PASSWORD = "password";
 
     }
 
@@ -198,6 +206,26 @@ public class Car_GoConst {
         client.setEmail(contentValues.getAsString(Car_GoConst.ClientConst.EMAIL));
         client.setCreditCard(contentValues.getAsInteger(Car_GoConst.ClientConst.CREDIT_CARD));
         return client;
+    }
+
+    //Client
+    public static ContentValues UserPasswordtoContentValues(String userName,String password,long ID) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(UesrNamePasswordConst.CLIENT_ID,ID);
+        contentValues.put(UesrNamePasswordConst.USER_NAME,userName);
+        contentValues.put(UesrNamePasswordConst.PASSWORD, password);
+        return contentValues;
+    }
+
+    public static List<String> ContentValuestoUserPassword(ContentValues contentValues) {
+        List<String> user_password = new ArrayList<>();
+        String _id = (contentValues.getAsLong(UesrNamePasswordConst.CLIENT_ID)).toString();
+        String userName =contentValues.getAsString(UesrNamePasswordConst.USER_NAME);
+        String password =contentValues.getAsString(UesrNamePasswordConst.USER_NAME);
+        user_password.add(_id);
+        user_password.add(userName);
+        user_password.add(password);
+        return user_password;
     }
 
 }

@@ -17,21 +17,22 @@ import java.util.List;
 
 public interface DB_manager {
 
-    boolean UserExistsOnDataBase(Long ID);
+    boolean UserExistsOnDataBase(ContentValues newClient);
     long addUser(ContentValues newClient);
     int addModel(ContentValues newModel);
     int addCar(ContentValues newCar);
     int addBranch(ContentValues newBranch);
     int addInvitation (ContentValues newInvatation);
-
+    long addUserNamePass(ContentValues UserPassword);
+    long checkOnDataBase(ContentValues UserPassword);
 
     List<CarsModel> AllCarsModel();
     List<Client> AllUsers();
     List<Branch> AllBranch();
     List<Car> AllCars();
+    List<Car> allAvailableCars();
     List<Invitation> allInvatation();
-
-    //functions we added
+        //functions we added
     /*boolean CarModelAvailable();
     boolean addInvitaion();
     boolean removeClient();
