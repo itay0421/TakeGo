@@ -114,63 +114,38 @@ public class newInvitationFragment extends Fragment {
         scrollView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
 
         carsModelList = MySQL_DBManager.carsModelList;
-        new AsyncTask<Void, View, List<CarsModel>>() {
-            ProgressDialog asyncDialog = new ProgressDialog(newInvitationFragment.this.getActivity());
+        adapter_carModel  = new ArrayAdapter<CarsModel>(getContext(), R.layout.item_list_model, carsModelList){//wrong! need
 
+            @NonNull
             @Override
-            protected void onPreExecute() {
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-                //set message of the dialog
-                asyncDialog.setMessage("loading");
-                //show dialog
-                asyncDialog.show();
-                super.onPreExecute();
-            }
-
-            @Override
-            protected List<CarsModel> doInBackground(Void... voids) {
-                List<CarsModel> myCustomCarModeList = FactoryMethod.getManager().AllCarModelFree();
-                //AllBranchByModel(contentValues);
-                return myCustomCarModeList;
-            }
-
-            @Override
-            protected void onPostExecute(List<CarsModel> branches) {
-                adapter_carModel  = new ArrayAdapter<CarsModel>(getContext(), R.layout.item_list_model, carsModelList){//wrong! need
-
-                    @NonNull
-                    @Override
-                    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
-                        if (convertView == null)    {
-                            convertView = View.inflate(newInvitationFragment.this.getActivity(), R.layout.item_list_model,null);
-                        }
-                        TextView textView_modelNumber = (TextView) convertView.findViewById(R.id.textView_modelNumber);
-                        TextView textView_conpany = (TextView) convertView.findViewById(R.id.textView_conpany);
-                        TextView textView_model = (TextView) convertView.findViewById(R.id.textView_model);
-                        TextView textView_seats = (TextView) convertView.findViewById(R.id.textView_seats);
-                        TextView textView_gearbox = (TextView) convertView.findViewById(R.id.textView_gearbox);
-
-
-                        textView_modelNumber.setText("code: " + ((Integer)carsModelList.get(position).getModelCode()).toString());
-                        textView_conpany.setText((carsModelList.get(position).getCompanyName()).toString());
-                        textView_model.setText((carsModelList.get(position).getModelName()).toString());
-                        textView_seats.setText("Seats: " + ((Integer)carsModelList.get(position).getSeatsNumber()).toString());
-                        textView_gearbox.setText(", " + (carsModelList.get(position).getGearBox().toString()));
-
-                        return convertView;
-                    }
-                };
-                if (branches.size() == 0) {
-                    textView_instoduction.setText(Html.fromHtml("We're really sorry!<br/>" +
-                            "there is no any car ready for rent.<br/>" +
-                            "Try later."));
-
+                if (convertView == null)    {
+                    convertView = View.inflate(newInvitationFragment.this.getActivity(), R.layout.item_list_model,null);
                 }
-                listView.setAdapter(adapter_carModel);
-                asyncDialog.dismiss();
+                TextView textView_modelNumber = (TextView) convertView.findViewById(R.id.textView_modelNumber);
+                TextView textView_conpany = (TextView) convertView.findViewById(R.id.textView_conpany);
+                TextView textView_model = (TextView) convertView.findViewById(R.id.textView_model);
+                TextView textView_seats = (TextView) convertView.findViewById(R.id.textView_seats);
+                TextView textView_gearbox = (TextView) convertView.findViewById(R.id.textView_gearbox);
+
+
+                textView_modelNumber.setText("code: " + ((Integer)carsModelList.get(position).getModelCode()).toString());
+                textView_conpany.setText((carsModelList.get(position).getCompanyName()).toString());
+                textView_model.setText((carsModelList.get(position).getModelName()).toString());
+                textView_seats.setText("Seats: " + ((Integer)carsModelList.get(position).getSeatsNumber()).toString());
+                textView_gearbox.setText(", " + (carsModelList.get(position).getGearBox().toString()));
+
+                return convertView;
             }
-        }.execute();
+        };
+
+        listView.setAdapter(adapter_carModel);
+
+
+
+
+
 
 
 
