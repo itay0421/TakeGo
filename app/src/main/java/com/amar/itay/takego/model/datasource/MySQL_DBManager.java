@@ -126,6 +126,28 @@ public class MySQL_DBManager implements DB_manager {
 
     }
 
+    @Override
+    public List<CarsModel> AllCarModelFree() {
+        List<CarsModel> result = new ArrayList<CarsModel>();
+
+        try{
+            String str = PHPtools.GET(WEB_URL+"/get_all_model_free.php");
+            JSONArray jsonArray = new JSONObject(str).getJSONArray("cars_model");
+
+            for( int i=0; i<jsonArray.length(); i++){
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
+                CarsModel carsModel = Car_GoConst.ContentValuesToCarModel(contentValues);
+                result.add(carsModel);
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     @Override
     public int addCar(ContentValues newCar)  {

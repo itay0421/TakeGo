@@ -46,4 +46,6 @@ public interface DB_manager {
     List<Branch> AllBranchByModel(ContentValues contentValues);
 
     Car GetCarByModelBranch(ContentValues contentValues);
+
+    List<CarsModel> AllCarModelFree();
 }
