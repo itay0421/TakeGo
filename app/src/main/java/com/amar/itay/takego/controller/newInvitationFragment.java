@@ -6,7 +6,6 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -19,9 +18,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,8 +37,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
-import static android.widget.Toast.LENGTH_LONG;
 
 
 /**
@@ -79,6 +76,7 @@ public class newInvitationFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_new_invitation, container, false);
         ScrollView scrollView = (ScrollView)view.findViewById(R.id.scrollview);
         final ListView listView = (ListView)view.findViewById(R.id.listView2);
+        SearchView searchView = (SearchView)view.findViewById(R.id.searchView);
 
         textView_instoduction = (TextView)view. findViewById(R.id.textView_insroduction);
         scrollView.scrollTo(0, scrollView.getTop());
@@ -142,6 +140,19 @@ public class newInvitationFragment extends Fragment {
 
         listView.setAdapter(adapter_carModel);
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                adapter_carModel.getFilter().filter(s);
+                return false;
+            }
+        });
+
 
 
 
@@ -197,8 +208,8 @@ public class newInvitationFragment extends Fragment {
                                     }
 
                                     TextView productId_City_TextView = (TextView) convertView.findViewById(R.id.street);
-                                    TextView productId_Street_TextView = (TextView) convertView.findViewById(R.id.city);
-                                    TextView productId_BuildingNumber_TextView = (TextView) convertView.findViewById(R.id._bulidingNumber);
+                                    TextView productId_Street_TextView = (TextView) convertView.findViewById(R.id.textview_comp_model);
+                                    TextView productId_BuildingNumber_TextView = (TextView) convertView.findViewById(R.id.textview_number);
                                     TextView productId_ParkingSpaces_TextView = (TextView) convertView.findViewById(R.id._ParkingSpaces);
                                     TextView productId_BranchNumber_TextView = (TextView) convertView.findViewById(R.id._BranchNumber);
 
@@ -314,7 +325,7 @@ public class newInvitationFragment extends Fragment {
             {
                 case Dialog.BUTTON_NEGATIVE:
                     Toast.makeText(newInvitationFragment.this.getActivity(), Html.fromHtml("O.K! <br/> you can try choose another car").toString(), Toast.LENGTH_LONG).show();
-
+                    getActivity().onBackPressed();
 
 
                     //we need to go back here.
@@ -354,8 +365,8 @@ public class newInvitationFragment extends Fragment {
                                     Html.fromHtml("We add your invitation!<br/> Enjoy your new car!<br/> is:").toString() + resoult, Toast.LENGTH_LONG).show();
 
                             //we need to go back here.
-
-                            super.onPostExecute(resoult);
+                            getActivity().onBackPressed();
+                            //super.onPostExecute(resoult);
                         }
 
 

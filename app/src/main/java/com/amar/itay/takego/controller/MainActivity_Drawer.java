@@ -103,7 +103,8 @@ public class MainActivity_Drawer extends AppCompatActivity
              fragment = new newInvitationFragment();// not suporrt.v4
         } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_Cars) {
+            fragment = new CarsFragment();
 
         } else if (id == R.id.nav_Branches) {
             fragment = new branchFragment();

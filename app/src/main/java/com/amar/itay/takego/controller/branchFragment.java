@@ -58,8 +58,8 @@ public class branchFragment extends Fragment  {
                         }
 
                         TextView productId_City_TextView = (TextView) convertView.findViewById(R.id.street);
-                        TextView productId_Street_TextView = (TextView) convertView.findViewById(R.id.city);
-                        TextView productId_BuildingNumber_TextView = (TextView) convertView.findViewById(R.id._bulidingNumber);
+                        TextView productId_Street_TextView = (TextView) convertView.findViewById(R.id.textview_comp_model);
+                        TextView productId_BuildingNumber_TextView = (TextView) convertView.findViewById(R.id.textview_number);
                         TextView productId_ParkingSpaces_TextView = (TextView) convertView.findViewById(R.id._ParkingSpaces);
                         TextView productId_BranchNumber_TextView = (TextView) convertView.findViewById(R.id._BranchNumber);
 

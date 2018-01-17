@@ -53,11 +53,14 @@
                 android:id="@+id/listView2"
                 android:layout_width="0dp"
                 android:layout_height="359dp"
-                android:layout_marginEnd="24dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/search_view_border"
                 android:clickable="false"
-
-                android:dividerHeight="1dp"
+                android:divider="#99c2ff"
+                android:dividerHeight="1sp"
+                android:padding="2sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -74,7 +77,9 @@
                 android:queryHint="Search...."
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView_insroduction" />
+                app:layout_constraintTop_toBottomOf="@+id/textView_insroduction"/>
+                <!--android:background="@drawable/search_view_border"-->
+
 
 
         </android.support.constraint.ConstraintLayout>

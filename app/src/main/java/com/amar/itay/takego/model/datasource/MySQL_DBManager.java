@@ -3,7 +3,9 @@ package com.amar.itay.takego.model.datasource;
 import android.content.ContentValues;
 import android.util.Log;
 import android.util.SparseLongArray;
+import android.widget.Toast;
 
+import com.amar.itay.takego.controller.CarsFragment;
 import com.amar.itay.takego.model.backend.Car_GoConst;
 import com.amar.itay.takego.model.backend.DB_manager;
 import com.amar.itay.takego.model.entities.Branch;
@@ -32,7 +34,7 @@ public class MySQL_DBManager implements DB_manager {
     static public  List<Invitation> invitationList = new ArrayList<Invitation>();
     static public List<CarsModel> carsModelList = new ArrayList<>();
     static public List<Car> carsList = new ArrayList<>();
-
+    static public Client client;
 
 
     @Override
@@ -127,20 +129,22 @@ public class MySQL_DBManager implements DB_manager {
     }
 
     @Override
-    public List<CarsModel> AllCarModelFree() {
-        List<CarsModel> result = new ArrayList<CarsModel>();
+    public List<ContentValues> AllCarModelFree() {
+        List<ContentValues> result = new ArrayList<ContentValues>();
 
         try{
             String str = PHPtools.GET(WEB_URL+"/get_all_model_free.php");
-            JSONArray jsonArray = new JSONObject(str).getJSONArray("cars_model");
+            JSONArray jsonArray = new JSONObject(str).getJSONArray("cars_and_model");
 
             for( int i=0; i<jsonArray.length(); i++){
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                 ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
-                CarsModel carsModel = Car_GoConst.ContentValuesToCarModel(contentValues);
-                result.add(carsModel);
+                result.add(contentValues);
+
             }
+            Log.d("resoult list", result.toString());
+
             return result;
         } catch (Exception e) {
             e.printStackTrace();
@@ -420,6 +424,17 @@ public class MySQL_DBManager implements DB_manager {
             return null;
         }
         else return carsList;
+    }
+
+    public static String realCarNumber(int number){
+        String str = String.valueOf(number);
+        int length = str.length();
+        if (length == 7 )
+            return str.substring(0,2)+"-"+str.substring(2,5)+"-"+str.substring(5,7);
+        if (length == 8)
+            return str.substring(0,3)+"-"+str.substring(3,5)+"-"+str.substring(5,8);
+        return str;
+
     }
 
 }
