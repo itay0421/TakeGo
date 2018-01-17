@@ -47,6 +47,7 @@ public class MainActivity_Login extends AppCompatActivity implements View.OnClic
     private ImageButton imageButton;
     private EditText userName;
     private EditText password;
+    TextView errorLogin;
     Uri imageUri;
     private ImageButton imageVisibility;
     private CheckBox remember;
@@ -138,6 +139,7 @@ public class MainActivity_Login extends AppCompatActivity implements View.OnClic
         password = (EditText) findViewById(R.id.password_login);
         //imageVisibility = (ImageButton) findViewById(R.id.imageVisibility);
         remember = (CheckBox) findViewById(R.id.remember);
+        errorLogin = (TextView) findViewById(R.id.errorLogin);
 
         sign_in.setOnClickListener(this);
         sign_up.setOnClickListener(this);
@@ -167,6 +169,8 @@ public class MainActivity_Login extends AppCompatActivity implements View.OnClic
                     }
                     startActivity(intent);
                 }
+                else
+                    errorLogin.setText("user name or password are incorrect");
             }
         }.execute();
 

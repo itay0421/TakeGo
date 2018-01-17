@@ -46,6 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="28dp"
         android:drawableLeft="@drawable/ic_user_name"
         android:drawableStart="@drawable/ic_user_name"
         android:ems="10"
@@ -118,12 +119,11 @@
         android:layout_width="300dp"
         android:layout_height="121dp"
         android:layout_marginEnd="40dp"
+        android:contentDescription="@string/user_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/iconrentcar"
-        tools:layout_editor_absoluteY="16dp"
-        android:layout_marginRight="40dp"
         tools:ignore="MissingConstraints"
-        android:contentDescription="@string/user_name" />
+        tools:layout_editor_absoluteY="4dp" />
 
     <CheckBox
         android:id="@+id/remember"
@@ -138,4 +138,19 @@
         app:layout_constraintHorizontal_bias="0.894"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_login" />
+
+    <TextView
+        android:id="@+id/errorLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/user_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.029"
+        app:layout_constraintStart_toStartOf="@+id/user_name"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintVertical_bias="0.651" />
 </android.support.constraint.ConstraintLayout>
