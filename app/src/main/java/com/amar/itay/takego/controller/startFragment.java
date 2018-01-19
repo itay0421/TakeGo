@@ -7,9 +7,12 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amar.itay.takego.R;
+import com.amar.itay.takego.model.datasource.MySQL_DBManager;
+import com.amar.itay.takego.model.entities.Client;
 
 
 /**
@@ -17,7 +20,8 @@ import com.amar.itay.takego.R;
  */
 public class startFragment extends Fragment {
 
-
+    Client client;
+    TextView clientName;
     public startFragment() {
         // Required empty public constructor
     }
@@ -27,6 +31,11 @@ public class startFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        client = MySQL_DBManager.client;
+        String firstName = client.getPrivateName();
+        String lastName = client.getFamilyName();
+        clientName = (TextView) getActivity().findViewById(R.id.clientName);
+        //clientName.setText((CharSequence) (firstName + " " + lastName));
         return inflater.inflate(R.layout.fragment_start, container, false);
     }
 

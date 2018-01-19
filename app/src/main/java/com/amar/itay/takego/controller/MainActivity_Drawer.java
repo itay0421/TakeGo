@@ -131,7 +131,7 @@ public class MainActivity_Drawer extends AppCompatActivity
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
-
+               fragment = new InfoFragment();
         }
         if(fragment != null) {
             FragmentManager fragmentManager = getFragmentManager();

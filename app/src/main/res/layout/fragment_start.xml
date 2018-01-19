@@ -7,22 +7,15 @@
     tools:context="com.amar.itay.takego.controller.startFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/clientName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="?attr/colorControlHighlight"
-        android:text="@string/hello_blank_fragment"
-        android:textSize="24sp" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="138dp"
-        android:layout_height="124dp"
-        android:layout_marginStart="176dp"
-        android:layout_marginTop="184dp"
-        android:src="@mipmap/ic_launcher_round"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="124dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

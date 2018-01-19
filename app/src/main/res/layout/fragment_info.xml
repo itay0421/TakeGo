@@ -1,0 +1,208 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPrimaryDark"
+    tools:context="com.amar.itay.takego.controller.InfoFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="0dp"
+        android:layout_weight="1"
+        android:contentDescription="@string/head_image"
+        android:scaleType="centerCrop"
+        android:src="@drawable/opel_corsa_11"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+<RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_weight="2"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+    <RelativeLayout
+        android:id="@+id/phoneNumberRelative"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="24dp">
+
+        <ImageView
+            android:id="@+id/phoneNumberImage"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/ic_phone" />
+
+        <TextView
+            android:id="@+id/phoneNumberText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="30dp"
+            android:layout_toEndOf="@+id/phoneNumberImage"
+            android:text="054-9358995"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/MobileText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/phoneNumberText"
+            android:text="Mobile" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/emailRelative"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/phoneNumberRelative"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/emailPicture"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="6dp"
+            android:src="@drawable/ic_email" />
+
+        <TextView
+            android:id="@+id/EmailText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="28dp"
+            android:layout_toEndOf="@+id/emailPicture"
+            android:text="davidyoels@gmail.com"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/emailTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/EmailText"
+            android:text="Email" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/emailRelative"
+        android:layout_marginTop="20dp"
+        android:id="@+id/webRelative">
+
+        <ImageView
+            android:id="@+id/imageView10"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_web" />
+
+        <TextView
+            android:id="@+id/webText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="https://www.sixtshlomo.com/IL"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/webTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/webText"
+            android:text="Website" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/locationRelative"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/webRelative"
+        android:layout_marginTop="22dp">
+
+        <ImageView
+            android:id="@+id/locationPicture"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="52dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/ic_location" />
+
+        <TextView
+            android:id="@+id/streetText"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="18dp"
+            android:layout_toEndOf="@+id/locationPicture"
+            android:text="Alanbi 45 "
+            android:textColor="@android:color/black"
+            android:textSize="22dp"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/cityText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/streetText"
+            android:layout_centerVertical="true"
+            android:text="Tel Aviv, Israel"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/cityTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/cityText"
+            android:layout_below="@+id/cityText"
+            android:layout_marginTop="6dp"
+            android:text="location"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+</RelativeLayout>
+
+
+</LinearLayout>

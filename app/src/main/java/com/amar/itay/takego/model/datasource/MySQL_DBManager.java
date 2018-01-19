@@ -34,7 +34,7 @@ public class MySQL_DBManager implements DB_manager {
     static public  List<Invitation> invitationList = new ArrayList<Invitation>();
     static public List<CarsModel> carsModelList = new ArrayList<>();
     static public List<Car> carsList = new ArrayList<>();
-    static public Client client;
+    static public Client client = new Client();
 
 
     @Override
@@ -247,20 +247,19 @@ public class MySQL_DBManager implements DB_manager {
     }
 
     @Override
-    public long checkOnDataBase(ContentValues UserPassword) {
+    public Client checkOnDataBase(ContentValues UserPassword) {
         try {
-            String a = PHPtools.POST(WEB_URL + "/UserNameExistOnDataBase.php",UserPassword);
-            return Integer.parseInt(a.trim());
-           /* JSONArray jsonArray = new JSONObject(str).getJSONArray("cars_model");
+            String str = PHPtools.POST(WEB_URL + "/UserNameExistOnDataBase.php", UserPassword);
+            JSONArray jsonArray = new JSONObject(str).getJSONArray("client");
             JSONObject jsonObject = jsonArray.getJSONObject(0);
             ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
-            List<String> client = Car_GoConst.ContentValuestoUserPassword(contentValues);
-            return Integer.parseInt(client.get(0));*/
+            Client client = Car_GoConst.ContentValuesToClient(contentValues);
+            return client;
         } catch (Exception e) {
            e.printStackTrace();
 
         }
-        return -1;
+        return null;
     }
 
     @Override

@@ -24,7 +24,7 @@ public interface DB_manager {
     int addBranch(ContentValues newBranch);
     int addInvitation (ContentValues newInvatation);
     long addUserNamePass(ContentValues UserPassword);
-    long checkOnDataBase(ContentValues UserPassword);
+    Client checkOnDataBase(ContentValues UserPassword);
 
     List<CarsModel> AllCarsModel();
     List<Client> AllUsers();

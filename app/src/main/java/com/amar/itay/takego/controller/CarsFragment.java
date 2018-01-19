@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,9 +22,6 @@ import com.amar.itay.takego.R;
 import com.amar.itay.takego.model.backend.Car_GoConst;
 import com.amar.itay.takego.model.backend.FactoryMethod;
 import com.amar.itay.takego.model.datasource.MySQL_DBManager;
-import com.amar.itay.takego.model.entities.Branch;
-import com.amar.itay.takego.model.entities.Car;
-import com.amar.itay.takego.model.entities.CarsModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,7 +101,7 @@ public class CarsFragment extends Fragment {
                             convertView = View.inflate(CarsFragment.this.getActivity(), R.layout.item_list_car,null);
                         }
                         TextView textview_comp_model = (TextView) convertView.findViewById(R.id.textview_comp_model);
-                        TextView textview_number = (TextView) convertView.findViewById(R.id.textview_number);
+                        TextView textview_number = (TextView) convertView.findViewById(R.id.detailsTextView);
 
                         textview_comp_model.setText(contentValuesList.get(position).getAsString(Car_GoConst.CarModelConst.COMPANY_NAME) +
                                 " " + contentValuesList.get(position).getAsString(Car_GoConst.CarModelConst.MODEL_NAME));

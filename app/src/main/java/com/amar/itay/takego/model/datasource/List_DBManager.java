@@ -83,8 +83,8 @@ public class List_DBManager implements DB_manager {
     }
 
     @Override
-    public long checkOnDataBase(ContentValues UserPassword) {
-        return 0;
+    public Client checkOnDataBase(ContentValues UserPassword) {
+        return null;
     }
 
 

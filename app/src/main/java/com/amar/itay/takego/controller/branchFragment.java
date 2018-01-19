@@ -10,11 +10,11 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amar.itay.takego.R;
 import com.amar.itay.takego.model.backend.FactoryMethod;
@@ -44,12 +44,22 @@ public class branchFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                try {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     Branch selectedBranch = (Branch) listView.getItemAtPosition(position);
                     String city = selectedBranch.getCity();
                     String street = selectedBranch.getStreet();
-                    intent.setData(Uri.parse("geo:0,0?q= " + street + " " + city +", Israel"));
+                    intent.setData(Uri.parse("geo:0,0?q= " + street + " " + city + ", Israel"));
                     startActivity(intent);
+                }
+                catch (Exception e){
+                    Toast.makeText(getActivity(), "can't open location, pls download maps", Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    //i.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.google.android.apps.maps"));
+                     i.setData(Uri.parse("http://play.google.com/store/search?q=maps&c=apps"));
+                    //i.setData(Uri.parse("market://details?id=com.google.android.apps.maps"));
+                    startActivity(i);
+                }
             }
         });
 
@@ -76,7 +86,7 @@ public class branchFragment extends Fragment {
 
                         TextView productId_City_TextView = (TextView) convertView.findViewById(R.id.street);
                         TextView productId_Street_TextView = (TextView) convertView.findViewById(R.id.textview_comp_model);
-                        TextView productId_BuildingNumber_TextView = (TextView) convertView.findViewById(R.id.textview_number);
+                        TextView productId_BuildingNumber_TextView = (TextView) convertView.findViewById(R.id.detailsTextView);
                         TextView productId_ParkingSpaces_TextView = (TextView) convertView.findViewById(R.id._ParkingSpaces);
                         TextView productId_BranchNumber_TextView = (TextView) convertView.findViewById(R.id._BranchNumber);
 

@@ -151,22 +151,22 @@ public class MainActivity_Login extends AppCompatActivity implements View.OnClic
     private void checkOnDataBase() {
          final ContentValues contentValuesUserPassword = Car_GoConst.UserPasswordtoContentValues(
                 userName.getText().toString(), password.getText().toString(), 0);
-        new AsyncTask<Void, Void, Long>() {
+        new AsyncTask<Void, Void, Client>() {
 
             @Override
-            protected Long doInBackground(Void... voids) {
-                long id = FactoryMethod.getManager().checkOnDataBase(contentValuesUserPassword);
-                Log.d(TAB, String.valueOf(id));
-                return id;
+            protected Client doInBackground(Void... voids) {
+                Client client = FactoryMethod.getManager().checkOnDataBase(contentValuesUserPassword);
+                return client;
             }
 
             @Override
-            protected void onPostExecute(Long id) {
+            protected void onPostExecute(Client client) {
                 Intent intent = new Intent(MainActivity_Login.this, MainActivity_Drawer.class);
-                if(id!=-1) {
+                if(client.getId()!=-1) {
                     if (remember.isChecked()) {
                         saveSharedPreferences();
                     }
+                    MySQL_DBManager.client = client;
                     startActivity(intent);
                 }
                 else
