@@ -156,7 +156,7 @@ public class MySQL_DBManager implements DB_manager {
     public void updateCar(ContentValues contentValues_update) throws IOException {
 
         try {
-            PHPtools.POST(WEB_URL + "/updateCar.php", contentValues_update);
+            PHPtools.POST(WEB_URL + "/UpdateCar.php", contentValues_update);
         } catch (IOException e) {
             printLog("addCar Exception:\n" + e);
 
