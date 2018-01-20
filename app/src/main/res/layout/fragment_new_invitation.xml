@@ -11,14 +11,15 @@
         android:id="@+id/scrollview"
         style="@android:style/Widget.Material.ScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:clipToPadding="false"
-        android:fillViewport="false">
+        android:fillViewport="false"
+        android:background="@drawable/road_2_50">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/road_1_47">
+          >
 
             <ImageView
                 android:id="@+id/imageView4"
@@ -77,8 +78,7 @@
                 android:queryHint="Search...."
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView_insroduction"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/textView_insroduction" />
 
 
         </android.support.constraint.ConstraintLayout>
