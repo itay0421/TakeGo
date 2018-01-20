@@ -33,6 +33,7 @@ import com.amar.itay.takego.model.entities.Car;
 import com.amar.itay.takego.model.entities.CarsModel;
 import com.amar.itay.takego.model.entities.Client;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -54,6 +55,8 @@ public class newInvitationFragment extends Fragment {
     protected Branch selectedBranch;
 
     ContentValues contentValues = new ContentValues();
+    ContentValues contentValues_update = new ContentValues();
+
     String selector = "model";
     Client client = new Client("Amar", "Itay", 23123 , "0509975183", "itay0421@gmail.com",88901234);
     ListView listView;
@@ -346,6 +349,11 @@ public class newInvitationFragment extends Fragment {
                     contentValues.put(Car_GoConst.InvitationConst.CLIENT_ID, client.getId());
                     contentValues.put(Car_GoConst.InvitationConst.CAR_NUMBER, selected_Car.getCarNumber());
 
+                    contentValues_update.put(Car_GoConst.CarConst.CAR_NUMBER,selected_Car.getCarNumber() );
+                    contentValues_update.put(Car_GoConst.CarConst.IN_USE, "true" );
+
+
+
 
 
 
@@ -354,6 +362,11 @@ public class newInvitationFragment extends Fragment {
 
                         @Override
                         protected Integer doInBackground(Void... params) {
+                            try {
+                                FactoryMethod.getManager().updateCar(contentValues_update);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             int resoult = FactoryMethod.getManager().addInvitation(contentValues);
                             return resoult;
                         }

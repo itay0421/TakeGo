@@ -9,6 +9,7 @@ import com.amar.itay.takego.model.entities.CarsModel;
 import com.amar.itay.takego.model.entities.Client;
 import com.amar.itay.takego.model.entities.Invitation;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -49,4 +50,5 @@ public interface DB_manager {
 
     List<ContentValues> AllCarModelFree();
 
+    void updateCar(ContentValues contentValues_update) throws IOException;
 }
