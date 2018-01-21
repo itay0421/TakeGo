@@ -4,6 +4,9 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
 
+import com.amar.itay.takego.model.backend.FactoryMethod;
+import com.amar.itay.takego.model.datasource.MySQL_DBManager;
+
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -28,8 +31,10 @@ public class MyIntentService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         while (isRun) {
             try {
-                Thread.sleep(1000);
-                Log.d("david","call me any time");
+                MySQL_DBManager.carsList = FactoryMethod.getManager().allAvailableCars();
+                MySQL_DBManager.carsModelList =  FactoryMethod.getManager().AllCarsModel();
+                Log.d("carList",String.valueOf(MySQL_DBManager.carsList.size()));
+                Thread.sleep(10000);
 
             } catch (InterruptedException e) {
                 e.printStackTrace();

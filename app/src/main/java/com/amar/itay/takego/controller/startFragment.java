@@ -53,7 +53,6 @@ public class startFragment extends Fragment implements View.OnClickListener{
         start = (Button) getActivity().findViewById(R.id.button_start);
         stop = (Button) getActivity().findViewById(R.id.button_stop);
 
-
         start.setOnClickListener(this);
         stop.setOnClickListener(this);
 
@@ -64,7 +63,6 @@ public class startFragment extends Fragment implements View.OnClickListener{
     public void onClick(View view) {
         if( view == start)
             startFragment.this.getActivity().startService(new Intent(startFragment.this.getActivity(),MyIntentService.class));
-
         else if(view == stop)
             getActivity().stopService(new Intent(getActivity(),MyIntentService.class));
     }
