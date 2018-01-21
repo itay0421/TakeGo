@@ -82,10 +82,14 @@ public class InfoFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         Intent intent =null;
         if (v == phoneNumberRelative) {
+
+            //Implicit intent
             intent = new Intent(Intent.ACTION_DIAL);
             intent.setData(Uri.parse("tel:"+phoneNumber.getText().toString()));
             startActivity(intent);
+
         } else if (v == emailRelative) {
+            //Implicit intent
             intent = new Intent(Intent.ACTION_SEND);
             //intent.setDataAndType(Uri.parse("mailto:"),"message/rfc822");doesnt work
             intent.setData(Uri.parse("mailto:"));
@@ -94,6 +98,13 @@ public class InfoFragment extends Fragment implements View.OnClickListener{
             intent.putExtra(Intent.EXTRA_EMAIL,to);
             Intent chooser = Intent.createChooser(intent,"Send Email");
             startActivity(chooser);
+
+            //
+            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto","message/rfc822", null));
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
+            emailIntent.putExtra(Intent.EXTRA_TEXT, "Body");
+            startActivity(Intent.createChooser(emailIntent, "Send email..."));
+            //
         } else if (v == webRelative) {
             intent = new Intent(activityContext, RentCarWebSite.class);
             intent.putExtra("webUrl",webText.getText().toString());

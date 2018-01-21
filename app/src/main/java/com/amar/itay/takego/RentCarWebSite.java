@@ -12,6 +12,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.amar.itay.takego.controller.MyIntentService;
+
 public class RentCarWebSite extends AppCompatActivity {
 
     WebView webView;
@@ -23,6 +25,7 @@ public class RentCarWebSite extends AppCompatActivity {
         setContentView(R.layout.activity_rent_car_web_site);
         intent = getIntent();
         Url = intent.getStringExtra("webUrl");
+//        startService(new Intent(getBaseContext(), MyIntentService.class));
         findViews();
     }
 

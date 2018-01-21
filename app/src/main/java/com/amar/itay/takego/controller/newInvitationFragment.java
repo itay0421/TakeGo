@@ -362,11 +362,9 @@ public class newInvitationFragment extends Fragment {
 
                         @Override
                         protected Integer doInBackground(Void... params) {
-                            try {
-                                FactoryMethod.getManager().updateCar(contentValues_update);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+
+                            FactoryMethod.getManager().updateCar(contentValues_update);
+
                             int resoult = FactoryMethod.getManager().addInvitation(contentValues);
                             return resoult;
                         }

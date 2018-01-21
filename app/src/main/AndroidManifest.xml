@@ -33,7 +33,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".controller.AddUserPassword" />
-        <activity android:name=".RentCarWebSite"></activity>
+        <activity android:name=".RentCarWebSite"/>
+        <service android:name=".controller.MyIntentService"/>
     </application>
 
 </manifest>

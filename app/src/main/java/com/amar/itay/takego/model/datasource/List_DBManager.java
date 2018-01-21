@@ -143,5 +143,10 @@ public class List_DBManager implements DB_manager {
 
     }
 
+    @Override
+    public void updateInvitation(ContentValues contentValues) {
+
+    }
+
 
 }

@@ -50,5 +50,6 @@ public interface DB_manager {
 
     List<ContentValues> AllCarModelFree();
 
-    void updateCar(ContentValues contentValues_update) throws IOException;
+    void updateCar(ContentValues contentValues_update);
+    void updateInvitation(ContentValues contentValues);
 }

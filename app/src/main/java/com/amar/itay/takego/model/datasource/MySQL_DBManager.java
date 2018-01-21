@@ -153,14 +153,30 @@ public class MySQL_DBManager implements DB_manager {
     }
 
     @Override
-    public void updateCar(ContentValues contentValues_update) throws IOException {
+    public void updateCar(ContentValues contentValues_update)  {
 
         try {
-            PHPtools.POST(WEB_URL + "/UpdateCar.php", contentValues_update);
-        } catch (IOException e) {
-            printLog("addCar Exception:\n" + e);
+            String result = PHPtools.POST(WEB_URL + "/UpdateCar.php", contentValues_update);
+            printLog("updateCar :\n" + result);
+
+        }catch (IOException e){
+            printLog("updateCar Exception:\n" + e);
 
         }
+
+    }
+
+    @Override
+    public void updateInvitation(ContentValues contentValues_update) {
+
+        try {
+            String result = PHPtools.POST(WEB_URL + "/updateInvitation.php", contentValues_update);
+            printLog("updateInvitation :\n" + result);
+
+        } catch (IOException e){
+            printLog("updateInvitation Exception:\n" + e);
+        }
+
 
     }
 
