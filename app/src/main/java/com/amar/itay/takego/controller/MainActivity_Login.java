@@ -76,6 +76,7 @@ public class MainActivity_Login extends AppCompatActivity implements View.OnClic
                 MySQL_DBManager.branchList = FactoryMethod.getManager().AllBranch();
                 MySQL_DBManager.carsModelList = FactoryMethod.getManager().AllCarsModel();
                 MySQL_DBManager.carsList = FactoryMethod.getManager().allAvailableCars();
+                MySQL_DBManager.invitationList = FactoryMethod.getManager().allInvatation();
                 Client b = new Client("dasd", "dasdasd", 555000, "01203", "dadqwe", 123123);
                 boolean a = FactoryMethod.getManager().UserExistsOnDataBase(Car_GoConst.ClientToContentValues(b));
                 return null;
@@ -162,7 +163,9 @@ public class MainActivity_Login extends AppCompatActivity implements View.OnClic
             @Override
             protected void onPostExecute(Client client) {
                 Intent intent = new Intent(MainActivity_Login.this, MainActivity_Drawer.class);
-                if(client.getId()!=-1) {
+                Log.d("dadasd", client.getFamilyName());
+                if(client.getId() != -1) {
+                    Log.d("ddddddddddddd",client.getFamilyName());
                     if (remember.isChecked()) {
                         saveSharedPreferences();
                     }
@@ -170,7 +173,9 @@ public class MainActivity_Login extends AppCompatActivity implements View.OnClic
                     startActivity(intent);
                 }
                 else
+                {
                     errorLogin.setText("user name or password are incorrect");
+                }
             }
         }.execute();
 

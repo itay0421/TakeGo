@@ -33,6 +33,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".controller.AddUserPassword" />
+        <activity android:name=".RentCarWebSite"></activity>
     </application>
 
 </manifest>

@@ -1,27 +1,24 @@
 package com.amar.itay.takego.controller;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.app.Fragment;
 import android.view.ViewGroup;
-import android.view.ViewManager;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amar.itay.takego.R;
-import com.amar.itay.takego.model.backend.Car_GoConst;
-import com.amar.itay.takego.model.datasource.MySQL_DBManager;
+import com.amar.itay.takego.RentCarWebSite;
 import com.amar.itay.takego.model.entities.Car;
 
 import java.util.ArrayList;
@@ -46,6 +43,7 @@ public class InfoFragment extends Fragment implements View.OnClickListener{
     TextView city;
     TextView street;
     TextView webText;
+    TextView moreInfo;
     Activity activityContext;
 
     @Override
@@ -65,18 +63,15 @@ public class InfoFragment extends Fragment implements View.OnClickListener{
         phoneNumberRelative = activityContext.findViewById(R.id.phoneNumberRelative);
         emailRelative = activityContext.findViewById(R.id.emailRelative);
         webRelative = activityContext.findViewById(R.id.webRelative);
-        locationRelative = activityContext.findViewById(R.id.locationRelative);
         phoneNumber = (TextView) activityContext.findViewById(R.id.phoneNumberText);
         emailTo = (TextView) activityContext.findViewById(R.id.EmailText);
-        city = (TextView) activityContext.findViewById(R.id.cityText);
-        street = (TextView) activityContext.findViewById(R.id.streetText);
         webText = (TextView) activityContext.findViewById(R.id.webText);
+        moreInfo = (TextView) activityContext.findViewById(R.id.moreInfoTextView);
 
         phoneNumberRelative.setOnClickListener(this);
         emailRelative.setOnClickListener(this);
         webRelative.setOnClickListener(this);
-        locationRelative.setOnClickListener(this);
-
+        moreInfo.setOnClickListener(this);
     }
 
 
@@ -100,8 +95,20 @@ public class InfoFragment extends Fragment implements View.OnClickListener{
             Intent chooser = Intent.createChooser(intent,"Send Email");
             startActivity(chooser);
         } else if (v == webRelative) {
-                 intent = new Intent(Intent.ACTION_VIEW,Uri.parse(webText.getText().toString()));
-                 startActivity(intent);
+            intent = new Intent(activityContext, RentCarWebSite.class);
+            intent.putExtra("webUrl",webText.getText().toString());
+            startActivity(intent);
+//            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(webText.getText().toString()));
+//            startActivity(intent);
+        }else if( v == moreInfo) {
+             Fragment fragment = new DetailsInfoFragment();
+            if(fragment != null) {
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.FragLinearLayout, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
         } else if (v == locationRelative) {
             try {
                 intent = new Intent(Intent.ACTION_VIEW);
@@ -112,7 +119,7 @@ public class InfoFragment extends Fragment implements View.OnClickListener{
             }
             catch (Exception e)
             {
-                Toast.makeText(getActivity(),"u dont have app",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"app not installed",Toast.LENGTH_LONG).show();
             }
         }
     }

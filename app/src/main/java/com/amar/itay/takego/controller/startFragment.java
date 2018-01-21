@@ -4,6 +4,7 @@ package com.amar.itay.takego.controller;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,12 +32,17 @@ public class startFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        return inflater.inflate(R.layout.fragment_start, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         client = MySQL_DBManager.client;
         String firstName = client.getPrivateName();
         String lastName = client.getFamilyName();
         clientName = (TextView) getActivity().findViewById(R.id.clientName);
-        //clientName.setText((CharSequence) (firstName + " " + lastName));
-        return inflater.inflate(R.layout.fragment_start, container, false);
+        clientName.setText((CharSequence) (firstName + " " + lastName));
     }
-
 }

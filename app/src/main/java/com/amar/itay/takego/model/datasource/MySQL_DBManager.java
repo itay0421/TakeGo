@@ -248,16 +248,20 @@ public class MySQL_DBManager implements DB_manager {
 
     @Override
     public Client checkOnDataBase(ContentValues UserPassword) {
+        List<Client> result = new ArrayList<Client>();
         try {
             String str = PHPtools.POST(WEB_URL + "/UserNameExistOnDataBase.php", UserPassword);
             JSONArray jsonArray = new JSONObject(str).getJSONArray("client");
-            JSONObject jsonObject = jsonArray.getJSONObject(0);
-            ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
-            Client client = Car_GoConst.ContentValuesToClient(contentValues);
-            return client;
+            Log.d("JasonDetails",str);
+            for( int i=0; i<jsonArray.length(); i++){
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
+                Client client = Car_GoConst.ContentValuesToClient(contentValues);
+                result.add(client);
+            }
+            return result.get(0);
         } catch (Exception e) {
            e.printStackTrace();
-
         }
         return null;
     }

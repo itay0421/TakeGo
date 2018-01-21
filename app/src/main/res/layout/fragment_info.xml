@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorPrimaryDark"
     tools:context="com.amar.itay.takego.controller.InfoFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -13,8 +12,10 @@
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginTop="0dp"
+        android:layout_height="200dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="29dp"
         android:layout_weight="1"
         android:contentDescription="@string/head_image"
         android:scaleType="centerCrop"
@@ -43,15 +44,15 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="24dp">
+        android:layout_alignParentTop="true">
 
         <ImageView
             android:id="@+id/phoneNumberImage"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="11dp"
             android:src="@drawable/ic_phone" />
 
         <TextView
@@ -81,15 +82,15 @@
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/phoneNumberRelative"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="17dp">
 
         <ImageView
             android:id="@+id/emailPicture"
-            android:layout_width="45dp"
-            android:layout_height="match_parent"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="6dp"
+            android:layout_marginStart="13dp"
             android:src="@drawable/ic_email" />
 
         <TextView
@@ -123,11 +124,11 @@
 
         <ImageView
             android:id="@+id/imageView10"
-            android:layout_width="45dp"
-            android:layout_height="match_parent"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="8dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="13dp"
             android:src="@drawable/ic_web" />
 
         <TextView
@@ -150,57 +151,42 @@
             android:text="Website" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/locationRelative"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_alignParentStart="true"
+    <TextView
+        android:id="@+id/infoTextView"
+        android:layout_width="350dp"
+        android:layout_height="90dp"
         android:layout_below="@+id/webRelative"
-        android:layout_marginTop="22dp">
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="11dp"
+        android:text="@string/Info"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:textStyle="italic" />
 
-        <ImageView
-            android:id="@+id/locationPicture"
-            android:layout_width="45dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="52dp"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/ic_location" />
+    <TextView
+        android:id="@+id/moreInfoTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_below="@+id/infoTextView"
+        android:layout_toEndOf="@+id/textView6"
+        android:text="More Info..."
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:textStyle="bold|italic" />
 
-        <TextView
-            android:id="@+id/streetText"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="18dp"
-            android:layout_toEndOf="@+id/locationPicture"
-            android:text="Alanbi 45 "
-            android:textColor="@android:color/black"
-            android:textSize="22dp"
-            android:textStyle="bold|italic" />
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/moreInfoTextView"
+        android:layout_alignBottom="@+id/moreInfoTextView"
+        android:layout_alignStart="@+id/infoTextView"
+        android:text="customers as if they were our family."
+        android:textColor="@android:color/black" />
 
-        <TextView
-            android:id="@+id/cityText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/streetText"
-            android:layout_centerVertical="true"
-            android:text="Tel Aviv, Israel"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="bold|italic" />
-
-        <TextView
-            android:id="@+id/cityTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/cityText"
-            android:layout_below="@+id/cityText"
-            android:layout_marginTop="6dp"
-            android:text="location"
-            android:textSize="18sp" />
-    </RelativeLayout>
 
 </RelativeLayout>
 
