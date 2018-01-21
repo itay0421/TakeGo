@@ -138,5 +138,10 @@ public class List_DBManager implements DB_manager {
         return null;
     }
 
+    @Override
+    public void updateCar(ContentValues contentValues_update) {
+
+    }
+
 
 }

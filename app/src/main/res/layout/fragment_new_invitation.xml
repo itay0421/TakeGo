@@ -11,14 +11,15 @@
         android:id="@+id/scrollview"
         style="@android:style/Widget.Material.ScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:clipToPadding="false"
-        android:fillViewport="false">
+        android:fillViewport="false"
+        android:background="@drawable/road_2_50">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#e6f0ff">
+          >
 
             <ImageView
                 android:id="@+id/imageView4"
@@ -27,6 +28,7 @@
                 android:contentDescription="@string/head_image"
                 android:scaleType="centerCrop"
                 android:src="@drawable/opel_corsa_11"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +38,6 @@
                 android:id="@+id/textView_insroduction"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="#4D99c2ff"
                 android:fontFamily="sans-serif"
                 android:paddingLeft="7sp"
                 android:paddingRight="7sp"
@@ -56,7 +57,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
-                android:background="@drawable/search_view_border"
+
                 android:clickable="false"
                 android:divider="#99c2ff"
                 android:dividerHeight="1sp"
@@ -77,9 +78,7 @@
                 android:queryHint="Search...."
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView_insroduction"/>
-                <!--android:background="@drawable/search_view_border"-->
-
+                app:layout_constraintTop_toBottomOf="@+id/textView_insroduction" />
 
 
         </android.support.constraint.ConstraintLayout>
