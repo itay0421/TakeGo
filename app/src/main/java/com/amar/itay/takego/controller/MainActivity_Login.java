@@ -64,7 +64,7 @@ public class MainActivity_Login extends AppCompatActivity implements View.OnClic
 
         findViews();
 
-        //clearSharedPreferences();
+        clearSharedPreferences();
         loadSharedPreferences();
 
 

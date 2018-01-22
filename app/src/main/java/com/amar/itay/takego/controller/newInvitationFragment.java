@@ -12,6 +12,7 @@ import android.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -175,6 +176,9 @@ public class newInvitationFragment extends Fragment {
                     selectedcarsModel = ((CarsModel)listView.getItemAtPosition(position));
                     selected_carsModelCode = ((CarsModel)listView.getItemAtPosition(position)).getModelCode();
                     contentValues.put(Car_GoConst.CarConst.MODEL_TYPE,selected_carsModelCode );
+
+                    MySQL_DBManager.currentCarModel =  ((CarsModel)listView.getItemAtPosition(position));
+                    Log.d("***************",((CarsModel)listView.getItemAtPosition(position)).getCompanyName() );
 
                     //clear listview and load branch list
                     //listView.setAdapter(null);
@@ -351,6 +355,8 @@ public class newInvitationFragment extends Fragment {
                     contentValues.put(Car_GoConst.InvitationConst.CAR_NUMBER, selected_Car.getCarNumber());
                     contentValues_update.put(Car_GoConst.CarConst.CAR_NUMBER,selected_Car.getCarNumber() );
                     contentValues_update.put(Car_GoConst.CarConst.IN_USE, "true" );
+
+                    //MySQL_DBManager.currentInvitation = Car_GoConst.ContentValuesToInvitation(contentValues);
 
 
 

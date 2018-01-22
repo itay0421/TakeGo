@@ -34,7 +34,8 @@ public class MySQL_DBManager implements DB_manager {
     static public List<CarsModel> carsModelList = new ArrayList<>();
     static public List<Car> carsList = new ArrayList<>();
     static public Client client = new Client();
-    static public Invitation invitation = null;
+    static public Invitation currentInvitation = null;
+    static public CarsModel currentCarModel = null;
 
     @Override
     public boolean UserExistsOnDataBase(ContentValues newClient) {
@@ -211,6 +212,29 @@ public class MySQL_DBManager implements DB_manager {
 
         }
         return invitationList_res;
+
+    }
+
+    @Override
+    public Invitation getAllOpenInvitation(ContentValues contentValues1) {
+        List<Invitation> invitationList = new ArrayList<>();
+
+        try{
+            String str = PHPtools.POST(WEB_URL+"/getAllInvitation.php", contentValues1);
+            JSONArray jsonArray = new JSONObject(str).getJSONArray("invitations_open");
+
+            for( int i=0; i<jsonArray.length(); i++){
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
+                Invitation invitation = Car_GoConst.ContentValuesToInvitation(contentValues);
+                invitationList.add(invitation);
+            }
+            return invitationList.get(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
 
     }
 
@@ -436,7 +460,6 @@ public class MySQL_DBManager implements DB_manager {
 
     @Override
     public List<Invitation> allInvatation() {
-        if(branchList.size() <= 0){
 
             try{
                 String str = PHPtools.GET(WEB_URL+"/getAllInvitation.php");
@@ -454,8 +477,7 @@ public class MySQL_DBManager implements DB_manager {
                 e.printStackTrace();
             }
             return null;
-        }
-        else return invitationList;
+
     }
 
 

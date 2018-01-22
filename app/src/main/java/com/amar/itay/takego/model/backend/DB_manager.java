@@ -54,4 +54,6 @@ public interface DB_manager {
     void updateInvitation(ContentValues contentValues);
 
     List<Invitation> checkChangeAtLast10Sec();
+
+    Invitation getAllOpenInvitation(ContentValues contentValues);
 }

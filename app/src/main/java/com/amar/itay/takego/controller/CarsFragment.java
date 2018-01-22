@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +68,7 @@ public class CarsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_cars, container, false);
         SearchView searchView = (SearchView)view.findViewById(R.id.searchView2);
         listView = (ListView)view.findViewById( R.id.listView3 );
+        //Log.d("act:", getActivity().toString());
 
 
         new AsyncTask<Void, View, Void>() {

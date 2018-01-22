@@ -157,5 +157,10 @@ public class List_DBManager implements DB_manager {
         return null;
     }
 
+    @Override
+    public Invitation getAllOpenInvitation(ContentValues contentValues) {
+        return null;
+    }
+
 
 }
