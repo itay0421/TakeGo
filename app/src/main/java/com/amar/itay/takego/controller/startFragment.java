@@ -52,32 +52,9 @@ public class startFragment extends Fragment implements View.OnClickListener{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         findViews();
-        findCarModelViews();
     }
 
-    private void findCarModelViews() {
 
-        List<Invitation> invitationList = MySQL_DBManager.invitationList;
-        for(Invitation invet: invitationList)
-        {
-            if(invet.getClientId() == client.getId())
-                currentInvitation = invet;
-        }
-        List<Car> carsList = MySQL_DBManager.carsList;
-        Car currentCar = null;
-        for(Car car : carsList)
-        {
-            if(currentInvitation.getCarNumber() == car.getCarNumber())
-                currentCar = car;
-        }
-        List<CarsModel> carsModelList = MySQL_DBManager.carsModelList;
-        for(CarsModel carsModel:carsModelList)
-        {
-            if(currentCar.getModelType()==carsModel.getModelCode())
-                currentCarModel = carsModel;
-        }
-
-    }
 
     private void findCarModel() {
         TextView CompanyName_TextView = (TextView) getActivity().findViewById(R.id.CompanyName);
