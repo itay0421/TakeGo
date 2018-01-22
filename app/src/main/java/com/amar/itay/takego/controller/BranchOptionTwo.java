@@ -149,6 +149,7 @@ public class BranchOptionTwo extends Fragment {
                                         TextView productId_GearBox_TextView = (TextView) convertView.findViewById(R.id.GearBoxCar);
                                         TextView productId_SeatsNumber_TextView = (TextView) convertView.findViewById(R.id.SeatsCar);
 
+
                                         productId_CompanyName_TextView.setText(String.valueOf(myCarModelList.get(position).getCompanyName()));
                                         productId_ModelName_TextView.setText(String.valueOf(myCarModelList.get(position).getModelName()));
                                         productId_EngineCapacity_TextView.setText(String.valueOf(myCarModelList.get(position).getEngineCapacity()));
