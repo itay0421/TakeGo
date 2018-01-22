@@ -38,6 +38,7 @@ public class branchFragment extends Fragment {
     }
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
+        ((MainActivity_Drawer) getActivity()).setActionBarTitle("Branches");
         view = inflater.inflate(R.layout.fragment_branch, container, false);
         listView = (ListView)view.findViewById(R.id.branch_listview);
 

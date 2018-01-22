@@ -63,6 +63,7 @@ public class CarsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        ((MainActivity_Drawer) getActivity()).setActionBarTitle("Cars");
         View view = inflater.inflate(R.layout.fragment_cars, container, false);
         SearchView searchView = (SearchView)view.findViewById(R.id.searchView2);
         listView = (ListView)view.findViewById( R.id.listView3 );

@@ -34,7 +34,14 @@
         </activity>
         <activity android:name=".controller.AddUserPassword" />
         <activity android:name=".RentCarWebSite"/>
+
         <service android:name=".controller.MyIntentService"/>
+
+        <receiver android:name=".controller.MyBroadcastReceiver">
+            <intent-filter>
+                <action android:name="com.amar.itay.takego.CAR_BECAME_FREE"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

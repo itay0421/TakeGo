@@ -9,7 +9,6 @@ import com.amar.itay.takego.model.entities.CarsModel;
 import com.amar.itay.takego.model.entities.Client;
 import com.amar.itay.takego.model.entities.Invitation;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -52,4 +51,6 @@ public interface DB_manager {
 
     void updateCar(ContentValues contentValues_update);
     void updateInvitation(ContentValues contentValues);
+
+    List<Invitation> checkChangeAtLast10Sec();
 }

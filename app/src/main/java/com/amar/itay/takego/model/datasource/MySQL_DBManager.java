@@ -1,11 +1,9 @@
 package com.amar.itay.takego.model.datasource;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.util.Log;
-import android.util.SparseLongArray;
-import android.widget.Toast;
 
-import com.amar.itay.takego.controller.CarsFragment;
 import com.amar.itay.takego.model.backend.Car_GoConst;
 import com.amar.itay.takego.model.backend.DB_manager;
 import com.amar.itay.takego.model.entities.Branch;
@@ -20,6 +18,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by itay0 on 09/12/2017.
@@ -177,6 +176,41 @@ public class MySQL_DBManager implements DB_manager {
             printLog("updateInvitation Exception:\n" + e);
         }
 
+
+    }
+
+    @Override
+    public List<Invitation> checkChangeAtLast10Sec() {
+        String result ;
+        List<Invitation> invitationList_res = new ArrayList<>();
+        //send Query if there ig any update at last 10 sec
+        try{
+
+            result = PHPtools.POST(WEB_URL + "/checkChangeAtLast10Sec.php", new ContentValues());
+            Log.d("resoult: ", result);
+
+            String r = result.trim();
+            Log.d("resoult: ", r);
+
+
+
+            if(!Objects.equals(r, "not")) {
+                JSONArray jsonArray = new JSONObject(result).getJSONArray("invitations_at_last_10_sec");
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                    ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
+                    Invitation invitation = Car_GoConst.ContentValuesToInvitation(contentValues);
+                    invitationList_res.add(invitation);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            printLog("checkChangeAtLast10Sec Exception:\n" + e);
+
+        }
+        return invitationList_res;
 
     }
 

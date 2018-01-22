@@ -9,7 +9,6 @@ import com.amar.itay.takego.model.entities.Client;
 import com.amar.itay.takego.model.entities.Invitation;
 import com.amar.itay.takego.model.backend.Car_GoConst;
 import com.amar.itay.takego.model.backend.DB_manager;
-import com.amar.itay.takego.model.entities.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -146,6 +145,11 @@ public class List_DBManager implements DB_manager {
     @Override
     public void updateInvitation(ContentValues contentValues) {
 
+    }
+
+    @Override
+    public List<Invitation> checkChangeAtLast10Sec() {
+        return null;
     }
 
 

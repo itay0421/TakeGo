@@ -64,8 +64,7 @@ public class startFragment extends Fragment implements View.OnClickListener{
     public void onClick(View view) {
         if( view == start)
             startFragment.this.getActivity().startService(new Intent(startFragment.this.getActivity(),MyIntentService.class));
-
         else if(view == stop)
-            getActivity().stopService(new Intent(getActivity(),MyIntentService.class));
+            startFragment.this.getActivity().stopService(new Intent(startFragment.this.getActivity(),MyIntentService.class));
     }
 }

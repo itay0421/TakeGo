@@ -106,6 +106,10 @@ public class MainActivity_Drawer extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    public void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
+    }
+
 
     //mean to the left side options with the three lines "in a row".
     @SuppressWarnings("StatementWithEmptyBody")

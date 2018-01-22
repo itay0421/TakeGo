@@ -2,7 +2,19 @@ package com.amar.itay.takego.controller;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.net.Uri;
+import android.text.format.DateUtils;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.amar.itay.takego.model.backend.FactoryMethod;
+import com.amar.itay.takego.model.entities.Invitation;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -28,32 +40,49 @@ public class MyIntentService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         while (isRun) {
             try {
-                Thread.sleep(1000);
-                Log.d("david","call me any time");
+                Thread.sleep(10000);
+
+
+//                Date tenSecAgo = new Date(System.currentTimeMillis() - 10000);
+//                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//                String date_str = dateFormat.format(tenSecAgo).toString();
+
+
+                List<Invitation> invitationList_at_10_sec = new ArrayList<Invitation>(FactoryMethod.getManager().checkChangeAtLast10Sec());
+
+                if(invitationList_at_10_sec.size() > 0) {
+
+                    int size = invitationList_at_10_sec.size();
+                    Log.d("list resuls size: ", String.valueOf(size));
+                    Log.d("list resuls size: ", String.valueOf(invitationList_at_10_sec.size()));
+
+
+                    Intent intent1 = new Intent();
+                    intent1.putExtra("message", String.valueOf(size));
+                    intent1.setAction("com.amar.itay.takego.CAR_BECAME_FREE");
+                    sendBroadcast(intent1);
+
+                    invitationList_at_10_sec.clear();
+                }
+
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            Log.d(TAG, serviceInfo(startId) + " print ...");
         }
     }
 
 
-    String serviceInfo(int sid) {
-        return "service [" + id + "] startId = " + sid;
-    }
 
     @Override
     public void onCreate() {
         super.onCreate();
         id++;
-        Log.d(TAG, serviceInfo(startId) + " onCreate ...");
 
     }
 
     @Override
     public void onDestroy() {
-        Log.d(TAG, serviceInfo(startId) + " onDestroy ...");
         isRun = false;
         super.onDestroy();
     }
@@ -62,7 +91,6 @@ public class MyIntentService extends IntentService {
     public int onStartCommand(Intent intent, int flags, int startId) {
         this.startId = startId;
         isRun = true;
-        Log.d(TAG, serviceInfo(startId) + " onStartCommand start ...");
         return super.onStartCommand(intent, flags, startId);
     }
 }
