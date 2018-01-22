@@ -53,7 +53,6 @@ public class startFragment extends Fragment implements View.OnClickListener{
         start = (Button) getActivity().findViewById(R.id.button_start);
         stop = (Button) getActivity().findViewById(R.id.button_stop);
 
-
         start.setOnClickListener(this);
         stop.setOnClickListener(this);
 
