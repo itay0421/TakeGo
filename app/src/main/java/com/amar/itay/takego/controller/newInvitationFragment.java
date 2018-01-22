@@ -349,7 +349,6 @@ public class newInvitationFragment extends Fragment {
                     contentValues.put(Car_GoConst.InvitationConst.INVITATION_IS_OPEN, "true");
                     contentValues.put(Car_GoConst.InvitationConst.CLIENT_ID, client.getId());
                     contentValues.put(Car_GoConst.InvitationConst.CAR_NUMBER, selected_Car.getCarNumber());
-
                     contentValues_update.put(Car_GoConst.CarConst.CAR_NUMBER,selected_Car.getCarNumber() );
                     contentValues_update.put(Car_GoConst.CarConst.IN_USE, "true" );
 
@@ -365,7 +364,6 @@ public class newInvitationFragment extends Fragment {
                         protected Integer doInBackground(Void... params) {
 
                             FactoryMethod.getManager().updateCar(contentValues_update);
-
                             int resoult = FactoryMethod.getManager().addInvitation(contentValues);
                             return resoult;
                         }

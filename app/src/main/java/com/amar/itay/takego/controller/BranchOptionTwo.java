@@ -3,7 +3,6 @@ package com.amar.itay.takego.controller;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -12,7 +11,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +26,6 @@ import com.amar.itay.takego.model.backend.Car_GoConst;
 import com.amar.itay.takego.model.backend.FactoryMethod;
 import com.amar.itay.takego.model.datasource.MySQL_DBManager;
 import com.amar.itay.takego.model.entities.Branch;
-import com.amar.itay.takego.model.entities.Car;
 import com.amar.itay.takego.model.entities.CarsModel;
 import com.amar.itay.takego.model.entities.Client;
 
@@ -143,10 +140,10 @@ public class BranchOptionTwo extends Fragment {
                                             convertView = View.inflate(BranchOptionTwo.this.getActivity(), R.layout.car_mini_layout, null);
                                         }
 
-                                        TextView productId_CompanyName_TextView = (TextView) convertView.findViewById(R.id.CompanyNameCar);
-                                        TextView productId_ModelName_TextView = (TextView) convertView.findViewById(R.id.ModelNameCar);
+                                        TextView productId_CompanyName_TextView = (TextView) convertView.findViewById(R.id.CompanyName);
+                                        TextView productId_ModelName_TextView = (TextView) convertView.findViewById(R.id.ModelName);
                                         TextView productId_EngineCapacity_TextView = (TextView) convertView.findViewById(R.id.engineCapacity);
-                                        TextView productId_GearBox_TextView = (TextView) convertView.findViewById(R.id.GearBoxCar);
+                                        TextView productId_GearBox_TextView = (TextView) convertView.findViewById(R.id.GearBox);
                                         TextView productId_SeatsNumber_TextView = (TextView) convertView.findViewById(R.id.SeatsCar);
 
 

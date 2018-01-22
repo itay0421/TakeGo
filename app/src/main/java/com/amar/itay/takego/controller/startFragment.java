@@ -15,15 +15,21 @@ import android.widget.Toast;
 
 import com.amar.itay.takego.R;
 import com.amar.itay.takego.model.datasource.MySQL_DBManager;
+import com.amar.itay.takego.model.entities.Car;
+import com.amar.itay.takego.model.entities.CarsModel;
 import com.amar.itay.takego.model.entities.Client;
+import com.amar.itay.takego.model.entities.Invitation;
+
+import java.util.List;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class startFragment extends Fragment implements View.OnClickListener{
-
     Client client;
+    Invitation currentInvitation;
+    CarsModel currentCarModel;
     TextView clientName;
     Button start;
     Button stop;
@@ -45,6 +51,50 @@ public class startFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        findViews();
+        findCarModelViews();
+    }
+
+    private void findCarModelViews() {
+
+        List<Invitation> invitationList = MySQL_DBManager.invitationList;
+        for(Invitation invet: invitationList)
+        {
+            if(invet.getClientId() == client.getId())
+                currentInvitation = invet;
+        }
+        List<Car> carsList = MySQL_DBManager.carsList;
+        Car currentCar = null;
+        for(Car car : carsList)
+        {
+            if(currentInvitation.getCarNumber() == car.getCarNumber())
+                currentCar = car;
+        }
+        List<CarsModel> carsModelList = MySQL_DBManager.carsModelList;
+        for(CarsModel carsModel:carsModelList)
+        {
+            if(currentCar.getModelType()==carsModel.getModelCode())
+                currentCarModel = carsModel;
+        }
+
+    }
+
+    private void findCarModel() {
+        TextView CompanyName_TextView = (TextView) getActivity().findViewById(R.id.CompanyName);
+        TextView ModelName_TextView = (TextView) getActivity().findViewById(R.id.ModelName);
+        TextView EngineCapacity_TextView = (TextView) getActivity().findViewById(R.id.engineCapacity);
+        TextView GearBox_TextView = (TextView) getActivity().findViewById(R.id.GearBox);
+        TextView SeatsNumber_TextView = (TextView) getActivity().findViewById(R.id.SeatsCar);
+
+        CompanyName_TextView.setText(String.valueOf(currentCarModel.getCompanyName()));
+        ModelName_TextView.setText(String.valueOf(currentCarModel.getModelName()));
+        EngineCapacity_TextView.setText(String.valueOf(currentCarModel.getEngineCapacity()));
+        GearBox_TextView.setText(String.valueOf(currentCarModel.getGearBox()));
+        SeatsNumber_TextView.setText(String.valueOf(currentCarModel.getSeatsNumber())+" Seats");
+
+    }
+
+    private void findViews() {
         client = MySQL_DBManager.client;
         String firstName = client.getPrivateName();
         String lastName = client.getFamilyName();
@@ -52,10 +102,10 @@ public class startFragment extends Fragment implements View.OnClickListener{
         clientName.setText((CharSequence) (firstName + " " + lastName));
         start = (Button) getActivity().findViewById(R.id.button_start);
         stop = (Button) getActivity().findViewById(R.id.button_stop);
+        currentInvitation = MySQL_DBManager.invitation;
 
         start.setOnClickListener(this);
         stop.setOnClickListener(this);
-
     }
 
 

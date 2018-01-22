@@ -34,7 +34,7 @@ public class MySQL_DBManager implements DB_manager {
     static public List<CarsModel> carsModelList = new ArrayList<>();
     static public List<Car> carsList = new ArrayList<>();
     static public Client client = new Client();
-
+    static public Invitation invitation = null;
 
     @Override
     public boolean UserExistsOnDataBase(ContentValues newClient) {
@@ -282,6 +282,7 @@ public class MySQL_DBManager implements DB_manager {
             //          if (id > 0)
 //                SetUpdate();
             printLog("addInvitation:\n" + result);
+
             return id;
         } catch (IOException e) {
             e.getMessage();
