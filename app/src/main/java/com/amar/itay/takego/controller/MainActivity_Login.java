@@ -151,7 +151,7 @@ public class MainActivity_Login extends AppCompatActivity implements View.OnClic
     @SuppressLint("StaticFieldLeak")
     private void checkOnDataBase() {
          final ContentValues contentValuesUserPassword = Car_GoConst.UserPasswordtoContentValues(
-                userName.getText().toString(), password.getText().toString(), 0);
+                userName.getText().toString(), password.getText().toString(),0);
         new AsyncTask<Void, Void, Client>() {
 
             @Override
@@ -162,10 +162,9 @@ public class MainActivity_Login extends AppCompatActivity implements View.OnClic
 
             @Override
             protected void onPostExecute(Client client) {
+                Log.d("<<<<<CLIENT::::%%%",client.getFamilyName());
                 Intent intent = new Intent(MainActivity_Login.this, MainActivity_Drawer.class);
-                Log.d("dadasd", client.getFamilyName());
                 if(client.getId() != -1) {
-                    Log.d("ddddddddddddd",client.getFamilyName());
                     if (remember.isChecked()) {
                         saveSharedPreferences();
                     }
@@ -178,7 +177,6 @@ public class MainActivity_Login extends AppCompatActivity implements View.OnClic
                 }
             }
         }.execute();
-
     }
 
     @Override

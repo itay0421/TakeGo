@@ -25,6 +25,8 @@
     <string name="head_image">head_image</string>
     <string name="hello_client_name">Hello client_name!<br />
         please select your dream Car</string>
+    <string name="hello_client_name_branch">Hello client_name!<br />
+        please select your branch</string>
 
     <string name="user_name">User Name</string>
     <string name="new_user">New User</string>

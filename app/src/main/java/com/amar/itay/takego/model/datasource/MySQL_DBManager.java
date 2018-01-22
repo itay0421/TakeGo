@@ -314,13 +314,15 @@ public class MySQL_DBManager implements DB_manager {
         try {
             String str = PHPtools.POST(WEB_URL + "/UserNameExistOnDataBase.php", UserPassword);
             JSONArray jsonArray = new JSONObject(str).getJSONArray("client");
-            Log.d("JasonDetails",str);
+
             for( int i=0; i<jsonArray.length(); i++){
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
+
                 ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
                 Client client = Car_GoConst.ContentValuesToClient(contentValues);
                 result.add(client);
             }
+            Log.d("CENTEE:::::",result.get(0).getFamilyName());
             return result.get(0);
         } catch (Exception e) {
            e.printStackTrace();
@@ -501,5 +503,25 @@ public class MySQL_DBManager implements DB_manager {
         return str;
 
     }
+      @Override
+    public List<CarsModel> AllAvilableCarsForBranch(ContentValues Branch) {
 
+          List<CarsModel> result = new ArrayList<CarsModel>();
+          try {
+              String str = PHPtools.POST(WEB_URL + "/getAllAvailableModelCarsOfBranch.php", Branch);
+              JSONArray jsonArray = new JSONObject(str).getJSONArray("carsModel");
+
+              for (int i = 0; i < jsonArray.length(); i++) {
+                  JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                  ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
+                  CarsModel carsModel = Car_GoConst.ContentValuesToCarModel(contentValues);
+                  result.add(carsModel);
+              }
+              return result;
+          } catch (Exception e) {
+              e.printStackTrace();
+          }
+          return null;
+      }
 }

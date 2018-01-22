@@ -133,7 +133,7 @@ public class MainActivity_Drawer extends AppCompatActivity
 
 
         } else if (id == R.id.nav_share) {
-
+           fragment = new BranchOptionTwo();
         } else if (id == R.id.nav_send) {
                fragment = new InfoFragment();
         }

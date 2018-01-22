@@ -118,6 +118,11 @@ public class List_DBManager implements DB_manager {
     }
 
     @Override
+    public List<CarsModel> AllAvilableCarsForBranch(ContentValues Branch) {
+        return null;
+    }
+
+    @Override
     public void deleteModel(ContentValues _idDel) {
 
     }
