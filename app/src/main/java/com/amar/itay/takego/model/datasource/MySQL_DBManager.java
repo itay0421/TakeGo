@@ -220,7 +220,7 @@ public class MySQL_DBManager implements DB_manager {
     @Override
     public Invitation getAllOpenInvitation(ContentValues contentValues1) {
         List<Invitation> invitationList = new ArrayList<>();
-
+        Invitation invit = null;
         try{
             String str = PHPtools.POST(WEB_URL+"/getAllInvitation.php", contentValues1);
             JSONArray jsonArray = new JSONObject(str).getJSONArray("invitations");
@@ -232,7 +232,12 @@ public class MySQL_DBManager implements DB_manager {
                 Invitation invitation = Car_GoConst.ContentValuesToInvitation(contentValues);
                 invitationList.add(invitation);
             }
-            return invitationList.get(0);
+            for(Invitation invet: invitationList)
+            {
+                if(invet.getIsInvitationIsOpen())
+                    invit = invet;
+            }
+            return invit;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +41,10 @@ public class startFragment extends Fragment implements View.OnClickListener{
     TextView clientName;
     Button start;
     Button stop;
+    Button closeInvitation;
+    ContentValues contentValues = new ContentValues();
+    ContentValues contentValues_update = new ContentValues();
+
     public startFragment() {
         // Required empty public constructor
     }
@@ -98,7 +103,7 @@ public class startFragment extends Fragment implements View.OnClickListener{
         ConstraintLayout carMiniLayout = getActivity().findViewById(R.id.carMiniLayout);
         Button closeInvitation = (Button) getActivity().findViewById(R.id.closeInvitation);
         if (currentInvitation != null) {
-            if (currentCarModel == null) {
+            if (currentInvitation.getIsInvitationIsOpen()) {
                 LoadCurrentModelCar();
                 CompanyName_TextView = (TextView) getActivity().findViewById(R.id.CompanyName);
                 ModelName_TextView = (TextView) getActivity().findViewById(R.id.ModelName);
@@ -150,9 +155,12 @@ public class startFragment extends Fragment implements View.OnClickListener{
         start = (Button) getActivity().findViewById(R.id.button_start);
         stop = (Button) getActivity().findViewById(R.id.button_stop);
         //currentInvitation = MySQL_DBManager.invitation;
+        closeInvitation = getActivity().findViewById(R.id.closeInvitation);
+
 
         start.setOnClickListener(this);
         stop.setOnClickListener(this);
+        closeInvitation.setOnClickListener(this);
     }
 
 
@@ -162,5 +170,46 @@ public class startFragment extends Fragment implements View.OnClickListener{
             startFragment.this.getActivity().startService(new Intent(startFragment.this.getActivity(),MyIntentService.class));
         else if(view == stop)
             startFragment.this.getActivity().stopService(new Intent(startFragment.this.getActivity(),MyIntentService.class));
+        else if(view == closeInvitation)
+            closeOpenInvitation();
+    }
+
+    private void closeOpenInvitation() {
+        contentValues.put(Car_GoConst.InvitationConst.TOTAL_PAYMENT, 0 );
+        contentValues.put(Car_GoConst.InvitationConst.FUEL_LITER, "null" );
+        contentValues.put(Car_GoConst.InvitationConst.IS_FUEL, "false");
+        contentValues.put(Car_GoConst.InvitationConst.START_RENT, "");
+        contentValues.put(Car_GoConst.InvitationConst.END_RENT, "");
+        contentValues.put(Car_GoConst.InvitationConst.INVITATION_IS_OPEN, "false");
+        contentValues.put(Car_GoConst.InvitationConst.CLIENT_ID, "null");
+        //Log.d("<<<<<<<***>>>>>>",String.valueOf(client==null));
+        Car car = null;
+        for(Car carInUse : MySQL_DBManager.allCars)
+        {
+            if(currentInvitation.getCarNumber()== carInUse.getCarNumber())
+                car = carInUse;
+        }
+        contentValues.put(Car_GoConst.InvitationConst.CAR_NUMBER, car.getCarNumber());
+        contentValues_update.put(Car_GoConst.CarConst.CAR_NUMBER,car.getCarNumber() );
+        contentValues_update.put(Car_GoConst.CarConst.IN_USE, "false" );
+
+
+
+
+
+
+
+
+        new AsyncTask<Void, Void, Void>() {
+
+            @Override
+            protected Void doInBackground(Void... params) {
+                FactoryMethod.getManager().updateCar(contentValues_update);
+                FactoryMethod.getManager().updateInvitation(contentValues);
+                return null;
+            }
+
+
+        }.execute();
     }
 }
