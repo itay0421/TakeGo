@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.amar.itay.takego.controller.BranchOptionTwo"
+    tools:context="com.amar.itay.takego.controller.newInvitationFragment_OptionTwo"
     android:background="@drawable/back1">
 
     <!-- TODO: Update blank fragment layout -->

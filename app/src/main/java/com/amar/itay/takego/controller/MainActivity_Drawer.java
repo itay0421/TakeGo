@@ -3,14 +3,8 @@ package com.amar.itay.takego.controller;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -24,9 +18,6 @@ import android.widget.Toast;
 
 import com.amar.itay.takego.R;
 import com.amar.itay.takego.model.datasource.MySQL_DBManager;
-import com.amar.itay.takego.model.entities.Branch;
-
-import java.util.List;
 
 public class MainActivity_Drawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -141,7 +132,7 @@ public class MainActivity_Drawer extends AppCompatActivity
 
 
         } else if (id == R.id.nav_share) {
-           fragment = new BranchOptionTwo();
+           fragment = new newInvitationFragment_OptionTwo();
         } else if (id == R.id.nav_send) {
                fragment = new InfoFragment();
         }
