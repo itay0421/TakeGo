@@ -34,7 +34,7 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class startFragment extends Fragment implements View.OnClickListener{
-    Client client = null;
+    Client client = MySQL_DBManager.client;
     Invitation currentInvitation = null;
     CarsModel currentCarModel = null;
     TextView clientName;
@@ -62,7 +62,7 @@ public class startFragment extends Fragment implements View.OnClickListener{
                 @Override
                 protected Invitation doInBackground(Void... voids) {
                     ContentValues contentValues = new ContentValues();
-                    contentValues.put("client_id", client.getId());
+                    contentValues.put(Car_GoConst.ClientConst.ID, client.getId());
                     currentInvitation = FactoryMethod.getManager().getAllOpenInvitation(contentValues);
 
                     //currentInvitation = FactoryMethod.getManager().getAllOpenInvitation(Car_GoConst.ClientToContentValues(MySQL_DBManager.client));
@@ -71,8 +71,7 @@ public class startFragment extends Fragment implements View.OnClickListener{
                 }
             }.execute();
 
-            client = MySQL_DBManager.client;
-            // Inflate the layout for this fragment
+
         return view;
     }
 
