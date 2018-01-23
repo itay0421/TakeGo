@@ -190,14 +190,13 @@ public class MySQL_DBManager implements DB_manager {
         try{
 
             result = PHPtools.POST(WEB_URL + "/checkChangeAtLast10Sec.php", new ContentValues());
-            Log.d("resoult: ", result);
 
             String r = result.trim();
-            Log.d("resoult: ", r);
+            Log.d("servise resoult: ", r);
 
 
 
-            if(!Objects.equals(r, "not")) {
+            if(!Objects.equals(r, "There was no change to the cars")) {
                 JSONArray jsonArray = new JSONObject(result).getJSONArray("invitations_at_last_10_sec");
 
                 for (int i = 0; i < jsonArray.length(); i++) {

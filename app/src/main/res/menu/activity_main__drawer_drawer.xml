@@ -5,16 +5,20 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/open_invitation"
+            android:icon="@drawable/ic_menu_share"
+            android:title="open Invitation" />
+        <item
             android:id="@+id/nav_add_invitation"
             android:icon="@android:drawable/ic_menu_add"
             android:title="Add Invitation" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/nav_add_invitation_2"
+            android:icon="@android:drawable/ic_menu_add"
+            android:title="Add Invitation 2" />
         <item
             android:id="@+id/nav_Cars"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/car_icon"
             android:title="Cars" />
         <item
             android:id="@+id/nav_Branches"
@@ -24,14 +28,11 @@
 
     <item android:title="Communicate">
         <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_info"
-                android:title="Info" />
+                android:title="Contact Us" />
         </menu>
     </item>
 

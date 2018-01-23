@@ -120,7 +120,8 @@ public class MainActivity_Drawer extends AppCompatActivity
 
         if (id == R.id.nav_add_invitation) {
              fragment = new newInvitationFragment();// not suporrt.v4
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_add_invitation_2) {
+            fragment = new newInvitationFragment_OptionTwo();
 
         } else if (id == R.id.nav_Cars) {
             fragment = new CarsFragment();
@@ -131,8 +132,7 @@ public class MainActivity_Drawer extends AppCompatActivity
 
 
 
-        } else if (id == R.id.nav_share) {
-           fragment = new newInvitationFragment_OptionTwo();
+        } else if (id == R.id.open_invitation) {
         } else if (id == R.id.nav_send) {
                fragment = new InfoFragment();
         }

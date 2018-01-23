@@ -32,6 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.concurrent.ThreadLocalRandom;
 
 
@@ -203,6 +204,7 @@ public class startFragment extends Fragment implements View.OnClickListener{
         //date of close order
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Jerusalem"));
         String date_str = "'" + dateFormat.format(date).toString() +"'";
         Log.d("*******date_str",date_str);
         contentValues.put(Car_GoConst.InvitationConst.END_RENT, date_str);
