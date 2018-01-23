@@ -13,13 +13,13 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="16dp"
+        android:paddingLeft="5dp"
         android:text="textview"
         android:textColor="@android:color/black"
         android:textSize="30sp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.534"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,8 +29,6 @@
         android:layout_height="42dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/bottom_rounded_corners"
-        android:backgroundTint="@color/colorPrimaryDark"
         android:text="start service"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,15 +42,13 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/bottom_rounded_corners"
-        android:backgroundTint="@color/colorPrimaryDark"
         android:text="stop service"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.846"
         app:layout_constraintStart_toEndOf="@+id/button_start"
         app:layout_constraintTop_toBottomOf="@+id/closeInvitation"
-        app:layout_constraintVertical_bias="0.954" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textView2"
@@ -65,7 +61,7 @@
         android:textSize="24sp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.227"
+        app:layout_constraintHorizontal_bias="0.214"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -74,6 +70,7 @@
         android:layout_width="match_parent"
         android:layout_height="159dp"
         android:layout_marginEnd="8dp"
+        android:visibility="gone"
         android:layout_marginStart="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -260,6 +257,7 @@
         android:textColor="@android:color/holo_green_dark"
         android:textSize="18sp"
         android:textStyle="bold|italic"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.043"
         app:layout_constraintStart_toStartOf="parent"
@@ -275,6 +273,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/bottom_rounded_corners"
         android:backgroundTint="@color/colorPrimaryDark"
+        android:visibility="gone"
         android:text="Close Invitation"
         android:textAllCaps="false"
         android:textStyle="bold"
@@ -292,6 +291,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
         android:src="@drawable/black_border"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
@@ -307,6 +307,7 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/imageKilometers"
         app:layout_constraintEnd_toEndOf="@+id/imageKilometers"
         app:layout_constraintStart_toStartOf="@+id/imageKilometers"
@@ -321,8 +322,25 @@
         android:layout_marginTop="8dp"
         android:text="*Enter car kilometers"
         android:textSize="18sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/carMiniLayout" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="291dp"
+        android:layout_height="248dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/start_speach"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TextViewKilometers" />
 
 </android.support.constraint.ConstraintLayout>
