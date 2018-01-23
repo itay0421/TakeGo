@@ -11,11 +11,11 @@
         <item
             android:id="@+id/nav_add_invitation"
             android:icon="@android:drawable/ic_menu_add"
-            android:title="Add Invitation" />
+            android:title="Add Invitation - by cars" />
         <item
             android:id="@+id/nav_add_invitation_2"
             android:icon="@android:drawable/ic_menu_add"
-            android:title="Add Invitation 2" />
+            android:title="Add Invitation - by branches" />
         <item
             android:id="@+id/nav_Cars"
             android:icon="@drawable/car_icon"

@@ -4,6 +4,7 @@ package com.amar.itay.takego.controller;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -15,6 +16,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,8 +48,13 @@ public class startFragment extends Fragment implements View.OnClickListener{
     Invitation currentInvitation = null;
     CarsModel currentCarModel = null;
     TextView clientName;
+    TextView TextViewKilometers;
+    EditText Kilometer;
+    ImageView imageKilometers;
     Button start;
     Button stop;
+    TextView inUse;
+    ConstraintLayout carMiniLayout;
     Button closeInvitation;
     ContentValues contentValues = new ContentValues();
     ContentValues contentValues_update = new ContentValues();
@@ -66,7 +75,6 @@ public class startFragment extends Fragment implements View.OnClickListener{
                     findCarModelView();
                  if(invitation == null)
                     Toast.makeText(startFragment.this.getActivity(),"no open invitation for client: "+client.getId(), Toast.LENGTH_SHORT).show();
-
                 }
 
                 @Override
@@ -79,6 +87,7 @@ public class startFragment extends Fragment implements View.OnClickListener{
 
                     return currentInvitation;
                 }
+
             }.execute();
 
 
@@ -104,12 +113,20 @@ public class startFragment extends Fragment implements View.OnClickListener{
         TextView GearBox_TextView;
         TextView SeatsNumber_TextView;
         TextView textView_carNumber;
-        TextView inUse = getActivity().findViewById(R.id.TextInUse);
-        ConstraintLayout carMiniLayout = getActivity().findViewById(R.id.carMiniLayout);
-        closeInvitation = (Button) getActivity().findViewById(R.id.closeInvitation);
 
+        inUse = getActivity().findViewById(R.id.TextInUse);
+        carMiniLayout = getActivity().findViewById(R.id.carMiniLayout);
+        closeInvitation = (Button) getActivity().findViewById(R.id.closeInvitation);
         if (currentInvitation != null) {
             if (currentInvitation.getIsInvitationIsOpen()) {
+                /////
+                carMiniLayout.setVisibility(View.VISIBLE);
+                closeInvitation.setVisibility(View.VISIBLE);
+                inUse.setVisibility(View.VISIBLE);
+                TextViewKilometers.setVisibility(View.VISIBLE);
+                imageKilometers.setVisibility(View.VISIBLE);
+                Kilometer.setVisibility(View.VISIBLE);
+                /////
                 LoadCurrentModelCar();
                 CompanyName_TextView = (TextView) getActivity().findViewById(R.id.CompanyName);
                 ModelName_TextView = (TextView) getActivity().findViewById(R.id.ModelName);
@@ -124,11 +141,15 @@ public class startFragment extends Fragment implements View.OnClickListener{
                 GearBox_TextView.setText(String.valueOf(currentCarModel.getGearBox()));
                 SeatsNumber_TextView.setText(String.valueOf(currentCarModel.getSeatsNumber()) + " Seats");
                 textView_carNumber.setText(MySQL_DBManager.realCarNumber(currentInvitation.getCarNumber()));
-            } else {
-//           carMiniLayout.setVisibility(View.GONE);
-//            closeInvitation.setVisibility(View.GONE);
-//           inUse.setVisibility(View.GONE);
             }
+        } else {
+            carMiniLayout.setVisibility(View.GONE);
+            closeInvitation.setVisibility(View.GONE);
+            inUse.setVisibility(View.GONE);
+            TextViewKilometers.setVisibility(View.GONE);
+            imageKilometers.setVisibility(View.GONE);
+            Kilometer.setVisibility(View.GONE);
+
         }
     }
 
@@ -153,7 +174,10 @@ public class startFragment extends Fragment implements View.OnClickListener{
     }
 
     private void findViews() {
-            findCarModelView();
+        Kilometer = (EditText) getActivity().findViewById(R.id.kilometersText);
+        TextViewKilometers = (TextView) getActivity().findViewById(R.id.TextViewKilometers);
+        imageKilometers = (ImageView) getActivity().findViewById(R.id.imageKilometers);
+        findCarModelView();
         //client = MySQL_DBManager.client;
 
         String firstName = client.getPrivateName();
@@ -184,34 +208,45 @@ public class startFragment extends Fragment implements View.OnClickListener{
 
     private void closeOpenInvitation() {
 
-        contentValues.put(Car_GoConst.InvitationConst.INVITATION_ID, currentInvitation.getInvitationId());
+        if (Kilometer.getText().length() == 0) {
+            TextViewKilometers.setTextColor(Color.RED);
+            TextViewKilometers.setText("You must enter car kilometers to continue");
+        } else {
+            contentValues.put(Car_GoConst.InvitationConst.INVITATION_ID, currentInvitation.getInvitationId());
 
-        //total payment
-        int randomNum = ThreadLocalRandom.current().nextInt(1,10);
-        double total_payment = randomNum * 100.90;
-        contentValues.put(Car_GoConst.InvitationConst.TOTAL_PAYMENT, total_payment );
+            carMiniLayout.setVisibility(View.GONE);
+            closeInvitation.setVisibility(View.GONE);
+            inUse.setVisibility(View.GONE);
+            TextViewKilometers.setVisibility(View.GONE);
+            imageKilometers.setVisibility(View.GONE);
+            Kilometer.setVisibility(View.GONE);
 
-        //about gas
-        randomNum = ThreadLocalRandom.current().nextInt(0,10);
-        if (randomNum == 0){
-            contentValues.put(Car_GoConst.InvitationConst.IS_FUEL, "false");
-        }else{
-            int fuel_liters = randomNum * 30;
-            contentValues.put(Car_GoConst.InvitationConst.FUEL_LITER, fuel_liters );
-            contentValues.put(Car_GoConst.InvitationConst.IS_FUEL, "true");
-        }
+            //total payment
+            int randomNum = ThreadLocalRandom.current().nextInt(1, 10);
+            double total_payment = randomNum * 100.90;
+            contentValues.put(Car_GoConst.InvitationConst.TOTAL_PAYMENT, total_payment);
 
-        //date of close order
-        Date date = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Jerusalem"));
-        String date_str = "'" + dateFormat.format(date).toString() +"'";
-        Log.d("*******date_str",date_str);
-        contentValues.put(Car_GoConst.InvitationConst.END_RENT, date_str);
+            //about gas
+            randomNum = ThreadLocalRandom.current().nextInt(0, 10);
+            if (randomNum == 0) {
+                contentValues.put(Car_GoConst.InvitationConst.IS_FUEL, "false");
+            } else {
+                int fuel_liters = randomNum * 30;
+                contentValues.put(Car_GoConst.InvitationConst.FUEL_LITER, fuel_liters);
+                contentValues.put(Car_GoConst.InvitationConst.IS_FUEL, "true");
+            }
 
-        contentValues.put(Car_GoConst.InvitationConst.INVITATION_IS_OPEN, "false");
+            //date of close order
+            Date date = new Date();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Jerusalem"));
+            String date_str = "'" + dateFormat.format(date).toString() + "'";
+            Log.d("*******date_str", date_str);
+            contentValues.put(Car_GoConst.InvitationConst.END_RENT, date_str);
 
-        //Log.d("<<<<<<<***>>>>>>",String.valueOf(client==null));
+            contentValues.put(Car_GoConst.InvitationConst.INVITATION_IS_OPEN, "false");
+
+            //Log.d("<<<<<<<***>>>>>>",String.valueOf(client==null));
 //        Car car = null;
 //        for(Car carInUse : MySQL_DBManager.allCars)
 //        {
@@ -220,22 +255,28 @@ public class startFragment extends Fragment implements View.OnClickListener{
 //        }
 //        contentValues.put(Car_GoConst.InvitationConst.CAR_NUMBER, car.getCarNumber());
 
-        //update car to be not in use
-        contentValues_update.put(Car_GoConst.CarConst.CAR_NUMBER, currentInvitation.getCarNumber() );
-        contentValues_update.put(Car_GoConst.CarConst.IN_USE, "false" );
+            //update car to be not in use
+            contentValues_update.put(Car_GoConst.CarConst.CAR_NUMBER, currentInvitation.getCarNumber());
+            contentValues_update.put(Car_GoConst.CarConst.IN_USE, "false");
 
 
-        new AsyncTask<Void, Void, Void>() {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    Toast.makeText(getActivity(), "Invitaion number" + currentInvitation.getInvitationId() + "is closed", Toast.LENGTH_LONG).show();
+                    currentInvitation = null;
+                }
 
-            @Override
-            protected Void doInBackground(Void... params) {
+                @Override
+                protected Void doInBackground(Void... params) {
 
-                FactoryMethod.getManager().updateCar(contentValues_update);
-                FactoryMethod.getManager().updateInvitation(contentValues);
-                return null;
-            }
+                    FactoryMethod.getManager().updateCar(contentValues_update);
+                    FactoryMethod.getManager().updateInvitation(contentValues);
+                    return null;
+                }
 
 
-        }.execute();
+            }.execute();
+        }
     }
 }

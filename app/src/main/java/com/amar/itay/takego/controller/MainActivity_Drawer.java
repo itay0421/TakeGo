@@ -38,7 +38,7 @@ public class MainActivity_Drawer extends AppCompatActivity
             public void onClick(View view) {
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
            //             .setAction("Action", null).show();
-                if(MySQL_DBManager.currentInvitation == null && MySQL_DBManager.currentCarModel == null) {
+                if(MySQL_DBManager.currentInvitation == null){
                     Fragment fragment = new newInvitationFragment();// not suporrt.v4
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
