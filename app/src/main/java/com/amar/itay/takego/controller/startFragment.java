@@ -27,8 +27,12 @@ import com.amar.itay.takego.model.entities.CarsModel;
 import com.amar.itay.takego.model.entities.Client;
 import com.amar.itay.takego.model.entities.Invitation;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 /**
@@ -98,9 +102,11 @@ public class startFragment extends Fragment implements View.OnClickListener{
         TextView EngineCapacity_TextView;
         TextView GearBox_TextView;
         TextView SeatsNumber_TextView;
+        TextView textView_carNumber;
         TextView inUse = getActivity().findViewById(R.id.TextInUse);
         ConstraintLayout carMiniLayout = getActivity().findViewById(R.id.carMiniLayout);
-        Button closeInvitation = (Button) getActivity().findViewById(R.id.closeInvitation);
+        closeInvitation = (Button) getActivity().findViewById(R.id.closeInvitation);
+
         if (currentInvitation != null) {
             if (currentInvitation.getIsInvitationIsOpen()) {
                 LoadCurrentModelCar();
@@ -109,12 +115,14 @@ public class startFragment extends Fragment implements View.OnClickListener{
                 EngineCapacity_TextView = (TextView) getActivity().findViewById(R.id.engineCapacity);
                 GearBox_TextView = (TextView) getActivity().findViewById(R.id.GearBox);
                 SeatsNumber_TextView = (TextView) getActivity().findViewById(R.id.SeatsCar);
+                textView_carNumber = (TextView) getActivity().findViewById(R.id.textView_carNumber);
 
                 CompanyName_TextView.setText(String.valueOf(currentCarModel.getCompanyName()));
                 ModelName_TextView.setText(String.valueOf(currentCarModel.getModelName()));
                 EngineCapacity_TextView.setText(String.valueOf(currentCarModel.getEngineCapacity()));
                 GearBox_TextView.setText(String.valueOf(currentCarModel.getGearBox()));
                 SeatsNumber_TextView.setText(String.valueOf(currentCarModel.getSeatsNumber()) + " Seats");
+                textView_carNumber.setText(MySQL_DBManager.realCarNumber(currentInvitation.getCarNumber()));
             } else {
 //           carMiniLayout.setVisibility(View.GONE);
 //            closeInvitation.setVisibility(View.GONE);
@@ -154,7 +162,7 @@ public class startFragment extends Fragment implements View.OnClickListener{
         start = (Button) getActivity().findViewById(R.id.button_start);
         stop = (Button) getActivity().findViewById(R.id.button_stop);
         //currentInvitation = MySQL_DBManager.invitation;
-        closeInvitation = getActivity().findViewById(R.id.closeInvitation);
+       // closeInvitation = getActivity().findViewById(R.id.closeInvitation);
 
 
         start.setOnClickListener(this);
@@ -174,35 +182,52 @@ public class startFragment extends Fragment implements View.OnClickListener{
     }
 
     private void closeOpenInvitation() {
-        contentValues.put(Car_GoConst.InvitationConst.TOTAL_PAYMENT, 0 );
-        contentValues.put(Car_GoConst.InvitationConst.FUEL_LITER, "null" );
-        contentValues.put(Car_GoConst.InvitationConst.IS_FUEL, "false");
-        contentValues.put(Car_GoConst.InvitationConst.START_RENT, "");
-        contentValues.put(Car_GoConst.InvitationConst.END_RENT, "");
-        contentValues.put(Car_GoConst.InvitationConst.INVITATION_IS_OPEN, "false");
-        contentValues.put(Car_GoConst.InvitationConst.CLIENT_ID, "null");
-        //Log.d("<<<<<<<***>>>>>>",String.valueOf(client==null));
-        Car car = null;
-        for(Car carInUse : MySQL_DBManager.allCars)
-        {
-            if(currentInvitation.getCarNumber()== carInUse.getCarNumber())
-                car = carInUse;
+
+        contentValues.put(Car_GoConst.InvitationConst.INVITATION_ID, currentInvitation.getInvitationId());
+
+        //total payment
+        int randomNum = ThreadLocalRandom.current().nextInt(1,10);
+        double total_payment = randomNum * 100.90;
+        contentValues.put(Car_GoConst.InvitationConst.TOTAL_PAYMENT, total_payment );
+
+        //about gas
+        randomNum = ThreadLocalRandom.current().nextInt(0,10);
+        if (randomNum == 0){
+            contentValues.put(Car_GoConst.InvitationConst.IS_FUEL, "false");
+        }else{
+            int fuel_liters = randomNum * 30;
+            contentValues.put(Car_GoConst.InvitationConst.FUEL_LITER, fuel_liters );
+            contentValues.put(Car_GoConst.InvitationConst.IS_FUEL, "true");
         }
-        contentValues.put(Car_GoConst.InvitationConst.CAR_NUMBER, car.getCarNumber());
-        contentValues_update.put(Car_GoConst.CarConst.CAR_NUMBER,car.getCarNumber() );
+
+        //date of close order
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date_str = "'" + dateFormat.format(date).toString() +"'";
+        Log.d("*******date_str",date_str);
+        contentValues.put(Car_GoConst.InvitationConst.END_RENT, date_str);
+
+        contentValues.put(Car_GoConst.InvitationConst.INVITATION_IS_OPEN, "false");
+
+        //Log.d("<<<<<<<***>>>>>>",String.valueOf(client==null));
+//        Car car = null;
+//        for(Car carInUse : MySQL_DBManager.allCars)
+//        {
+//            if(currentInvitation.getCarNumber()== carInUse.getCarNumber())
+//                car = carInUse;
+//        }
+//        contentValues.put(Car_GoConst.InvitationConst.CAR_NUMBER, car.getCarNumber());
+
+        //update car to be not in use
+        contentValues_update.put(Car_GoConst.CarConst.CAR_NUMBER, currentInvitation.getCarNumber() );
         contentValues_update.put(Car_GoConst.CarConst.IN_USE, "false" );
-
-
-
-
-
-
 
 
         new AsyncTask<Void, Void, Void>() {
 
             @Override
             protected Void doInBackground(Void... params) {
+
                 FactoryMethod.getManager().updateCar(contentValues_update);
                 FactoryMethod.getManager().updateInvitation(contentValues);
                 return null;

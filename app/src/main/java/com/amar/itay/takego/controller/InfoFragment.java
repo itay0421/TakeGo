@@ -107,7 +107,7 @@ public class InfoFragment extends Fragment implements View.OnClickListener{
             startActivity(Intent.createChooser(emailIntent, "Send email..."));
             //
         } else if (v == webRelative) {
-            intent = new Intent(activityContext, RentCarWebSite.class);
+           // intent = new Intent(activityContext, RentCarWebSite.class);
             intent.putExtra("webUrl",webText.getText().toString());
             startActivity(intent);
 //            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(webText.getText().toString()));

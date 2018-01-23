@@ -54,7 +54,6 @@ public class MyIntentService extends IntentService {
 
                     int size = invitationList_at_10_sec.size();
                     Log.d("list resuls size: ", String.valueOf(size));
-                    Log.d("list resuls size: ", String.valueOf(invitationList_at_10_sec.size()));
 
 
                     Intent intent1 = new Intent();
