@@ -59,7 +59,6 @@ public class newInvitationFragment extends Fragment {
     ContentValues contentValues_update = new ContentValues();
 
     String selector = "model";
-    Client client = new Client("Amar", "Itay", 23123 , "0509975183", "itay0421@gmail.com",88901234);
     Client currentClient;
     ListView listView;
     ArrayAdapter<CarsModel> adapter_carModel;
@@ -83,10 +82,10 @@ public class newInvitationFragment extends Fragment {
         ScrollView scrollView = (ScrollView)view.findViewById(R.id.scrollview);
         final ListView listView = (ListView)view.findViewById(R.id.listView2);
         SearchView searchView = (SearchView)view.findViewById(R.id.searchView);
-
+        currentClient = MySQL_DBManager.client;
         textView_instoduction = (TextView)view. findViewById(R.id.textView_insroduction);
         scrollView.scrollTo(0, scrollView.getTop());
-        textView_instoduction.setText(Html.fromHtml( "Hello " +"<b>"+ client.getPrivateName()  + " " + client.getFamilyName()+ "</b>"+ "! <br/>" +
+        textView_instoduction.setText(Html.fromHtml( "Hello " +"<b>"+ currentClient.getPrivateName()  + " " + currentClient.getFamilyName()+ "</b>"+ "! <br/>" +
                                                     "Here you can choose the type of car you want.<br/><br/>" +
                                                      "<font size=\"20\">Note that you can filter the results as desired.</font>"));
 
@@ -282,14 +281,14 @@ public class newInvitationFragment extends Fragment {
                             //dialog for add invitation
                             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(newInvitationFragment.this.getActivity());
                             alertDialogBuilder.setTitle("Confirm Invitation");
-                            String massege = "Hello "+"<b>"+client.getPrivateName()+client.getFamilyName()+"</b>,<br/><br/>"+
+                            String massege = "Hello "+"<b>"+currentClient.getPrivateName()+currentClient.getFamilyName()+"</b>,<br/><br/>"+
                                     "We want to make sure that the order is right for you,<br/>" +
                                     "please confirm your oreder.<br/><br/>"+
                                     "Car number: "+"<b>" + MySQL_DBManager.realCarNumber(selected_Car.getCarNumber())+ "</b><br/>" +
                                     "Model: "+"<b>" + selectedcarsModel.getCompanyName() +" "+ selectedcarsModel.getModelName()+ "</b><br/>" +
                                     "Branch: "+"<b>" + selectedBranch.getCity() +", "+ selectedBranch.getStreet() +" "+
                                                             selectedBranch.getBuildingNumber()+ "</b><br/><br/>" +
-                                    "you pay with credit card " + client.getCreditCard() + "<br/>" +
+                                    "you pay with credit card " + currentClient.getCreditCard() + "<br/>" +
                                     "we start your renting from today." + "<br/><br/>"
                                     + "Are you approves the order? <br/>";
 
@@ -352,7 +351,7 @@ public class newInvitationFragment extends Fragment {
                     contentValues.put(Car_GoConst.InvitationConst.START_RENT, date_str);
                     contentValues.put(Car_GoConst.InvitationConst.END_RENT, "null");
                     contentValues.put(Car_GoConst.InvitationConst.INVITATION_IS_OPEN, "true");
-                    contentValues.put(Car_GoConst.InvitationConst.CLIENT_ID, client.getId());
+                    contentValues.put(Car_GoConst.InvitationConst.CLIENT_ID, currentClient.getId());
                     //Log.d("<<<<<<<***>>>>>>",String.valueOf(client==null));
                     contentValues.put(Car_GoConst.InvitationConst.CAR_NUMBER, selected_Car.getCarNumber());
                     contentValues_update.put(Car_GoConst.CarConst.CAR_NUMBER,selected_Car.getCarNumber() );

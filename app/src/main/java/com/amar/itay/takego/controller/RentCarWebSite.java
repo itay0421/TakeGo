@@ -1,4 +1,4 @@
-package com.amar.itay.takego;
+package com.amar.itay.takego.controller;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -12,8 +12,10 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.amar.itay.takego.R;
 import com.amar.itay.takego.controller.MyIntentService;
 
+@SuppressLint("Registered")
 public class RentCarWebSite extends AppCompatActivity {
 
     WebView webView;
