@@ -2,6 +2,8 @@ package com.amar.itay.takego.controller;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +13,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,9 +29,13 @@ import com.amar.itay.takego.model.backend.Car_GoConst;
 import com.amar.itay.takego.model.backend.FactoryMethod;
 import com.amar.itay.takego.model.datasource.MySQL_DBManager;
 import com.amar.itay.takego.model.entities.Branch;
+import com.amar.itay.takego.model.entities.Car;
 import com.amar.itay.takego.model.entities.CarsModel;
 import com.amar.itay.takego.model.entities.Client;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -38,7 +45,7 @@ import java.util.List;
  * to handle interaction events.
  * create an instance of this fragment.
  */
-public class BranchOptionTwo extends Fragment {
+public class newInvitationFragment_OptionTwo extends Fragment {
 
 
 
@@ -46,12 +53,16 @@ public class BranchOptionTwo extends Fragment {
     List<Branch> myBranchsList;
     List<CarsModel> myCarModelList = null;
     Branch branchOnOrder = null;
-    CarsModel carOnOrder = null;
+    CarsModel carModelOnOrder = null;
+    Car carOnOreder = null;
     boolean nowOnBranch = true;
-    Client client = null;
+    Client currentClient = null;
+    ContentValues contentValues = new ContentValues();
+    ContentValues contentValues_update = new ContentValues();
+
 
     View view;
-    public BranchOptionTwo() {
+    public newInvitationFragment_OptionTwo() {
         // Required empty public constructor
     }
 
@@ -62,7 +73,7 @@ public class BranchOptionTwo extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_branch_option_two, container, false);
         listView = (ListView) view.findViewById(R.id.listViewBranch);
-        client = MySQL_DBManager.client;
+        currentClient = MySQL_DBManager.client;
 
         myBranchsList = MySQL_DBManager.branchList;
         ArrayAdapter<Branch> adapter = new ArrayAdapter<Branch>(getContext(), R.layout.branch_mini_layout, myBranchsList) {
@@ -72,7 +83,7 @@ public class BranchOptionTwo extends Fragment {
             public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 
                 if (convertView == null) {
-                    convertView = View.inflate(BranchOptionTwo.this.getActivity(), R.layout.branch_mini_layout, null);
+                    convertView = View.inflate(newInvitationFragment_OptionTwo.this.getActivity(), R.layout.branch_mini_layout, null);
                 }
 
                 TextView productId_Location_TextView = (TextView) convertView.findViewById(R.id.locationTextB);
@@ -115,30 +126,30 @@ public class BranchOptionTwo extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 if (nowOnBranch) {
 
+
                     branchOnOrder = (Branch) listView.getItemAtPosition(position);
                     final ContentValues contentValuesBranch = Car_GoConst.BranchToContentValues(branchOnOrder);
+
                     new AsyncTask<Void, View, List<CarsModel>>() {
 
                         @Override
                         protected List<CarsModel> doInBackground(Void... voids) {
-                            Log.d("<<<<<<<6766464667>>>>>>",String.valueOf(myBranchsList.size()));
                             myCarModelList = FactoryMethod.getManager().AllAvilableCarsForBranch(contentValuesBranch);
                             return myCarModelList;
                         }
 
                         @Override
-                        protected void onPostExecute(List<CarsModel> cars) {
+                        protected void onPostExecute(List<CarsModel> carsModelList) {
                             nowOnBranch = false;
-                            //Log.d("<<<<<<<6767>>>>>>",String.valueOf(cars.size()));
-                            if (cars != null) {
-                                ArrayAdapter<CarsModel> adapter = new ArrayAdapter<CarsModel>(getContext(), R.layout.car_mini_layout, myCarModelList) {
+                            if (carsModelList != null) {
+                                ArrayAdapter<CarsModel> adapter = new ArrayAdapter<CarsModel>(getContext(), R.layout.car_mini_layout, carsModelList) {
 
                                     @NonNull
                                     @Override
                                     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 
                                         if (convertView == null) {
-                                            convertView = View.inflate(BranchOptionTwo.this.getActivity(), R.layout.car_mini_layout, null);
+                                            convertView = View.inflate(newInvitationFragment_OptionTwo.this.getActivity(), R.layout.car_mini_layout, null);
                                         }
 
                                         TextView productId_CompanyName_TextView = (TextView) convertView.findViewById(R.id.CompanyName);
@@ -169,51 +180,156 @@ public class BranchOptionTwo extends Fragment {
                 }
             else
             {
-                carOnOrder = (CarsModel) listView.getItemAtPosition(position);
-               find();
+                //now selected car (on click) model will send to server
+                carModelOnOrder = (CarsModel) listView.getItemAtPosition(position);
+
+
+                contentValues.put(Car_GoConst.CarConst.MODEL_TYPE, carModelOnOrder.getModelCode());
+                contentValues.put(Car_GoConst.CarConst.BRANCH_NUMBER, branchOnOrder.getBranchNumber());
+
+                new AsyncTask<Void, View, Car>() {
+
+                    ProgressDialog asyncDialog = new ProgressDialog(newInvitationFragment_OptionTwo.this.getActivity());
+
+                    @Override
+                    protected void onPreExecute() {
+                        //set message of the dialog
+                        asyncDialog.setMessage("loading");
+                        //show dialog
+                        asyncDialog.show();
+                        super.onPreExecute();
+                    }
+
+                    @Override
+                    protected Car doInBackground(Void... voids) {
+                        carOnOreder = FactoryMethod.getManager().GetCarByModelBranch(contentValues);
+                        return carOnOreder;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Car selected_car) {
+                        asyncDialog.dismiss();
+                        listView.setAdapter(null);
+                        showDialogConfirm(selected_car);
+
+                        super.onPostExecute(selected_car);
+                    }
+
+
+                }.execute();
+
+
+
             }
         }});
 
 
         return view;
     }
-    public void find()
-    {
-//        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BranchOptionTwo.this.getActivity());
-//        alertDialogBuilder.setTitle("Confirm Invitation");
-//        String massege = "Hello "+"<b>"+client.getPrivateName()+client.getFamilyName()+"</b>,<br/><br/>"+
-//                "We want to make sure that the order is right for you,<br/>" +
-//                "please confirm your oreder.<br/><br/>"+
-//                "Car number: "+"<b>" + carOnOrder.getCarNumber()+ "</b><br/>" +
-//                //"Model: "+"<b>" + selectedcarsModel.getCompanyName() +" "+ selectedcarsModel.getModelName()+ "</b><br/>" +
-//                "Model: "+"<b>" + carOnOrder.getCarNumber() +" "+ carOnOrder.getCarNumber()+ "</b><br/>" +
-//                "Branch: "+"<b>" + branchOnOrder.getCity() +", "+ branchOnOrder.getStreet() +" "+
-//                branchOnOrder.getBuildingNumber()+ "</b><br/><br/>" +
-//                "you pay with credit card " + client.getCreditCard() + "<br/>" +
-//                "we start your renting from today." + "<br/><br/>"
-//                + "Are you approves the order? <br/>";
 
 
+    private void  showDialogConfirm(Car selected_car){
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(newInvitationFragment_OptionTwo.this.getActivity());
+
+        alertDialogBuilder.setTitle("Confirm Invitation");
+        String massege = "Hello "+"<b>"+ currentClient.getPrivateName()+ currentClient.getFamilyName()+"</b>,<br/><br/>"+
+                "We want to make sure that the order is right for you,<br/>" +
+                "please confirm your oreder.<br/><br/>"+
+                "Car number: "+"<b>" + MySQL_DBManager.realCarNumber(selected_car.getCarNumber())+ "</b><br/>" +
+                "Model: "+"<b>" + carModelOnOrder.getCompanyName() +" "+ carModelOnOrder.getModelName()+ "</b><br/>" +
+                "Branch: "+"<b>" + branchOnOrder.getCity() +", "+ branchOnOrder.getStreet() +" "+
+                branchOnOrder.getBuildingNumber()+ "</b><br/><br/>" +
+                "you pay with credit card " + currentClient.getCreditCard() + "<br/>" +
+                "we start your renting from today." + "<br/><br/>"
+                + "Are you approves the order? <br/>";
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            alertDialogBuilder.setMessage(Html.fromHtml(massege, Html.FROM_HTML_MODE_LEGACY));
+        } else {
+            alertDialogBuilder.setMessage(Html.fromHtml(massege));
+        }
+        alertDialogBuilder.setPositiveButton("Ok", onClickListener);
+        alertDialogBuilder.setNegativeButton("Cancel ", onClickListener);
 
 
-//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-//            alertDialogBuilder.setMessage(Html.fromHtml(massege, Html.FROM_HTML_MODE_LEGACY));
-//        } else {
-//            alertDialogBuilder.setMessage(Html.fromHtml(massege));
-//        }
-//        alertDialogBuilder.setPositiveButton("Ok",onClickListener);
-//        alertDialogBuilder.setNegativeButton("Cancel ",onClickListener);
-//
-//
-//        AlertDialog alertDialog = alertDialogBuilder.create();
-//        alertDialog.show( );
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show( );
+
 
     }
-    AlertDialog.OnClickListener onClickListener = new DialogInterface.OnClickListener()
-    {
+
+
+    AlertDialog.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
+
+
         @Override
         public void onClick(DialogInterface dialog, int which) {
 
-        }
-    };
+            switch (which)
+            {
+                case Dialog.BUTTON_NEGATIVE:
+                    Toast.makeText(newInvitationFragment_OptionTwo.this.getActivity(), Html.fromHtml("O.K! <br/> you can try choose another car").toString(), Toast.LENGTH_LONG).show();
+                    getActivity().onBackPressed();
+
+
+                    //we need to go back here.
+                    break;
+
+                case Dialog.BUTTON_POSITIVE:
+
+                    currentClient = MySQL_DBManager.client;
+
+                    Date date = new Date();
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String date_str = dateFormat.format(date).toString();
+
+                    contentValues.put(Car_GoConst.InvitationConst.TOTAL_PAYMENT, 0 );
+                    contentValues.put(Car_GoConst.InvitationConst.FUEL_LITER, "null" );
+                    contentValues.put(Car_GoConst.InvitationConst.IS_FUEL, "false");
+                    contentValues.put(Car_GoConst.InvitationConst.START_RENT, date_str);
+                    contentValues.put(Car_GoConst.InvitationConst.END_RENT, "null");
+                    contentValues.put(Car_GoConst.InvitationConst.INVITATION_IS_OPEN, "true");
+                    contentValues.put(Car_GoConst.InvitationConst.CLIENT_ID, currentClient.getId());
+                    contentValues.put(Car_GoConst.InvitationConst.CAR_NUMBER, carOnOreder.getCarNumber());
+
+                    //update car to be 'in_use'
+                    contentValues_update.put(Car_GoConst.CarConst.CAR_NUMBER,carOnOreder.getCarNumber() );
+                    contentValues_update.put(Car_GoConst.CarConst.IN_USE, "true" );
+
+
+
+
+
+
+
+
+                    new AsyncTask<Void, Void, Integer>() {
+
+                        @Override
+                        protected Integer doInBackground(Void... params) {
+                            FactoryMethod.getManager().updateCar(contentValues_update);
+                            int result = FactoryMethod.getManager().addInvitation(contentValues);
+                            return result;
+                        }
+
+
+                        @Override
+                        protected void onPostExecute(Integer result) {
+                            Toast.makeText(newInvitationFragment_OptionTwo.this.getActivity(),
+                                    Html.fromHtml("We add your invitation!<br/> Enjoy your new car!<br/> is:").toString() + result, Toast.LENGTH_LONG).show();
+
+                            //we need to go back here.
+                            getActivity().onBackPressed();
+                            //super.onPostExecute(resoult);
+                        }
+
+
+                    }.execute();
+
+                    break;
+
+            }
+
+        } };
 }

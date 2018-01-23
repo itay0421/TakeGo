@@ -285,7 +285,7 @@ public class newInvitationFragment extends Fragment {
                             String massege = "Hello "+"<b>"+client.getPrivateName()+client.getFamilyName()+"</b>,<br/><br/>"+
                                     "We want to make sure that the order is right for you,<br/>" +
                                     "please confirm your oreder.<br/><br/>"+
-                                    "Car number: "+"<b>" + selected_Car.getCarNumber()+ "</b><br/>" +
+                                    "Car number: "+"<b>" + MySQL_DBManager.realCarNumber(selected_Car.getCarNumber())+ "</b><br/>" +
                                     "Model: "+"<b>" + selectedcarsModel.getCompanyName() +" "+ selectedcarsModel.getModelName()+ "</b><br/>" +
                                     "Branch: "+"<b>" + selectedBranch.getCity() +", "+ selectedBranch.getStreet() +" "+
                                                             selectedBranch.getBuildingNumber()+ "</b><br/><br/>" +
