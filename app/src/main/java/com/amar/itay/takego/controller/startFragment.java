@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.amar.itay.takego.model.entities.CarsModel;
 import com.amar.itay.takego.model.entities.Client;
 import com.amar.itay.takego.model.entities.Invitation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -32,9 +34,9 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class startFragment extends Fragment implements View.OnClickListener{
-    Client client = new Client("dasd", "dasdasd", 555000, "01203", "dadqwe", 123123);
-    Invitation currentInvitation;
-    CarsModel currentCarModel;
+    Client client = null;
+    Invitation currentInvitation = null;
+    CarsModel currentCarModel = null;
     TextView clientName;
     Button start;
     Button stop;
@@ -48,28 +50,29 @@ public class startFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_start, container, false);
+            new AsyncTask<Void, Void, Invitation>() {
+                @Override
+                protected void onPostExecute(Invitation invitation) {
+                    findCarModelView();
+                 if(invitation == null)
+                    Toast.makeText(startFragment.this.getActivity(),"no open invitation for client: "+client.getId(), Toast.LENGTH_SHORT).show();
 
-        new AsyncTask<Void,Void,Invitation>(){
-            @Override
-            protected void onPostExecute(Invitation invitation) {
-                super.onPostExecute(invitation);
+                }
 
-                //Log.d("@@@@@@@@@@@", String.valueOf(invitation.getCarNumber()));
-                Toast.makeText(startFragment.this.getActivity(), String.valueOf(invitation.getCarNumber()), Toast.LENGTH_SHORT).show();
+                @Override
+                protected Invitation doInBackground(Void... voids) {
+                    ContentValues contentValues = new ContentValues();
+                    contentValues.put("client_id", client.getId());
+                    currentInvitation = FactoryMethod.getManager().getAllOpenInvitation(contentValues);
 
-            }
+                    //currentInvitation = FactoryMethod.getManager().getAllOpenInvitation(Car_GoConst.ClientToContentValues(MySQL_DBManager.client));
 
-            @Override
-            protected Invitation doInBackground(Void... voids) {
-                currentInvitation = FactoryMethod.getManager().getAllOpenInvitation(Car_GoConst.ClientToContentValues(client));
+                    return currentInvitation;
+                }
+            }.execute();
 
-                //currentInvitation = FactoryMethod.getManager().getAllOpenInvitation(Car_GoConst.ClientToContentValues(MySQL_DBManager.client));
-
-                return currentInvitation;
-            }
-        }.execute();
-        // Inflate the layout for this fragment
-
+            client = MySQL_DBManager.client;
+            // Inflate the layout for this fragment
         return view;
     }
 
@@ -78,28 +81,68 @@ public class startFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        currentCarModel = MySQL_DBManager.currentCarModel;
         findViews();
+
     }
 
 
 
-    private void findCarModel() {
-        TextView CompanyName_TextView = (TextView) getActivity().findViewById(R.id.CompanyName);
-        TextView ModelName_TextView = (TextView) getActivity().findViewById(R.id.ModelName);
-        TextView EngineCapacity_TextView = (TextView) getActivity().findViewById(R.id.engineCapacity);
-        TextView GearBox_TextView = (TextView) getActivity().findViewById(R.id.GearBox);
-        TextView SeatsNumber_TextView = (TextView) getActivity().findViewById(R.id.SeatsCar);
+    private void findCarModelView() {
+        TextView CompanyName_TextView;
+        TextView ModelName_TextView;
+        TextView EngineCapacity_TextView;
+        TextView GearBox_TextView;
+        TextView SeatsNumber_TextView;
+        TextView inUse = getActivity().findViewById(R.id.TextInUse);
+        ConstraintLayout carMiniLayout = getActivity().findViewById(R.id.carMiniLayout);
+        Button closeInvitation = (Button) getActivity().findViewById(R.id.closeInvitation);
+        if (currentInvitation != null) {
+            if (currentCarModel == null) {
+                LoadCurrentModelCar();
+                CompanyName_TextView = (TextView) getActivity().findViewById(R.id.CompanyName);
+                ModelName_TextView = (TextView) getActivity().findViewById(R.id.ModelName);
+                EngineCapacity_TextView = (TextView) getActivity().findViewById(R.id.engineCapacity);
+                GearBox_TextView = (TextView) getActivity().findViewById(R.id.GearBox);
+                SeatsNumber_TextView = (TextView) getActivity().findViewById(R.id.SeatsCar);
 
-        CompanyName_TextView.setText(String.valueOf(currentCarModel.getCompanyName()));
-        ModelName_TextView.setText(String.valueOf(currentCarModel.getModelName()));
-        EngineCapacity_TextView.setText(String.valueOf(currentCarModel.getEngineCapacity()));
-        GearBox_TextView.setText(String.valueOf(currentCarModel.getGearBox()));
-        SeatsNumber_TextView.setText(String.valueOf(currentCarModel.getSeatsNumber())+" Seats");
+                CompanyName_TextView.setText(String.valueOf(currentCarModel.getCompanyName()));
+                ModelName_TextView.setText(String.valueOf(currentCarModel.getModelName()));
+                EngineCapacity_TextView.setText(String.valueOf(currentCarModel.getEngineCapacity()));
+                GearBox_TextView.setText(String.valueOf(currentCarModel.getGearBox()));
+                SeatsNumber_TextView.setText(String.valueOf(currentCarModel.getSeatsNumber()) + " Seats");
+            } else {
+//           carMiniLayout.setVisibility(View.GONE);
+//            closeInvitation.setVisibility(View.GONE);
+//           inUse.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    private void LoadCurrentModelCar() {
+        List<Car> carList = new ArrayList<>();
+
+        for(Car car:MySQL_DBManager.allCars)
+        {
+            if(car.getCarNumber() == currentInvitation.getCarNumber())
+                carList.add(car);
+        }
+        for(CarsModel carsModel: MySQL_DBManager.carsModelList)
+        {
+            for(Car car :carList) {
+                if (carsModel.getModelCode() == car.getModelType()) {
+                    MySQL_DBManager.currentCarModel = carsModel;
+                    currentCarModel = carsModel;
+                }
+            }
+        }
 
     }
 
     private void findViews() {
+            findCarModelView();
         //client = MySQL_DBManager.client;
+
         String firstName = client.getPrivateName();
         String lastName = client.getFamilyName();
         clientName = (TextView) getActivity().findViewById(R.id.clientName);

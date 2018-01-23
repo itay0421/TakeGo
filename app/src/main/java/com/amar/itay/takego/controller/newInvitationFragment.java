@@ -60,6 +60,7 @@ public class newInvitationFragment extends Fragment {
 
     String selector = "model";
     Client client = new Client("Amar", "Itay", 23123 , "0509975183", "itay0421@gmail.com",88901234);
+    Client currentClient;
     ListView listView;
     ArrayAdapter<CarsModel> adapter_carModel;
     TextView textView_instoduction;
@@ -340,7 +341,8 @@ public class newInvitationFragment extends Fragment {
                     break;
 
                 case Dialog.BUTTON_POSITIVE:
-
+                    currentClient = MySQL_DBManager.client;
+                    Log.d("<<<<<<<@@@@@@@>>>>>>",String.valueOf(currentClient.getId()));
                     Date date = new Date();
                     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String date_str = dateFormat.format(date).toString();
@@ -352,6 +354,7 @@ public class newInvitationFragment extends Fragment {
                     contentValues.put(Car_GoConst.InvitationConst.END_RENT, "null");
                     contentValues.put(Car_GoConst.InvitationConst.INVITATION_IS_OPEN, "true");
                     contentValues.put(Car_GoConst.InvitationConst.CLIENT_ID, client.getId());
+                    //Log.d("<<<<<<<***>>>>>>",String.valueOf(client==null));
                     contentValues.put(Car_GoConst.InvitationConst.CAR_NUMBER, selected_Car.getCarNumber());
                     contentValues_update.put(Car_GoConst.CarConst.CAR_NUMBER,selected_Car.getCarNumber() );
                     contentValues_update.put(Car_GoConst.CarConst.IN_USE, "true" );
@@ -368,17 +371,16 @@ public class newInvitationFragment extends Fragment {
 
                         @Override
                         protected Integer doInBackground(Void... params) {
-
                             FactoryMethod.getManager().updateCar(contentValues_update);
-                            int resoult = FactoryMethod.getManager().addInvitation(contentValues);
-                            return resoult;
+                            int result = FactoryMethod.getManager().addInvitation(contentValues);
+                            return result;
                         }
 
 
                         @Override
-                        protected void onPostExecute(Integer resoult) {
+                        protected void onPostExecute(Integer result) {
                             Toast.makeText(newInvitationFragment.this.getActivity(),
-                                    Html.fromHtml("We add your invitation!<br/> Enjoy your new car!<br/> is:").toString() + resoult, Toast.LENGTH_LONG).show();
+                                    Html.fromHtml("We add your invitation!<br/> Enjoy your new car!<br/> is:").toString() + result, Toast.LENGTH_LONG).show();
 
                             //we need to go back here.
                             getActivity().onBackPressed();

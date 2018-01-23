@@ -52,6 +52,7 @@ public class MainActivity_Login extends AppCompatActivity implements View.OnClic
     private ImageButton imageVisibility;
     private CheckBox remember;
     String load;
+    Client client_load = new Client();
     public static final int PICK_IMAGE = 100;
     public static final String TAB = "dav";
 
@@ -64,7 +65,7 @@ public class MainActivity_Login extends AppCompatActivity implements View.OnClic
 
         findViews();
 
-        clearSharedPreferences();
+        //clearSharedPreferences();
         loadSharedPreferences();
 
 
@@ -77,12 +78,13 @@ public class MainActivity_Login extends AppCompatActivity implements View.OnClic
                 MySQL_DBManager.carsModelList = FactoryMethod.getManager().AllCarsModel();
                 MySQL_DBManager.carsList = FactoryMethod.getManager().allAvailableCars();
                 MySQL_DBManager.invitationList = FactoryMethod.getManager().allInvatation();
+                MySQL_DBManager.allCars = FactoryMethod.getManager().AllCars();
                 Client b = new Client("dasd", "dasdasd", 555000, "01203", "dadqwe", 123123);
                 boolean a = FactoryMethod.getManager().UserExistsOnDataBase(Car_GoConst.ClientToContentValues(b));
                 return null;
             }
-
         }.execute();
+
 
     }
 
@@ -96,11 +98,19 @@ public class MainActivity_Login extends AppCompatActivity implements View.OnClic
             }
             if (sharedPreferences.contains("Password")) {
                 password.setText(sharedPreferences.getString("Password", null));
+                Toast.makeText(this, "loaded!", Toast.LENGTH_SHORT).show();
             }
             if (userName.getText().length() != 0 && password.getText().length() != 0) {
                 load = "loaded";
-                Toast.makeText(this, "loaded!", Toast.LENGTH_SHORT).show();
+                client_load.setFamilyName(sharedPreferences.getString("FamilyName", null));
+                client_load.setPrivateName(sharedPreferences.getString("PrivateName", null));
+                client_load.setCreditCard(sharedPreferences.getLong("CreditCard", 0));
+                client_load.setId(sharedPreferences.getLong("Id", 0));
+                client_load.setEmail(sharedPreferences.getString("email", null));
+                client_load.setPhoneNumber(sharedPreferences.getString("PhoneNumber", null));
             }
+
+
         } catch (Exception ex) {
             Toast.makeText(this, "failed to load!", Toast.LENGTH_SHORT).show();
         }
@@ -114,6 +124,12 @@ public class MainActivity_Login extends AppCompatActivity implements View.OnClic
             String pass = password.getText().toString();
             editor.putString("UserName", UserName);
             editor.putString("Password", pass);
+            editor.putString("FamilyName",client_load.getFamilyName());
+            editor.putString("PrivateName",client_load.getPrivateName());
+            editor.putLong("Id",client_load.getId());
+            editor.putString("PhoneNumber",client_load.getPhoneNumber());
+            editor.putString("email",client_load.getEmail());
+            editor.putLong("CreditCard",client_load.getCreditCard());
             editor.commit();
             Toast.makeText(this, "saved!", Toast.LENGTH_SHORT).show();
         } catch (Exception ex) {
@@ -163,6 +179,7 @@ public class MainActivity_Login extends AppCompatActivity implements View.OnClic
             @Override
             protected void onPostExecute(Client client) {
                 Log.d("<<<<<CLIENT::::%%%",client.getFamilyName());
+                client_load = client;
                 Intent intent = new Intent(MainActivity_Login.this, MainActivity_Drawer.class);
                 if(client.getId() != -1) {
                     if (remember.isChecked()) {
@@ -184,7 +201,10 @@ public class MainActivity_Login extends AppCompatActivity implements View.OnClic
         if (v == sign_in) {
             Intent intent = new Intent(this, MainActivity_Drawer.class);
             if (load == "loaded")//check if shred preferences exist.
+            {
+                MySQL_DBManager.client = client_load;
                 startActivity(intent);
+            }
             else
                 checkOnDataBase();
             //check on data base if the user name and password didnt found on the shared preferences

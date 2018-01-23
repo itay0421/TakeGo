@@ -20,8 +20,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.amar.itay.takego.R;
+import com.amar.itay.takego.model.datasource.MySQL_DBManager;
 import com.amar.itay.takego.model.entities.Branch;
 
 import java.util.List;
@@ -45,12 +47,18 @@ public class MainActivity_Drawer extends AppCompatActivity
             public void onClick(View view) {
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
            //             .setAction("Action", null).show();
-                Fragment fragment = new newInvitationFragment();// not suporrt.v4
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.FragLinearLayout, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                if(MySQL_DBManager.currentInvitation == null && MySQL_DBManager.currentCarModel == null) {
+                    Fragment fragment = new newInvitationFragment();// not suporrt.v4
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.FragLinearLayout, fragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+                else
+                {
+                    Toast.makeText(MainActivity_Drawer.this.getBaseContext(),"u already order a car",Toast.LENGTH_LONG).show();
+                }
             }
         });
 

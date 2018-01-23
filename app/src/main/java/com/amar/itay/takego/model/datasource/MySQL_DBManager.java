@@ -3,6 +3,7 @@ package com.amar.itay.takego.model.datasource;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.amar.itay.takego.model.backend.Car_GoConst;
 import com.amar.itay.takego.model.backend.DB_manager;
@@ -32,6 +33,7 @@ public class MySQL_DBManager implements DB_manager {
     static public List<Branch> branchList = new ArrayList<Branch>();
     static public  List<Invitation> invitationList = new ArrayList<Invitation>();
     static public List<CarsModel> carsModelList = new ArrayList<>();
+    static public List<Car> allCars = new ArrayList<>();
     static public List<Car> carsList = new ArrayList<>();
     static public Client client = new Client();
     static public Invitation currentInvitation = null;
@@ -221,7 +223,7 @@ public class MySQL_DBManager implements DB_manager {
 
         try{
             String str = PHPtools.POST(WEB_URL+"/getAllInvitation.php", contentValues1);
-            JSONArray jsonArray = new JSONObject(str).getJSONArray("invitations_open");
+            JSONArray jsonArray = new JSONObject(str).getJSONArray("invitations");
 
             for( int i=0; i<jsonArray.length(); i++){
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -233,9 +235,8 @@ public class MySQL_DBManager implements DB_manager {
             return invitationList.get(0);
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
-        return null;
-
     }
 
 
@@ -300,6 +301,7 @@ public class MySQL_DBManager implements DB_manager {
     @Override
     public int addInvitation(ContentValues newInvitation) {
         try{
+            //Log.d("<<<<<<<<******>>>>>>>>>",String.valueOf(Car_GoConst.ContentValuesToInvitation(newInvitation).getClientId()));
             String result = PHPtools.POST(WEB_URL + "insertInvitation.php", newInvitation);
             String s = result.trim();
             int id = Integer.parseInt(s) ;

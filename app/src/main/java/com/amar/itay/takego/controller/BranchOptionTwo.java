@@ -44,7 +44,7 @@ public class BranchOptionTwo extends Fragment {
 
     ListView listView ;
     List<Branch> myBranchsList;
-    List<CarsModel> myCarModelList;
+    List<CarsModel> myCarModelList = null;
     Branch branchOnOrder = null;
     CarsModel carOnOrder = null;
     boolean nowOnBranch = true;
@@ -114,21 +114,22 @@ public class BranchOptionTwo extends Fragment {
 
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 if (nowOnBranch) {
+
                     branchOnOrder = (Branch) listView.getItemAtPosition(position);
                     final ContentValues contentValuesBranch = Car_GoConst.BranchToContentValues(branchOnOrder);
                     new AsyncTask<Void, View, List<CarsModel>>() {
 
                         @Override
                         protected List<CarsModel> doInBackground(Void... voids) {
+                            Log.d("<<<<<<<6766464667>>>>>>",String.valueOf(myBranchsList.size()));
                             myCarModelList = FactoryMethod.getManager().AllAvilableCarsForBranch(contentValuesBranch);
                             return myCarModelList;
                         }
 
                         @Override
                         protected void onPostExecute(List<CarsModel> cars) {
-                            Log.d("<<<<<>>>>>>>",String.valueOf(cars.get(0).getModelCode()));
                             nowOnBranch = false;
-                            Log.d("<<<<<<<>>>>>>","jhjhhjgh");
+                            //Log.d("<<<<<<<6767>>>>>>",String.valueOf(cars.size()));
                             if (cars != null) {
                                 ArrayAdapter<CarsModel> adapter = new ArrayAdapter<CarsModel>(getContext(), R.layout.car_mini_layout, myCarModelList) {
 
