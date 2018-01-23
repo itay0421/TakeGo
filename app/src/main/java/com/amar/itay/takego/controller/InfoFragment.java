@@ -18,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amar.itay.takego.R;
-import com.amar.itay.takego.RentCarWebSite;
 import com.amar.itay.takego.model.entities.Car;
 
 import java.util.ArrayList;
