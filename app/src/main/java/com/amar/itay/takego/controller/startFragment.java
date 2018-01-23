@@ -54,6 +54,7 @@ public class startFragment extends Fragment implements View.OnClickListener{
     Button start;
     Button stop;
     TextView inUse;
+    TextView startText;
     ConstraintLayout carMiniLayout;
     Button closeInvitation;
     ContentValues contentValues = new ContentValues();
@@ -126,6 +127,8 @@ public class startFragment extends Fragment implements View.OnClickListener{
                 TextViewKilometers.setVisibility(View.VISIBLE);
                 imageKilometers.setVisibility(View.VISIBLE);
                 Kilometer.setVisibility(View.VISIBLE);
+                startText.setVisibility(View.GONE);
+
                 /////
                 LoadCurrentModelCar();
                 CompanyName_TextView = (TextView) getActivity().findViewById(R.id.CompanyName);
@@ -149,7 +152,7 @@ public class startFragment extends Fragment implements View.OnClickListener{
             TextViewKilometers.setVisibility(View.GONE);
             imageKilometers.setVisibility(View.GONE);
             Kilometer.setVisibility(View.GONE);
-
+            startText.setVisibility(View.VISIBLE);
         }
     }
 
@@ -177,6 +180,7 @@ public class startFragment extends Fragment implements View.OnClickListener{
         Kilometer = (EditText) getActivity().findViewById(R.id.kilometersText);
         TextViewKilometers = (TextView) getActivity().findViewById(R.id.TextViewKilometers);
         imageKilometers = (ImageView) getActivity().findViewById(R.id.imageKilometers);
+        startText =(TextView) getActivity().findViewById(R.id.startText);
         findCarModelView();
         //client = MySQL_DBManager.client;
 
@@ -220,6 +224,7 @@ public class startFragment extends Fragment implements View.OnClickListener{
             TextViewKilometers.setVisibility(View.GONE);
             imageKilometers.setVisibility(View.GONE);
             Kilometer.setVisibility(View.GONE);
+            startText.setVisibility(View.VISIBLE);
 
             //total payment
             int randomNum = ThreadLocalRandom.current().nextInt(1, 10);
