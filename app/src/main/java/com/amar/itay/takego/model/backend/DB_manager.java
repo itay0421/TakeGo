@@ -37,6 +37,7 @@ public interface DB_manager {
     List<Car> allAvailableCars();
     List<Invitation> allInvatation();
     List<CarsModel> AllAvilableCarsForBranch(ContentValues Branch);
+
         //functions we added
     /*boolean CarModelAvailable();
     boolean addInvitaion();
