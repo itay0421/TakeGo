@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -15,11 +16,13 @@ import android.webkit.WebViewClient;
 import com.amar.itay.takego.R;
 import com.amar.itay.takego.controller.MyIntentService;
 
+import java.net.URL;
+
 @SuppressLint("Registered")
 public class RentCarWebSite extends AppCompatActivity {
 
     WebView webView;
-    Intent intent;
+    Intent intent =null;
     String Url;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,21 +41,21 @@ public class RentCarWebSite extends AppCompatActivity {
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         //improve webView performance
-        webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
-        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-        webSettings.setAppCacheEnabled(true);
-        webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        webSettings.setDomStorageEnabled(true);
-        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
-        webSettings.setUseWideViewPort(true);
-        webSettings.setSavePassword(true);
-        webSettings.setSaveFormData(true);
-        webSettings.setEnableSmoothTransition(true);
+//        webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+//        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+//        webSettings.setAppCacheEnabled(true);
+//        webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+//        webSettings.setDomStorageEnabled(true);
+//        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+//        webSettings.setUseWideViewPort(true);
+//        webSettings.setSavePassword(true);
+//        webSettings.setSaveFormData(true);
+//        webSettings.setEnableSmoothTransition(true);
 
 
-        webView.loadUrl(Url);
+        webView.loadUrl("https://www.google.co.il/search?q=picture&tbm=isch&source=iu&ictx=1&fir=8mNyFG2hn_NzJM%253A%252CDK_kK4jcw6ui8M%252C_&usg=__fX0qvhKhegLlUrmkr4j5F0pq68M%3D&sa=X&ved=0ahUKEwigh5KNvvHYAhWSKlAKHZrpA9UQ9QEILjAC#imgrc=8mNyFG2hn_NzJM:");
         //force links open in web view only
-        webView.setWebViewClient(new WebViewClient());
+        //webView.setWebViewClient(new WebViewClient());
     }
 
 }

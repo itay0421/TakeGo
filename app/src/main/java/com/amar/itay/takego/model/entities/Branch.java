@@ -4,18 +4,30 @@ package com.amar.itay.takego.model.entities;
  * Created by david salmon on 11/2/2017.
  */
 
+/**
+ * Branch class represents the branch where cars are stored to rent.
+ */
 public class Branch {
-
+    //attributes
     private String City;
     private String Street;
     private int BuildingNumber;
     private int ParkingSpacesNumber;
     private int BranchNumber; //ID
 
-    //default constructor.
+    /**
+     * default constructor.
+     */
     public Branch(){}
 
-    //constructor.
+    /**
+     * constructor.
+     * @param city to insert city name.
+     * @param street to insert street name.
+     * @param buildingNumber to insert building number.
+     * @param parkingSpacesNumber to insert parking space number.
+     * @param branchNumber to insert branch number.
+     */
     public Branch(String city, String street, int buildingNumber, int parkingSpacesNumber, int branchNumber) {
         City = city;
         Street = street;
@@ -102,14 +114,12 @@ public class Branch {
         BranchNumber = branchNumber;
     }
 
+    /**
+     * @return string with all attribute of the class.
+     */
     public String toString()
     {
         return " City: " + City + " Street: " +  Street + " Building Number: " + BuildingNumber + " Parking Spaces: " + ParkingSpacesNumber + " Branch Number: " + BranchNumber;
     }
-
-
-    //********ContentValues*******
-
-
 }
 

@@ -4,17 +4,28 @@ package com.amar.itay.takego.model.entities;
  * Created by david salmon on 11/2/2017.
  */
 
+/**
+ * Car class represents the cars to rent.
+ */
 public class Car {
-    //
+    //attributes
     private int BranchNumber;
     private int ModelType;//just int
     private int Kilometers;
     private int CarNumber;
     private boolean InUse;
+    /**
+     * default constructor.
+     */
+    public Car() {}
 
-    public Car() {
-    }
-
+    /**
+     * constructor.
+     * @param branchNumber to insert branch number.
+     * @param modelType to insert model type.
+     * @param kilometers to insert kilometers.
+     * @param carNumber to insert car number name.
+     */
     public Car(int branchNumber, int modelType, int kilometers, int carNumber) {
         BranchNumber = branchNumber;
         ModelType = modelType;
@@ -86,12 +97,14 @@ public class Car {
     public void setCarNumber(int carNumber) {
         CarNumber = carNumber;
     }
-
+    /**
+     *
+     * @return string with all attribute of the class.
+     */
     public String toString() {
         return "Branch Number: " + BranchNumber + " Model Type: " + ModelType + " Kilometers: " + Kilometers + " Car Number: " + CarNumber;
     }
 
-    //********ContentValues*******
 
 
 }

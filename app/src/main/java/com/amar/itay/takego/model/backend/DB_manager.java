@@ -15,6 +15,10 @@ import java.util.List;
  * Created by david salmon on 11/3/2017.
  */
 
+/**
+ * interface : everyone the inherit from me must to implement all his functions.
+ * interface defines the functions we should implements.
+ */
 public interface DB_manager {
 
     boolean UserExistsOnDataBase(ContentValues newClient);

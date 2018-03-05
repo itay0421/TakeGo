@@ -4,6 +4,9 @@ package com.amar.itay.takego.model.entities;
  * Created by david salmon on 11/4/2017.
  */
 
+/**
+ * Client class represents the clients that rent the cars.
+ */
 public class Client {
     private String FamilyName;
     private String PrivateName;
@@ -12,7 +15,9 @@ public class Client {
     private String email;
     private long CreditCard;
 
-    // default constructor.
+    /**
+     * default constructor.
+     */
     public Client() {
     }
 
@@ -20,7 +25,15 @@ public class Client {
         Id = id;
     }
 
-    //constructor.
+    /**
+     * constructor.
+     * @param familyName to insert family name.
+     * @param privateName to insert private name.
+     * @param id to insert id.
+     * @param phoneNumber to insert phone number.
+     * @param email to insert email.
+     * @param creditCard to insert credit card.
+     */
     public Client(String familyName, String privateName, long id, String phoneNumber, String email, long creditCard) {
         FamilyName = familyName;
         PrivateName = privateName;
@@ -106,12 +119,13 @@ public class Client {
     public void setCreditCard(long creditCard) {
         CreditCard = creditCard;
     }
-
+    /**
+     * @return string with all attribute of the class.
+     */
     public String toString()
     {
         return "Name: " + PrivateName + " " + FamilyName + " Id: " + Id + " Phone Number: " + PhoneNumber + " Email: " + email + " Credit Card: " + CreditCard;
     }
 
-    //********ContentValues*******
 
 }

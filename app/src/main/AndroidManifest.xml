@@ -25,14 +25,15 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".controller.MainActivity_Login"
+            android:label="@string/LoginStart"
             tools:ignore="WrongManifestParent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".controller.AddUserPassword" />
-        <activity android:name=".RentCarWebSite"/>
+        <activity android:name=".controller.AddUserPassword" android:label="@string/activity_add_user_password"/>
+        <activity android:name=".controller.RentCarWebSite" />
 
         <service android:name=".controller.MyIntentService"/>
 

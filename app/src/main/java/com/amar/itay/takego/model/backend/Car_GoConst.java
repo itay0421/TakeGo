@@ -19,10 +19,17 @@ import java.util.List;
 /**
  * Created by itay0 on 12/11/2017.
  */
-
+/**
+ * All the class down below in format of key and value.
+ * this needed for ContentValues which also goes with key and value.
+ * With ContentValues we can send to the php page parameters.
+ * Also we will convert from ContentValues to our classes(Car/Branch..) and also the same to other side.
+ */
 public class Car_GoConst {
 
-
+    /**
+     * format of key and value for the Branch class.
+     */
     public static class BranchConst {
         public static final String CITY = "city";
         public static final String STREET = "street";
@@ -31,6 +38,9 @@ public class Car_GoConst {
         public static final String BRANCH_NUMBER = "_id";
     }
 
+    /**
+     * format of key and value for the Car class.
+     */
     public static class CarConst {
         public static final String BRANCH_NUMBER = "branch_number";
         public static final String MODEL_TYPE = "model_type";
@@ -39,6 +49,9 @@ public class Car_GoConst {
         public static final String IN_USE = "in_use";
     }
 
+    /**
+     * format of key and value for the Car Model class.
+     */
     public static class CarModelConst {
         public static final String MODEL_CODE = "_id";
         public static final String COMPANY_NAME = "company_name";
@@ -48,6 +61,9 @@ public class Car_GoConst {
         public static final String SEATS_NUMBER = "seat_number";
     }
 
+    /**
+     * format of key and value for the Client class.
+     */
     public static class ClientConst {
         public static final String FAMILY_NAME = "family_name";
         public static final String PRIVATE_NAME = "private_name";
@@ -57,6 +73,9 @@ public class Car_GoConst {
         public static final String CREDIT_CARD = "credit_card";
     }
 
+    /**
+     * format of key and value for the Invitation class.
+     */
     public static class InvitationConst{
         public static final String INVITATION_ID = "_id";
         public static final String CLIENT_ID = "client_id";
@@ -69,6 +88,10 @@ public class Car_GoConst {
         public static final String TOTAL_PAYMENT = "total_payment";
 
     }
+
+    /**
+     * format of key and value for the user name and password.
+     */
     public static class UesrNamePasswordConst {
         public static final String CLIENT_ID = "_id";
         public static final String USER_NAME = "user_name";
@@ -76,6 +99,11 @@ public class Car_GoConst {
 
     }
 
+    /**
+     * convert Invitation to ContentValues.
+     * @param invitation to be convert.
+     * @return ContentValues with key and value format of Invitation.
+     */
     public static ContentValues InvitationToContentValues(Invitation invitation) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(InvitationConst.INVITATION_ID, invitation.getInvitationId());
@@ -97,6 +125,11 @@ public class Car_GoConst {
         return contentValues;
     }
 
+    /**
+     * convert ContentValues to Invitation.
+     * @param contentValues to be convert.
+     * @return instance of Invitation with the ContentValues values.
+     */
     public static Invitation ContentValuesToInvitation(ContentValues contentValues) {
         Invitation invitation = new Invitation();
         invitation.setInvitationId(contentValues.getAsInteger(InvitationConst.INVITATION_ID));
@@ -121,6 +154,11 @@ public class Car_GoConst {
         return invitation;
     }
 
+    /**
+     * convert Car to ContentValues.
+     * @param car to be convert.
+     * @return ContentValues with key and value format of Car(like we defined earlier-lines 37-42).
+     */
     public static ContentValues CarToContentValues(Car car) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(Car_GoConst.CarConst.BRANCH_NUMBER, car.getBranchNumber());
@@ -131,6 +169,11 @@ public class Car_GoConst {
         return contentValues;
     }
 
+    /**
+     * convert ContentValues to Car.
+     * @param contentValues to be convert.
+     * @return instance of Car with the ContentValues values.
+     */
     public static Car ContentValuesToCar(ContentValues contentValues) {
         Car car = new Car();
         car.setBranchNumber(contentValues.getAsInteger(Car_GoConst.CarConst.BRANCH_NUMBER));
@@ -141,6 +184,11 @@ public class Car_GoConst {
         return car;
     }
 
+    /**
+     * convert Branch to ContentValues.
+     * @param branch to be convert.
+     * @return ContentValues with key and value format of Branch(like we defined earlier-lines 26-32).
+     */
     public static ContentValues BranchToContentValues(Branch branch) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(Car_GoConst.BranchConst.BRANCH_NUMBER, branch.getBranchNumber());
@@ -151,6 +199,11 @@ public class Car_GoConst {
         return contentValues;
     }
 
+    /**
+     * convert ContentValues to Branch.
+     * @param contentValues to be convert.
+     * @return instance of Branch
+     */
     public static Branch ContentValuesToBranch(ContentValues contentValues) {
 
         Branch branch = new Branch();
@@ -163,6 +216,11 @@ public class Car_GoConst {
         return branch;
     }
 
+    /**
+     * convert Car Model to ContentValues.
+     * @param carModel to be convert.
+     * @return ContentValues with key and value format of Car Model(like we defined earlier-lines 26-32).
+     */
     public static ContentValues CarModelToContentValues(CarsModel carModel) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(Car_GoConst.CarModelConst.MODEL_CODE, carModel.getModelCode());
@@ -174,6 +232,11 @@ public class Car_GoConst {
         return contentValues;
     }
 
+    /**
+     * convert ContentValues to Car Model.
+     * @param contentValues to be convert.
+     * @return instance of Car Model with the ContentValues values.
+     */
     public static CarsModel ContentValuesToCarModel(ContentValues contentValues) {
         CarsModel carModel = new CarsModel();
         carModel.setCompanyName(contentValues.getAsString(Car_GoConst.CarModelConst.COMPANY_NAME));
@@ -185,7 +248,11 @@ public class Car_GoConst {
         return carModel;
     }
 
-    //Client
+    /**
+     * convert Client to ContentValues.
+     * @param client to be convert.
+     * @return ContentValues with key and value format of Client(like we defined earlier-lines 59-66).
+     */
     public static ContentValues ClientToContentValues(Client client) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(Car_GoConst.ClientConst.FAMILY_NAME, client.getFamilyName());
@@ -197,6 +264,11 @@ public class Car_GoConst {
         return contentValues;
     }
 
+    /**
+     * convert ContentValues to Client.
+     * @param contentValues to be convert.
+     * @return instance of Client with the ContentValues values.
+     */
     public static Client ContentValuesToClient(ContentValues contentValues) {
         Client client = new Client();
         client.setId(contentValues.getAsLong(Car_GoConst.ClientConst.ID));
@@ -208,7 +280,13 @@ public class Car_GoConst {
         return client;
     }
 
-    //Client
+    /**
+     * convert userName to ContentValues.
+     * @param userName to be convert.
+     * @param password to be convert.
+     * @param ID to be convert.
+     * @return ContentValues with key and value format of userName.
+     */
     public static ContentValues UserPasswordtoContentValues(String userName,String password,long ID) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(UesrNamePasswordConst.CLIENT_ID,ID);
@@ -217,6 +295,11 @@ public class Car_GoConst {
         return contentValues;
     }
 
+    /**
+     * convert ContentValues to UserPassword.
+     * @param contentValues to be convert.
+     * @return instance of UserPassword with the ContentValues values.
+     */
     public static List<String> ContentValuestoUserPassword(ContentValues contentValues) {
         List<String> user_password = new ArrayList<>();
         String _id = (contentValues.getAsLong(UesrNamePasswordConst.CLIENT_ID)).toString();
