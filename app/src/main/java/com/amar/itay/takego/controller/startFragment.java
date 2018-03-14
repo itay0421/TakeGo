@@ -40,9 +40,6 @@ import java.util.TimeZone;
 import java.util.concurrent.ThreadLocalRandom;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class startFragment extends Fragment implements View.OnClickListener{
     Client client = MySQL_DBManager.client;
     Invitation currentInvitation = null;
@@ -60,11 +57,20 @@ public class startFragment extends Fragment implements View.OnClickListener{
     ContentValues contentValues = new ContentValues();
     ContentValues contentValues_update = new ContentValues();
 
+    /**
+     * default constructor.
+     */
     public startFragment() {
         // Required empty public constructor
     }
 
-
+    /**
+     * @param inflater to convert xml to view.
+     * @param container of the screen.
+     * @param savedInstanceState contains the most recent data, specially contains
+     * data of the activity's previous initialization part.
+     * @return the view to be display.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -96,6 +102,10 @@ public class startFragment extends Fragment implements View.OnClickListener{
     }
 
 
+     /**
+     * @param savedInstanceState contains the most recent data, specially contains
+     * data of the activity's previous initialization part.
+     */
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -106,7 +116,9 @@ public class startFragment extends Fragment implements View.OnClickListener{
     }
 
 
-
+    /**
+     * findViews of car models.
+     */
     private void findCarModelView() {
         TextView CompanyName_TextView;
         TextView ModelName_TextView;
@@ -156,6 +168,9 @@ public class startFragment extends Fragment implements View.OnClickListener{
         }
     }
 
+    /**
+     * load the current model car.
+     */
     private void LoadCurrentModelCar() {
         List<Car> carList = new ArrayList<>();
 
@@ -176,6 +191,9 @@ public class startFragment extends Fragment implements View.OnClickListener{
 
     }
 
+    /**
+     * find views.
+     */
     private void findViews() {
         Kilometer = (EditText) getActivity().findViewById(R.id.kilometersText);
         TextViewKilometers = (TextView) getActivity().findViewById(R.id.TextViewKilometers);
@@ -199,7 +217,9 @@ public class startFragment extends Fragment implements View.OnClickListener{
         closeInvitation.setOnClickListener(this);
     }
 
-
+    /**
+     * @param view represent the view of the event that have been occurred.
+     */
     @Override
     public void onClick(View view) {
         if( view == start)
@@ -210,6 +230,9 @@ public class startFragment extends Fragment implements View.OnClickListener{
             closeOpenInvitation();
     }
 
+    /**
+     * closing open invitation and insert the kilometers to calculate the payment.
+     */
     private void closeOpenInvitation() {
 
         if (Kilometer.getText().length() == 0) {

@@ -41,8 +41,14 @@ import java.util.Date;
 import java.util.List;
 
 
-/**
- * A simple {@link Fragment} subclass.
+/*
+* in this function we did multiply thins.
+     * 1) the search dialog (to filter the current element.
+     * 2) we did 2 screens:
+     *  2.1) the first screen show all cars and the user chose one that he want after that:
+     *  2.2) the second screen show up to pick the place he want to take the car from there.
+     * we used AlertDialog after the user pick the car and the branch we will show to the user
+     * dialog text to confirm his invitation.
  */
 public class newInvitationFragment extends Fragment {
 
@@ -68,12 +74,21 @@ public class newInvitationFragment extends Fragment {
     //TODO id notlong
 
 
-
+    /**
+     * default constructor.
+     */
     public newInvitationFragment() {
         // Required empty public constructor
     }
 
-
+    /**
+     * getting all the views.
+     * @param inflater to convert xml to view.
+     * @param container of the screen.
+     * @param savedInstanceState contains the most recent data, specially contains
+     * data of the activity's previous initialization part.
+     * @return the view to be display.
+     */
     @Override
     public View  onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ((MainActivity_Drawer) getActivity()).setActionBarTitle("New Invitation");
@@ -157,14 +172,6 @@ public class newInvitationFragment extends Fragment {
                 return false;
             }
         });
-
-
-
-
-
-
-
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
           public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -182,6 +189,8 @@ public class newInvitationFragment extends Fragment {
 
                     //clear listview and load branch list
                     //listView.setAdapter(null);
+
+                    //used to show all the cars and to chose one of them
                     new AsyncTask<Void, View, List<Branch>>() {
                         ProgressDialog asyncDialog = new ProgressDialog(newInvitationFragment.this.getActivity());
 
@@ -249,7 +258,7 @@ public class newInvitationFragment extends Fragment {
                     contentValues.put(Car_GoConst.CarConst.BRANCH_NUMBER, selected_branch );
 
                     //clear listview and load branch list
-
+                   //used to show the branch-s and pick one of them
                     new AsyncTask<Void, View, Car>() {
                         ProgressDialog asyncDialog = new ProgressDialog(newInvitationFragment.this.getActivity());
 
@@ -364,7 +373,7 @@ public class newInvitationFragment extends Fragment {
 
 
 
-
+                    //used to add the new invitation.
                     new AsyncTask<Void, Void, Integer>() {
 
                         @Override

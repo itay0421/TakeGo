@@ -39,6 +39,7 @@ import java.io.StringReader;
 
 public class MainActivity_Login extends AppCompatActivity implements View.OnClickListener {
 
+    //definition for the instance views we will get.
     SharedPreferences sharedPreferences;
     boolean SavePass;
     private EditText editText;
@@ -56,20 +57,22 @@ public class MainActivity_Login extends AppCompatActivity implements View.OnClic
     public static final int PICK_IMAGE = 100;
     public static final String TAB = "dav";
 
-
+    /**
+     * @param savedInstanceState contains the most recent data, specially contains
+     * data of the activity's previous initialization part.
+     */
     @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_login);
 
-        findViews();
+        findViews();//find the views.
 
         //clearSharedPreferences();
-        loadSharedPreferences();
+        loadSharedPreferences();//loading the username and the password.
 
-
-        //*******just for test.
+        //getting all the information fom the sql table by the php page.
         new AsyncTask<Void, Void, Void>() {
 
             @Override
@@ -89,6 +92,9 @@ public class MainActivity_Login extends AppCompatActivity implements View.OnClic
     }
 
 
+    /**
+     * loading the information about the client in case he choose to save them.
+     */
     private void loadSharedPreferences() {
         try {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -116,6 +122,9 @@ public class MainActivity_Login extends AppCompatActivity implements View.OnClic
         }
     }
 
+    /**
+     * saving the information about the client in case he choose to save them.
+     * */
     private void saveSharedPreferences() {
         try {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -137,6 +146,9 @@ public class MainActivity_Login extends AppCompatActivity implements View.OnClic
         }
     }
 
+    /**
+     * clear the information about the client.
+     */
     private void clearSharedPreferences() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -147,6 +159,9 @@ public class MainActivity_Login extends AppCompatActivity implements View.OnClic
         Toast.makeText(this, "clear Preferences", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * find the views.
+     */
     private void findViews() {
         //editText = (EditText)findViewById( R.id.editText );
         sign_in = (Button) findViewById(R.id.sign_in);
@@ -164,6 +179,9 @@ public class MainActivity_Login extends AppCompatActivity implements View.OnClic
         //imageVisibility.setOnClickListener(this);
     }
 
+    /**
+     * checking on the database if the client exist in there in order to let him get access into the app.
+     */
     @SuppressLint("StaticFieldLeak")
     private void checkOnDataBase() {
          final ContentValues contentValuesUserPassword = Car_GoConst.UserPasswordtoContentValues(
@@ -196,6 +214,13 @@ public class MainActivity_Login extends AppCompatActivity implements View.OnClic
         }.execute();
     }
 
+    /**
+     * checking if the click was to sign in or sign up.
+     * 1)The sign in function check the client if exist by the shared preferences if the client doesn't exist there
+     *   he is checking on the database by the checkOnDataBase() function.
+     * 2)The sign up function open  a new activity to add the new client.
+     * @param v represent the view of the event that have been occurred.
+     */
     @Override
     public void onClick(View v) {
         if (v == sign_in) {
@@ -220,24 +245,34 @@ public class MainActivity_Login extends AppCompatActivity implements View.OnClic
         }
     }
 
+    /**
+     * open gallery for the picture.
+     */
     void openGallery() {
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, PICK_IMAGE);
     }
 
+    /**
+     *
+     * @param RequestCode to know what the user want to do (PICK_IMAGE etc).
+     * @param ResultCode to check if the result code ok.
+     * @param data the uri to the gallery.
+     */
     @Override
     public void onActivityResult(int RequestCode, int ResultCode, Intent data) {
         super.onActivityResult(RequestCode, ResultCode, data);
+        //change the Uri to the gallery if everything ok
         if (ResultCode == RESULT_OK && RequestCode == PICK_IMAGE) {
             imageUri = data.getData();
             imageButton.setImageURI(imageUri);
         }
         InputStream inputStream;
         try {
-            inputStream = getContentResolver().openInputStream(imageUri);
-            Bitmap imag = new BitmapFactory().decodeStream(inputStream);
-            imageButton.setImageBitmap(imag);
-            File file = new File(imageUri.toString());
+            inputStream = getContentResolver().openInputStream(imageUri);//open the gallery.
+            Bitmap imag = new BitmapFactory().decodeStream(inputStream);//getting the image the have been selected/
+            imageButton.setImageBitmap(imag);//set the image that have been choose
+            File file = new File(imageUri.toString());//make a new file with the Uri.
         } catch (FileNotFoundException e) {
             //e.printStackTrace();
             Toast.makeText(this, "unable to open image", Toast.LENGTH_LONG).show();

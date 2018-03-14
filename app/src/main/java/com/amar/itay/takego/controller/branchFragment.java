@@ -23,20 +23,29 @@ import com.amar.itay.takego.model.entities.Branch;
 import java.util.List;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class branchFragment extends Fragment {
 
-
+    //definition for the instance views we will get.
     ListView listView ;
-    List<Branch> myBranchsList;
     View view;
+    List<Branch> myBranchsList;
 
+    /**
+     * default constructor.
+     */
     public branchFragment() {
         // Required empty public constructor
     }
 
+    /**
+     * this function open the maps application by the place in the chosen element in case the long click event has been occurred.
+     * @param inflater to convert xml to view.
+     * @param container of the screen.
+     * @param savedInstanceState contains the most recent data, specially contains
+     * data of the activity's previous initialization part.
+     * @return the view to be display.
+     */
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
         ((MainActivity_Drawer) getActivity()).setActionBarTitle("Branches");
         view = inflater.inflate(R.layout.fragment_branch, container, false);

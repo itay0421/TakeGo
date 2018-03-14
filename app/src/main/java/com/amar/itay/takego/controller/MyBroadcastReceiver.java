@@ -17,8 +17,16 @@ import java.util.List;
  * Created by itay0 on 22/01/2018.
  */
 
+/**
+ * listening to events in case any car released by closing invitation.
+ */
 public class MyBroadcastReceiver extends BroadcastReceiver {
 
+    /**
+     * on receive he will check if the car became free and will make a toast to say that there is a new car.
+     * @param context of the activity.
+     * @param intent of the calling activity.
+     */
     @Override
     public void onReceive(Context context, Intent intent) {
 
@@ -33,8 +41,6 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
                 @Override
                 protected Void doInBackground(Void... voids) {
                     MySQL_DBManager.carsList = FactoryMethod.getManager().AllCars();
-
-
                     return null;
                 }
             }.execute();

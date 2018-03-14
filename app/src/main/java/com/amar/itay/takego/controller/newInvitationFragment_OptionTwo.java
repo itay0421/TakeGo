@@ -43,6 +43,13 @@ import java.util.List;
  * Activities that contain this fragment must implement the
  * to handle interaction events.
  * create an instance of this fragment.
+ * in this function we did multiply thins.
+     * 1) the search dialog (to filter the current element.
+     * 2) we did 2 screens:
+     *  2.1) the first screen show up to pick the place he want to take the car from there and
+     *  2.2) the second screen show all cars and the user chose one that he want after that he shows the AlertDialog.
+     *  we used AlertDialog after the user pick the car and the branch we will show to the user
+     * dialog text to confirm his invitation.
  */
 public class newInvitationFragment_OptionTwo extends Fragment {
 
@@ -61,13 +68,24 @@ public class newInvitationFragment_OptionTwo extends Fragment {
 
 
     View view;
+
+    /**
+     * default constructor.
+     */
     public newInvitationFragment_OptionTwo() {
         // Required empty public constructor
     }
 
 
 
-
+    /**
+     * getting all the views.
+     * @param inflater to convert xml to view.
+     * @param container of the screen.
+     * @param savedInstanceState contains the most recent data, specially contains
+     * data of the activity's previous initialization part.
+     * @return the view to be display.
+     */
     @SuppressLint("StaticFieldLeak")
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_new_invitation_option_two, container, false);

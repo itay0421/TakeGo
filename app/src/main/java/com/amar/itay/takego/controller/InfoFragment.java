@@ -24,11 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A simple {@link android.app.Fragment} subclass.
+ * this class show the information about the rent car company.
  */
 public class InfoFragment extends Fragment implements View.OnClickListener{
 
-
+    //definition for the instance views we will get.
     private ListView listView;
     private List<Car> myList;
     List<ContentValues> contentValuesList = new ArrayList<ContentValues>();
@@ -45,6 +45,13 @@ public class InfoFragment extends Fragment implements View.OnClickListener{
     TextView moreInfo;
     Activity activityContext;
 
+    /**
+     * @param inflater to convert xml to view.
+     * @param container of the screen.
+     * @param savedInstanceState contains the most recent data, specially contains
+     * data of the activity's previous initialization part.
+     * @return the view to be display.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,11 +61,20 @@ public class InfoFragment extends Fragment implements View.OnClickListener{
         return inflater.inflate(R.layout.fragment_info, container, false);
     }
 
+    /**
+     * this function call the find the views function.
+     * @param savedInstanceState contains the most recent data, specially contains
+     * data of the activity's previous initialization part.
+     */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         findViews();
     }
+
+    /**
+     * find the views.
+     */
     private void findViews() {
         phoneNumberRelative = activityContext.findViewById(R.id.phoneNumberRelative);
         emailRelative = activityContext.findViewById(R.id.emailRelative);
@@ -74,10 +90,22 @@ public class InfoFragment extends Fragment implements View.OnClickListener{
         moreInfo.setOnClickListener(this);
     }
 
-
+    /**
+     * default constructor.
+     */
     public InfoFragment() {
     }
 
+    /**
+     * check if the click is one of the button that register to the click event.
+     * for everyone of them he makes different things :
+     * 1) for the phoneNumber button click he opens the calling app.
+     * 2) for the email button click he opens the email app.
+     * 3) for the web button click he opens the website of the company.
+     * 4) for the moreInfo text click he opens the moreInfo activity to display more information.
+     * 4) for the location button click he opens the maps app.
+     * @param v represent the view of the event that have been occurred.
+     */
     @Override
     public void onClick(View v) {
         Intent intent =null;

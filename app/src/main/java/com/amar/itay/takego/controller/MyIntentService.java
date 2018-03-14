@@ -18,10 +18,7 @@ import java.util.List;
 
 
 /**
- * An {@link IntentService} subclass for handling asynchronous task requests in
- * a service on a separate handler thread.
- * <p>
- * TODO: Customize class - update intent actions and extra parameters.
+ * every interval time the service check if  a car has been released.
  */
 public class MyIntentService extends IntentService {
 
@@ -30,12 +27,18 @@ public class MyIntentService extends IntentService {
     boolean isRun = false;
     final String TAG = "testService";
 
-
+    /**
+     * constructor
+     */
     public MyIntentService() {
         super("MyIntentService");
         id = count++;
     }
 
+    /**
+     * This method is invoked on the worker thread with a request to process.
+     * @param intent that was used to bind to this service.
+     */
     @Override
     protected void onHandleIntent(Intent intent) {
         while (isRun) {
@@ -72,7 +75,6 @@ public class MyIntentService extends IntentService {
     }
 
 
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -86,6 +88,16 @@ public class MyIntentService extends IntentService {
         super.onDestroy();
     }
 
+    /**
+     *
+     * The system invokes this method by calling startService() when another component (such as an activity)
+     * requests that the service be started.
+     * When this method executes, the service is started and can run in the background indefinitely.
+     * @param intent that was used to bind to this service.
+     * @param flags (not used)
+     * @param startId to insert the start id.
+     * @return
+     */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         this.startId = startId;

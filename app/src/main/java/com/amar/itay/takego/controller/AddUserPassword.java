@@ -19,7 +19,16 @@ import com.amar.itay.takego.model.backend.FactoryMethod;
 import com.amar.itay.takego.model.entities.Car;
 import com.amar.itay.takego.model.entities.Client;
 
+/**
+ * this class is the code behind of the activity_add_user_password that handel his events.
+ * class that add a new client.
+ */
 public class AddUserPassword extends AppCompatActivity implements View.OnClickListener {
+    /*definition for the instance views we will get.
+     to add new client we did two screens:
+     1) for the userName and password.
+     2) for the rest information about this client(private name, family name etc ).
+     */
     //first screen
     ImageButton profilePicture;
     EditText userName;
@@ -35,15 +44,24 @@ public class AddUserPassword extends AppCompatActivity implements View.OnClickLi
     EditText phoneNumber;
     Button addUser;
      static String TA = "MES";
+
+    /**
+     * the function create the activity and find the views.
+     * @param savedInstanceState contains the most recent data, specially contains
+     * data of the activity's previous initialization part.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_user_password);
         findViews();
         Log.d(TA,"ASDASD");
-
-
     }
+
+    /**
+     * the findViews function gets the instance of the views.
+     * and make the add button,next(to enter more information on the second screen),image to listen the click event.
+     */
     void findViews()
     {
         //first screen
@@ -65,6 +83,11 @@ public class AddUserPassword extends AppCompatActivity implements View.OnClickLi
         addUser.setOnClickListener(this);
         imageVisibility.setOnClickListener(this);
     }
+
+    /**
+     * check if the click is the add button click or one of the others.
+     * @param v represent the view of the event that have been occurred.
+     */
     @Override
     public void onClick(View v) {
         int visibility = userName.getVisibility();
@@ -91,6 +114,10 @@ public class AddUserPassword extends AppCompatActivity implements View.OnClickLi
             //password.setTextAppearance(23);
     }
 
+    /**
+     * the function take all the information that has been insert and send it by thread in the background to
+     * the php page to add the new Client.
+     */
     void addClient() {
         Context context = getApplicationContext();
 

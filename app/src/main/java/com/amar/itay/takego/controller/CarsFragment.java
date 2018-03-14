@@ -32,6 +32,7 @@ import java.util.List;
  */
 public class CarsFragment extends Fragment {
 
+    //definition for the instance views we will get.
     private SearchView searchView;
     private ImageView imageView6;
     private TextView textViewCompModel;
@@ -51,16 +52,23 @@ public class CarsFragment extends Fragment {
     ArrayAdapter<ContentValues> adapter_car_Model;
 
 
-
-
-
-
-
+    /**
+     * default constructor.
+     */
     public CarsFragment() {
         // Required empty public constructor
     }
 
-
+    /**
+     *  * we divide the screen to three little screens to display the cars and for the chosen car
+     * the screen display his branch and his car model.
+     * we did search dialog (to filter the current element.
+     * @param inflater to convert xml to view.
+     * @param container of the screen.
+     * @param savedInstanceState contains the most recent data, specially contains
+     * data of the activity's previous initialization part.
+     * @return the view to be display.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -131,7 +139,6 @@ public class CarsFragment extends Fragment {
                 return false;
             }
         });
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -165,6 +172,12 @@ public class CarsFragment extends Fragment {
         return view;
     }
 
+    /**
+     *
+     * @param view to get thhe element by this view.
+     * @param savedInstanceState contains the most recent data, specially contains
+     * data of the activity's previous initialization part.
+     */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Setup any handles to view objects here
@@ -180,12 +193,6 @@ public class CarsFragment extends Fragment {
         textViewStreetNumber = (TextView)view.findViewById( R.id.textView_street_number );
         textViewParking = (TextView)view.findViewById( R.id.textView_parking );
         textView24 = (TextView)view.findViewById( R.id.textView24 );
-
-
-
-
-
-
         }
 
 }
